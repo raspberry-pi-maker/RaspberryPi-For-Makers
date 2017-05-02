@@ -1,0 +1,8 @@
+set terminal wxt size 1500, 500
+set ylabel "Voltage"
+set xlabel "Time"
+
+plot \
+"mcp3008.dat" using 1:3 lc rgb '#0000ff' lt  1 lw 2  t "Analog Voltage"
+
+pause -1 "Hit return to continue"
