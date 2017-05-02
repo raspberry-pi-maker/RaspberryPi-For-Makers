@@ -1,0 +1,727 @@
+[
+    {
+        "id": "a46e2720.464938",
+        "type": "inject",
+        "z": "e33e4bb4.297408",
+        "name": "Trigger",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "x": 89.5,
+        "y": 60.149993896484375,
+        "wires": [
+            [
+                "86fe8fe4.15b7a"
+            ]
+        ]
+    },
+    {
+        "id": "4bb59f40.65de2",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "시작",
+        "info": "여기에서 시작한다. 주기적(5초)으로 반복",
+        "x": 56,
+        "y": 21,
+        "wires": []
+    },
+    {
+        "id": "da9f1979.84a6a8",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "메인 파이썬 실행",
+        "info": "파이썬 프로그램을 시작함",
+        "x": 273.99981689453125,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "e2fb75b1.64e368",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "물고기 사료 공급용 버튼",
+        "info": "",
+        "x": 873.7499389648437,
+        "y": 408.0553894042969,
+        "wires": []
+    },
+    {
+        "id": "f7f9dfee.0ac08",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "Clear",
+        "func": "msg.payload = \"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 943.8333129882812,
+        "y": 450.6997985839844,
+        "wires": [
+            [
+                "574da588.2e757c",
+                "e9da3179.67e1f",
+                "d3bdc800.5dc488"
+            ]
+        ]
+    },
+    {
+        "id": "544deaef.fd27f4",
+        "type": "exec",
+        "z": "e33e4bb4.297408",
+        "command": "python /usr/local/src/monitor/fish_meal.py",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Fish",
+        "x": 1229.1389770507812,
+        "y": 442.2442932128906,
+        "wires": [
+            [
+                "e9da3179.67e1f"
+            ],
+            [
+                "d3bdc800.5dc488"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "574da588.2e757c",
+        "type": "delay",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1093.5277099609375,
+        "y": 448.9443664550781,
+        "wires": [
+            [
+                "544deaef.fd27f4"
+            ]
+        ]
+    },
+    {
+        "id": "6f456b37.e8a0f4",
+        "type": "udp in",
+        "z": "e33e4bb4.297408",
+        "name": "SR_501 UDP",
+        "iface": "",
+        "port": "35100",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 75,
+        "y": 179.83326721191406,
+        "wires": [
+            [
+                "eca6565d.4aab28"
+            ]
+        ]
+    },
+    {
+        "id": "6b23918e.27297",
+        "type": "udp in",
+        "z": "e33e4bb4.297408",
+        "name": "MQ2 UDP",
+        "iface": "",
+        "port": "35101",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 67.08332824707031,
+        "y": 271.8333435058594,
+        "wires": [
+            [
+                "e669ef2f.5b14b"
+            ]
+        ]
+    },
+    {
+        "id": "855feca5.4da84",
+        "type": "udp in",
+        "z": "e33e4bb4.297408",
+        "name": "DHT11 Temp. UDP",
+        "iface": "",
+        "port": "35102",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 95,
+        "y": 365.58326721191406,
+        "wires": [
+            [
+                "c653d3a2.ce6d3"
+            ]
+        ]
+    },
+    {
+        "id": "e320a54f.62b5d8",
+        "type": "udp in",
+        "z": "e33e4bb4.297408",
+        "name": "DHT11 Humidity UDP",
+        "iface": "",
+        "port": "35103",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 105,
+        "y": 452.24998474121093,
+        "wires": [
+            [
+                "3cb8a105.fd39fe"
+            ]
+        ]
+    },
+    {
+        "id": "eca6565d.4aab28",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "SR501 Process",
+        "func": "var detect = msg.payload;\nvar time = msg.payload[0].timestamp;\nif(detect === \"1\"){ //침입\n  var newmsg = { payload: msg.payload.length };\n  newmsg.topic = \"Alarm : Invasion detected\";\n  newmsg.payload = \"Invasion detected\";\n\n  msg.payload = detect;\n  return [newmsg, msg];\n}\nelse{ //정상\n  msg.payload = detect;\n  return [null, msg];\n}\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 331.6666259765625,
+        "y": 176.2499542236328,
+        "wires": [
+            [
+                "6677291c.a74838"
+            ],
+            [
+                "e7338403.912318",
+                "9c247af2.175168"
+            ]
+        ]
+    },
+    {
+        "id": "e7338403.912318",
+        "type": "ui_gauge",
+        "z": "e33e4bb4.297408",
+        "name": "Invasion Detection",
+        "group": "54a2e1a9.0e60b",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Invasion Detection",
+        "label": "detect or not",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 621.9166870117187,
+        "y": 139.083251953125,
+        "wires": []
+    },
+    {
+        "id": "9c247af2.175168",
+        "type": "ui_chart",
+        "z": "e33e4bb4.297408",
+        "name": "Invasion Detection",
+        "group": "54a2e1a9.0e60b",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Invasion Detection",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 621.9166870117187,
+        "y": 178.083251953125,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "e669ef2f.5b14b",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "MQ Emergency",
+        "func": "var density = msg.payload;\nif(density > 10.0){ //위험\n  var newmsg = { payload: msg.payload.length };\n  newmsg.topic = \"Alarm : Unnormal Gas Density\";\n  newmsg.payload = \"Unnormal Gas Density:\" + density ;  \n  return [newmsg, msg];\n}\nelse{ //정상\n  msg.payload = density;\n  return [null, msg];\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 336.6666259765625,
+        "y": 278.91661071777343,
+        "wires": [
+            [
+                "6677291c.a74838"
+            ],
+            [
+                "7748fe56.e164b",
+                "3ab3c786.422048"
+            ]
+        ]
+    },
+    {
+        "id": "7748fe56.e164b",
+        "type": "ui_gauge",
+        "z": "e33e4bb4.297408",
+        "name": "Gas density",
+        "group": "ef7cfc7f.61f68",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gas density",
+        "label": "density",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1023",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 601.9166870117187,
+        "y": 235.08331298828125,
+        "wires": []
+    },
+    {
+        "id": "3ab3c786.422048",
+        "type": "ui_chart",
+        "z": "e33e4bb4.297408",
+        "name": "Gas density",
+        "group": "ef7cfc7f.61f68",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Gas density",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "ymin": "0",
+        "ymax": "1024",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 600.9166870117187,
+        "y": 275.08331298828125,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c653d3a2.ce6d3",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "DHT11 Temp.",
+        "func": "var temperature = msg.payload;\nif(temperature > 35.0){ //위험\n  var newmsg = { payload: msg.payload.length };\n  newmsg.topic = \"Alarm : Unnormal temperature\";\n  newmsg.payload = \"Unnormal temperature:\" + temperature + \" at\" + time +\" detected\";\n  return [newmsg, msg];\n}\nelse{ //정상\n  return [null, msg];\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 338.33331298828125,
+        "y": 357.2499542236328,
+        "wires": [
+            [
+                "6677291c.a74838"
+            ],
+            [
+                "a43e060f.634288",
+                "540a85d8.5767dc"
+            ]
+        ]
+    },
+    {
+        "id": "3cb8a105.fd39fe",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "DHT11 Humidity",
+        "func": "return msg",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 338.33331298828125,
+        "y": 452.2499237060547,
+        "wires": [
+            [
+                "e80026f1.3b08c8",
+                "2945f45e.873bec"
+            ]
+        ]
+    },
+    {
+        "id": "e80026f1.3b08c8",
+        "type": "ui_gauge",
+        "z": "e33e4bb4.297408",
+        "name": "Humidity",
+        "group": "13114804.a32658",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 595.2500610351562,
+        "y": 418.4164123535156,
+        "wires": []
+    },
+    {
+        "id": "2945f45e.873bec",
+        "type": "ui_chart",
+        "z": "e33e4bb4.297408",
+        "name": "Humidity",
+        "group": "13114804.a32658",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Humidity",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 595.7500610351562,
+        "y": 452.0664367675781,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a43e060f.634288",
+        "type": "ui_gauge",
+        "z": "e33e4bb4.297408",
+        "name": "Temperature",
+        "group": "2d894ccd.e93aa4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "x": 601.9166870117187,
+        "y": 323.4166259765625,
+        "wires": []
+    },
+    {
+        "id": "540a85d8.5767dc",
+        "type": "ui_chart",
+        "z": "e33e4bb4.297408",
+        "name": "Temperature",
+        "group": "2d894ccd.e93aa4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Temperature",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "bezier",
+        "nodata": "",
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "x": 602.9166870117187,
+        "y": 356.4166259765625,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "cea32dfa.e56fc",
+        "type": "e-mail",
+        "z": "e33e4bb4.297408",
+        "server": "smtp.gmail.com",
+        "port": "587",
+        "name": "spypiggy@empal.com",
+        "dname": "Alarm E-Mail",
+        "x": 1057.9168090820312,
+        "y": 177.5000762939453,
+        "wires": []
+    },
+    {
+        "id": "34d1a90f.87b5b6",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "이메일 송신",
+        "info": "gmail 포트\n465번 포트(SSL 필요)\n587번 포트(TLS 필요)\n\n",
+        "x": 861.9166870117187,
+        "y": 131.2500762939453,
+        "wires": []
+    },
+    {
+        "id": "6677291c.a74838",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "E-mail Send?",
+        "func": "var now = new Date();\nvar start = global.get(\"email\");\n\nif(null === start || undefined === start){\n    return [msg, null];\n}\n\nvar end = now.getTime();\nvar timegap = (end - start) / 1000;\nif(timegap > 300.0){\n    return [msg, null];\n}\nelse{\n  msg.payload = 'End:' + end + 'Start:' + start + 'Gap:' + timegap\n  return [null, msg];\n} \n\n\n\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 873.1670532226562,
+        "y": 178.45570373535156,
+        "wires": [
+            [
+                "66e993f0.39fc6c",
+                "cea32dfa.e56fc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a676419a.5ad73",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "SR501",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 475.6249694824219,
+        "y": 66.62496185302734,
+        "wires": []
+    },
+    {
+        "id": "ae3bcae2.73abc8",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "MQ2",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 303.75,
+        "y": 239.74998474121094,
+        "wires": []
+    },
+    {
+        "id": "44a09a2f.342fa4",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "Temp.",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 306.25,
+        "y": 322.24998474121093,
+        "wires": []
+    },
+    {
+        "id": "8cbece46.75b73",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "Humidity",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 317.5,
+        "y": 414.74998474121093,
+        "wires": []
+    },
+    {
+        "id": "86fe8fe4.15b7a",
+        "type": "daemon",
+        "z": "e33e4bb4.297408",
+        "command": "python",
+        "args": "/usr/local/src/monitor/main_control.py",
+        "cr": false,
+        "redo": false,
+        "op": "string",
+        "name": "",
+        "x": 244.375,
+        "y": 61.9375,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7ec69a64.d00054",
+        "type": "ui_button",
+        "z": "e33e4bb4.297408",
+        "name": "Fish",
+        "group": "33fb2b00.650b76",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "사료 투입",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 815,
+        "y": 451.2499694824219,
+        "wires": [
+            [
+                "f7f9dfee.0ac08"
+            ]
+        ]
+    },
+    {
+        "id": "e9da3179.67e1f",
+        "type": "ui_text",
+        "z": "e33e4bb4.297408",
+        "group": "33fb2b00.650b76",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "result",
+        "label": "result",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1251.2500610351562,
+        "y": 312.1000061035156,
+        "wires": []
+    },
+    {
+        "id": "d3bdc800.5dc488",
+        "type": "ui_text",
+        "z": "e33e4bb4.297408",
+        "group": "33fb2b00.650b76",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "err",
+        "label": "err",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1251.7500610351562,
+        "y": 352.7500305175781,
+        "wires": []
+    },
+    {
+        "id": "66e993f0.39fc6c",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "EMail update",
+        "func": "var dt = new Date();\nvar start = dt.getTime();\nglobal.set(\"email\",start);\nreturn msg;\n",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 1053.7500610351562,
+        "y": 119.99995422363281,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5203814.be58e8",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 1051.875,
+        "y": 36.87493896484375,
+        "wires": []
+    },
+    {
+        "id": "8bd58fda.2c512",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "No Email",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1051.2500610351562,
+        "y": 258.5,
+        "wires": []
+    },
+    {
+        "id": "54a2e1a9.0e60b",
+        "type": "ui_group",
+        "z": "",
+        "name": "Invasion Detection",
+        "tab": "ccb083b4.471c7",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "ef7cfc7f.61f68",
+        "type": "ui_group",
+        "z": "",
+        "name": "Gas density",
+        "tab": "ccb083b4.471c7",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "13114804.a32658",
+        "type": "ui_group",
+        "z": "",
+        "name": "Humidity",
+        "tab": "ccb083b4.471c7",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "2d894ccd.e93aa4",
+        "type": "ui_group",
+        "z": "",
+        "name": "Temperature",
+        "tab": "ccb083b4.471c7",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "33fb2b00.650b76",
+        "type": "ui_group",
+        "z": "",
+        "name": "Fish",
+        "tab": "ccb083b4.471c7",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "ccb083b4.471c7",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]

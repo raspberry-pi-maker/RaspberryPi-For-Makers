@@ -1,0 +1,443 @@
+[
+    {
+        "id": "a5216eeb.2b3a2",
+        "type": "sqlite",
+        "z": "e33e4bb4.297408",
+        "mydb": "29732747.d3b5b8",
+        "name": "Pi_Monitoring DB",
+        "x": 651.5,
+        "y": 61,
+        "wires": [
+            [
+                "bfbdcdc3.cab688"
+            ]
+        ]
+    },
+    {
+        "id": "41099d01.70f9f4",
+        "type": "delay",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 291.5,
+        "y": 245.40000915527344,
+        "wires": [
+            [
+                "61b65bf6.52a02c",
+                "9dae089a.3f9298"
+            ]
+        ]
+    },
+    {
+        "id": "61b65bf6.52a02c",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "MQ SQL",
+        "func": "msg.topic=\"select timestamp, density  from mq order by timestamp desc limit 1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 438.5,
+        "y": 200,
+        "wires": [
+            [
+                "a5216eeb.2b3a2"
+            ]
+        ]
+    },
+    {
+        "id": "9dae089a.3f9298",
+        "type": "delay",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 290.20001220703125,
+        "y": 369.20001220703125,
+        "wires": [
+            [
+                "6aec61d0.5c338"
+            ]
+        ]
+    },
+    {
+        "id": "6aec61d0.5c338",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "DHT SQL",
+        "func": "msg.topic=\"select timestamp, humidity, temperature from dht11 order by timestamp desc limit 1\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 434.20001220703125,
+        "y": 339.20001220703125,
+        "wires": [
+            [
+                "a5216eeb.2b3a2"
+            ]
+        ]
+    },
+    {
+        "id": "bfbdcdc3.cab688",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "Which Sensor?",
+        "func": "//함수의 출력을 3개로 만들어 둔 다음 센서에 따라 다르게 보낸다.\nvar str = msg.topic;\nvar length = msg.payload.length;\nif(length === 0){\n  msg.topic = \"Error\";\n  msg.payload = msg.payload + \"Query Error\";\n  return [ null, null, null, msg ]; //네번째로 출력\n}\nvar index = str.search(\"dht11\");\nif(index !== -1)\n{\n  msg.topic = \"dht11\";\n  return [ msg, null, null, null]; //첫번째로 출력\n}\nindex = msg.topic.search(\"mq\");\nif(index !== -1){\n  msg.topic = \"mq\";\n  return [ null, msg, null, null]; //두번째로 출력\n}\nmsg.topic = \"sr501\";\nreturn [ null, null, msg, null];    //세번째로 출력",
+        "outputs": "4",
+        "noerr": 0,
+        "x": 649.5,
+        "y": 172.1999969482422,
+        "wires": [
+            [
+                "f23ca137.615c28"
+            ],
+            [
+                "e4645381.f1728"
+            ],
+            [
+                "75c20772.ca6d48"
+            ],
+            [
+                "a5446ef5.87a758"
+            ]
+        ]
+    },
+    {
+        "id": "75c20772.ca6d48",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "SR501 Emergency",
+        "func": "var detect = msg.payload[0].detect;\nvar time = msg.payload[0].timestamp;\nif(detect === 1){ //침입\n  var newmsg = { payload: msg.payload.length };\n  newmsg.topic = \"Alarm : Invasion detected\";\n  newmsg.payload = \"Invasion detected at\" + time;\n  return [newmsg, msg];\n}\nelse{ //정상\n  msg.payload = \"Success2\";\n  return [null, msg];\n}\n",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 666.5,
+        "y": 554.6000366210937,
+        "wires": [
+            [
+                "86de3afa.114458"
+            ],
+            [
+                "20a99622.f59322"
+            ]
+        ]
+    },
+    {
+        "id": "e4645381.f1728",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "MQ Emergency",
+        "func": "var density = msg.payload[0].density;\nvar time = msg.payload[0].timestamp;\nif(density > 10.0){ //위험\n  var newmsg = { payload: msg.payload.length };\n  newmsg.topic = \"Alarm : Unnormal Gas Density\";\n  newmsg.payload = \"Unnormal Gas Density:\" + temperature + \" at\" + time +\" detected\";  \n  return [newmsg, msg];\n}\nelse{ //정상\n  msg.payload = density;\n  return [null, msg];\n}",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 659.2000122070312,
+        "y": 475.2000732421875,
+        "wires": [
+            [
+                "86de3afa.114458"
+            ],
+            [
+                "fbf9c78f.23311"
+            ]
+        ]
+    },
+    {
+        "id": "f23ca137.615c28",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "DHT11 Emergency",
+        "func": "var humidity = msg.payload[0].humidity;\nvar temperature = msg.payload[0].temperature;\nvar time = msg.payload[0].timestamp;\nif(temperature > 0.0){ //위험\n  var newmsg = { payload: msg.payload.length };\n  var hmsg = { payload: msg.payload.length };\n  newmsg.topic = \"Alarm : Unnormal temperature\";\n  newmsg.payload = \"Unnormal temperature:\" + temperature + \" at\" + time +\" detected\";\n  hmsg.payload = humidity;\n  msg.payload = temperature;\n  return [newmsg, hmsg, msg];\n}\nelse{ //정상\n  var hmsg = { payload: msg.payload.length };\n  hmsg.payload = humidity;\n  msg.payload = temperature;\n  return [null, hmsg, msg];\n}\n",
+        "outputs": "3",
+        "noerr": 0,
+        "x": 668.2000122070312,
+        "y": 394.2000732421875,
+        "wires": [
+            [
+                "86de3afa.114458"
+            ],
+            [
+                "6de5bbb4.c625b4"
+            ],
+            [
+                "61534959.ca5da"
+            ]
+        ]
+    },
+    {
+        "id": "a5446ef5.87a758",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "Error Message",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 876.5,
+        "y": 88.19999694824219,
+        "wires": []
+    },
+    {
+        "id": "20a99622.f59322",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "detect",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1065.2000122070312,
+        "y": 559.2000122070312,
+        "wires": []
+    },
+    {
+        "id": "2eedaa13.3ef2a6",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1073.2000122070312,
+        "y": 81.19999694824219,
+        "wires": []
+    },
+    {
+        "id": "c067c004.c4a3a8",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1073.2000122070312,
+        "y": 124.19999694824219,
+        "wires": []
+    },
+    {
+        "id": "b6fcb15c.bb7328",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 102.199951171875,
+        "y": 405.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "fbf9c78f.23311",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "gas",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1062.2000122070312,
+        "y": 479.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "6de5bbb4.c625b4",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "humidity",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1068.2000122070312,
+        "y": 356.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "61534959.ca5da",
+        "type": "debug",
+        "z": "e33e4bb4.297408",
+        "name": "temperature",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1078.2000122070312,
+        "y": 396.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "86de3afa.114458",
+        "type": "e-mail",
+        "z": "e33e4bb4.297408",
+        "server": "smtp.gmail.com",
+        "port": "587",
+        "name": "spypiggy@empal.com",
+        "dname": "Alarm E-Mail",
+        "x": 1078.5,
+        "y": 280.5999755859375,
+        "wires": []
+    },
+    {
+        "id": "fafdb597.3bcae",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "이메일 송신",
+        "info": "gmail 포트\n465번 포트(SSL 필요)\n587번 포트(TLS 필요)\n\n",
+        "x": 1077.5,
+        "y": 240.5999755859375,
+        "wires": []
+    },
+    {
+        "id": "773c68f2.bf30a8",
+        "type": "exec",
+        "z": "e33e4bb4.297408",
+        "command": "ps -ef|grep python",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Python Check",
+        "x": 169.5,
+        "y": 119.54998779296875,
+        "wires": [
+            [],
+            [
+                "56e02c70.c4cde4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "a46e2720.464938",
+        "type": "inject",
+        "z": "e33e4bb4.297408",
+        "name": "Trigger",
+        "topic": "",
+        "payload": "Start",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 79.5,
+        "y": 60.149993896484375,
+        "wires": [
+            [
+                "773c68f2.bf30a8"
+            ]
+        ]
+    },
+    {
+        "id": "56e02c70.c4cde4",
+        "type": "function",
+        "z": "e33e4bb4.297408",
+        "name": "Python Check & SR501 SQL",
+        "func": "//파이썬 프로세스를 못찾으면 실행시킨다.\nvar str = msg.payload;\nvar index = str.search(\"main_control.py\");\nmsg.topic = \"select timestamp, detect from sr501 order by timestamp desc limit 1\";\nif(index !== -1)\n{\n  return [msg, null]; //첫번째로 출력\n}\nreturn [ msg, msg];  //첫번째,두번째 출력",
+        "outputs": "2",
+        "noerr": 0,
+        "x": 327,
+        "y": 55,
+        "wires": [
+            [
+                "a5216eeb.2b3a2",
+                "41099d01.70f9f4"
+            ],
+            [
+                "826b8ac5.df03f8"
+            ]
+        ]
+    },
+    {
+        "id": "826b8ac5.df03f8",
+        "type": "exec",
+        "z": "e33e4bb4.297408",
+        "command": "python /usr/local/src/monitor/main_control.py &",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Python Exec",
+        "x": 98,
+        "y": 307,
+        "wires": [
+            [],
+            [
+                "b6fcb15c.bb7328"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4bb59f40.65de2",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "시작",
+        "info": "여기에서 시작한다. 주기적(5초)으로 반복",
+        "x": 56,
+        "y": 21,
+        "wires": []
+    },
+    {
+        "id": "da9f1979.84a6a8",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "메인 파이썬 실행",
+        "info": "파이썬 프로그램을 시작함",
+        "x": 105,
+        "y": 261,
+        "wires": []
+    },
+    {
+        "id": "1e39e45b.c16e3c",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "파이썬 실행여부 확인",
+        "info": "파이썬 프로그램을 체크",
+        "x": 307,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "83610649.cc7fb8",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "SR501 쿼리",
+        "info": "파이썬 프로그램을 체크",
+        "x": 525,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "4ef7eea5.62f14",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "1초 후 MQ 쿼리",
+        "info": "",
+        "x": 442,
+        "y": 162,
+        "wires": []
+    },
+    {
+        "id": "3f73c631.01358a",
+        "type": "comment",
+        "z": "e33e4bb4.297408",
+        "name": "1초 후 DHT11 쿼리",
+        "info": "",
+        "x": 449,
+        "y": 293,
+        "wires": []
+    },
+    {
+        "id": "29732747.d3b5b8",
+        "type": "sqlitedb",
+        "z": "",
+        "db": "/home/pi/PI_Monitoring.db"
+    }
+]
