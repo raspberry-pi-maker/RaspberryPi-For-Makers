@@ -1,0 +1,9 @@
+set terminal wxt size 1500, 500
+set ylabel "Voltage"
+set xlabel "Time"
+
+plot \
+"fsr402-2.dat" using 1:2 lc rgb '#ff0000' lt  1 lw 1  t "Vout", \
+"fsr402-2.dat" using 1:4 lc rgb '#0000ff' lt  1 lw 1  t "Registor"
+
+pause -1 "Hit return to continue"

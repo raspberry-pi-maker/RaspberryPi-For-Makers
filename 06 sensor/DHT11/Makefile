@@ -1,0 +1,29 @@
+CC=gcc
+CPP=g++
+INC1 = 
+INC2 = 
+INCDIRS = -I${INC1} -I${INC2}
+LIBDIR1 = 
+LIBDIR2 = 
+#CFLAGS=-g -Wall ${INCDIRS}	
+CFLAGS=-g  ${INCDIRS}	
+#LDFLAGS = -L${LIBDIR1} -L${LIBDIR2} -lwiringPi -lm -lrt
+LDFLAGS = -lwiringPi -lm -lrt
+LDFLAGS2 = -lpigpio -lm -lrt -lpthread
+
+SOURCES=dht11.cpp
+OBJECTS=$(SOURCES:.c=.o)
+
+SOURCES2=dht11_async.c
+OBJECTS2=$(SOURCES2:.c=.o)
+
+EXECUTABLE=dht11
+EXECUTABLE2=dht11_async
+
+all:$(EXECUTABLE) $(EXECUTABLE1) $(EXECUTABLE2)
+$(EXECUTABLE):$(OBJECTS) 
+	$(CPP) $(CFLAGS) $(OBJECTS) $(LDFLAGS) -o $@   
+$(EXECUTABLE2):$(OBJECTS2) 
+	$(CC) $(CFLAGS) $(OBJECTS2) $(LDFLAGS2) -o $@   
+clean:
+	rm -f $(OBJECTS) $(OBJECTS2) $(EXECUTABLE) $(EXECUTABLE2)

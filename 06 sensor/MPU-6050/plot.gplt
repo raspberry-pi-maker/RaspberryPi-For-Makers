@@ -1,0 +1,20 @@
+set terminal wxt size 1500, 500
+#plot \
+#"6050_1.dat" using 1:5 lc rgb '#00ff00' lt -1 lw 4  t "X Rotate", \
+#"6050_1.dat" using 1:6 lc rgb '#0000ff' lt -1 lw 4  t "Y Rotate", \
+#"6050_1.dat" using 1:8 lc rgb '#000000' lt -1 lw 4  t "Complemnt X" , \
+#"6050_1.dat" using 1:9 lc rgb '#ff0000' lt -1 lw 4  t "Complement Y"
+
+plot \
+"6050_1.dat" using 1:5 lc rgb '#ff0000' lt  -1 lw 2  t "X Rotate", \
+"6050_1.dat" using 1:8 lc rgb '#0000ff' lt  -1 lw 2  t "Complemnt X", \
+"6050_1.dat" using 1:10 lc rgb '#008000' lt  -1 lw 2  t "Kalman X" 
+ 
+#plot \
+#"6050_1.dat" using 1:5 lc rgb '#ff0000' lt  4 lw 1  t "X Rotate", \
+#"6050_1.dat" using 1:8 lc rgb '#0000ff' lt  4 lw 1  t "Complemnt X", \
+#"6050_1.dat" using 1:10 lc rgb '#008000' lt  4 lw 1  t "Kalman X" 
+
+pause -1 "Hit return to continue"
+
+
