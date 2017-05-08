@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+#-*- coding: utf-8 -*-
+#If this code works, it was written by Seunghyun Lee(www.bluebaynetworks.co.kr).
+#If not, I don't know who wrote it
 import time, sys
 from socket import * 
 
