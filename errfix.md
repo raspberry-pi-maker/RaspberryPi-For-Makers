@@ -10,8 +10,8 @@
 3장
 ----------------------------------
 130페이지 
-i2cdetect 0 ->i2cdetect -y 0
-i2cdetect 1 ->i2cdetect -y 1
+i2cdetect 0 ->i2cdetect -y 0__
+i2cdetect 1 ->i2cdetect -y 1__
 
 4장
 ----------------------------------
