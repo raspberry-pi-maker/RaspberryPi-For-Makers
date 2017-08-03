@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <math.h>
 #include <wiringPi.h>
+#include <wiringPiI2C.h>
 
 #define PCA9685_MODE1 0x0
 #define PCA9685_PRESCALE  0xFE
