@@ -9,4 +9,5 @@
 잘못된 부분을 발견하시거나 질문이 있으신 분들은 raspberry.pi.maker@gmail.com로 메일 보내주시기 바랍니다.
 책 내용 중 업데이트 된 부분은 [errfix.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/errfix.md) 를 통해 확인할 수 있습니다.
 
+크기가 작아 잘 보이지 않는 그림들이 일부 있습니다. 본문의 잘 보이지 않는 그림들을 따로 올려드립니다. [image.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/image.md) 파일을 참조하십시오,
 
