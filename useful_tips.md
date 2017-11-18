@@ -50,5 +50,5 @@ dhcpd.conf 파일 수정 내용은 본문을 참조한다.<br />
 
 #### 마무리
 마운트를 해제하고 SD카드를 제거 한 다음 파이에 넣어서 작동시키면 된다.
-* #unmount /dev/sdb1 <br />
-* #unmount /dev/sdb2 <br /><br />
+* #umount /dev/sdb1 <br />
+* #umount /dev/sdb2 <br /><br />
