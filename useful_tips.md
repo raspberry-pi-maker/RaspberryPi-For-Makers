@@ -33,7 +33,7 @@ WiFi 셋업은 공유기 정보와 접속 암호를 알고 있다는 가정하�
 만약 ssid가 _YourSSID_ , 공유기 암호가 _passwd_ 라고 가정하자. <br />
 
 wpa_supplicant 파일을 수정한다.
-* #vi /mnt/sdc2/etc/wpa_supplicant/wpa_supplicant.conf
+* #vi /mnt/sdb2/etc/wpa_supplicant/wpa_supplicant.conf
 
 다음과 같이 공유기 정보를 추가한다.<br />
 _ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -44,7 +44,7 @@ network={<br />
 }_
 
 그리고 다음은 dhcpcd.conf 파일을 수정한다. 
-* #vi /mnt/sdc2/etc/dhcpcd.conf
+* #vi /mnt/sdb2/etc/dhcpcd.conf
 
 dhcpd.conf 파일 수정 내용은 본문을 참조한다.<br />
 
