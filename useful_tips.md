@@ -31,8 +31,7 @@ SSH 서비스 활성화는 /mnt/sdb1 (BOOT 파티션)에 ssh 이름의 빈 파�
 * #touch /mnt/sdb1/ssh<br /><br />
 
 #### WiFi 셋업
-WiFi 셋업은 공유기 정보와 접속 암호를 알고 있다는 가정하에 진행한다.
-만약 ssid가 _YourSSID_ , 공유기 암호가 _passwd_ 라고 가정하자. <br />
+WiFi 셋업은 공유기 정보와 접속 암호를 알고 있다는 가정하에 진행한다. ssid가 _YourSSID_ , 공유기 암호가 _passwd_ 라고 가정하자. <br />
 
 wpa_supplicant 파일을 수정한다.
 * #vi /mnt/sdb2/etc/wpa_supplicant/wpa_supplicant.conf
