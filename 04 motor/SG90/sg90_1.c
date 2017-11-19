@@ -1,3 +1,6 @@
+/*
+반드시 root 권한으로 실행할 것 ->$sudo ./sg90_1
+*/
 #include <time.h>
 #include <sys/time.h>
 #include <stdio.h>
@@ -7,20 +10,7 @@
 
 const int gpioPin = 18; 
 
-/******
-dp value 50  -> duty 50  / 1000 -> 5%
-dp value 100 -> duty 100 / 1000 -> 10%
-******/ 
-void my_servo(int angle)
-{
-	float dp;
-	if(angle < 0 || angle > 180){
-		printf( "invalid angle:%d", angle);
-		return;
-	}
-	dp = 30.0  + angle * 90.0 / 180.0;
-	gpioPWM(gpioPin, (unsigned int)dp);
-}
+
 void servo(int angle)
 {
 	float dp;
@@ -28,7 +18,8 @@ void servo(int angle)
 		printf( "invalid angle:%d", angle);
 		return;
 	}
-	dp = 5.0  + angle * 5.0 / 180.0;
+	dp = 3 + (angle * 9.0 / 180.0);
+	dp *= 10;	//PWM 범위가 0 ~ 1000이라서 10배로 변경
 	gpioPWM(gpioPin, dp);
 }
 int main(void) 
