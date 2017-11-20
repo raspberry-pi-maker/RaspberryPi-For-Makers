@@ -109,6 +109,41 @@ except KeyboardInterrupt:
  
 수정 후
 ```python
+# PWM 듀티 설정
+def set_PWM_Duty(channel, rate):
+	on = 0
+	off = rate * 4095.0 / 100.0 
+	set_PWM(channel, on, int(off))
+
+# PWM Length 설정
+def set_PWM_Length(channel, rate):
+  pulse = 1000.0 / Hz #perhaps 20ms
+  off = rate * 4095/pulse
+  on = 0
+  set_PWM(channel, on, int(off))
+  print "PWM 0 ~ 4095:",  off, " duty:", off * 100 / 4095
+
+# angle 설정 (SG90의 경우 대략... 0도=0.6ms ... 180도=2.5ms)
+def set_angle(channel, rate):
+  val = 0.6 + rate * 1.9 / 180.0
+  print "PWM High time:",  val
+  set_PWM_Length(channel, val)
+
+......(중략)......
+
+try:
+  while True:
+    val = input("angle: 0 ~ 180,  Ctrl+C to quit:")
+    if(val < 0 or val > 180):
+      print "Invalid range"
+    else:  
+      set_angle(0, val)
+    time.sleep(1)
+
+except KeyboardInterrupt:   
+  print "Servo driver Application End" 
+  set_PWM(0, 0, 0)
+  exit()
 
 ```
 

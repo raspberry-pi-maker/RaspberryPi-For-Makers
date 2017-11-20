@@ -14,7 +14,7 @@
 
 int dID = 0x40;	// This is the default address value of pca9685 
 int fd = 0;	// i2c device handle
-
+int Hz = 50;
 void my_ctrl_c_handler(int sig){ // can be called asynchronously
 	int x;
 	printf ("Servo driver Application End\n"); 
@@ -78,18 +78,30 @@ void set_PWM(int channel, short on, short off)
 
 }
 
-void set_PWM_Duty(int channel, double rate)
+
+// PWM Length 설정
+void set_PWM_Length(int channel, double rate)
 {
-	int on, off;
-	on = 0;
-	off = (int)(rate * 4095.0 / 100.0 );
-	set_PWM(channel, on, off);
+  float pulse, off;
+  int on;  
+  pulse = 1000.0 / Hz; //perhaps 20ms
+  off = rate * 4095 / pulse;
+  on = 0;
+  set_PWM(channel, on, (int)off);
+}
+
+// angle 설정 (SG90의 경우 대략... 0도=0.6ms ... 180도=2.5ms)
+void set_angle(int channel, double rate)
+{
+  double val;	
+  val = 0.6 + rate * 1.9 / 180.0;
+  set_PWM_Length(channel, val);
 }
 
 int main()
 {
 	char buf[128];
-	double duty;
+	double angle;
 
 	signal(SIGINT, my_ctrl_c_handler);	//Ctrl + C Handler
 	if((fd=wiringPiI2CSetup(dID))<0){
@@ -98,15 +110,15 @@ int main()
 	}
 
 	write_byte_2c(PCA9685_MODE1, 0);
-	set_PWMFreq(50); //50Hz
+	set_PWMFreq(Hz); //50Hz
 	set_PWM(0, 0, 2048); 	//0 channel duty 50%
 
 	while(1){
-		printf("Duty: 0.0 ~ 100.0,  -1 to quit:");
+		printf("angle: 0 ~ 180,  Ctrl+C to quit:");
 		gets(buf);
-		duty = atof(buf);	//must include stdlib.h or invalid return maybe occur.
-		if(-1. == duty) break;
-		set_PWM_Duty(0, duty);
+		angle = atof(buf);	//must include stdlib.h or invalid return maybe occur.
+		if(-1. == angle) break;
+		set_angle(0, angle);
 	}
 	return 0;
 }

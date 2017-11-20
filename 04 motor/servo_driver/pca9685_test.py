@@ -70,6 +70,20 @@ def set_PWM_Duty(channel, rate):
 	off = rate * 4095.0 / 100.0 
 	set_PWM(channel, on, int(off))
 
+# PWM Length 설정
+def set_PWM_Length(channel, rate):
+  pulse = 1000.0 / Hz #perhaps 20ms
+  off = rate * 4095/pulse
+  on = 0
+  set_PWM(channel, on, int(off))
+  print "PWM 0 ~ 4095:",  off, " duty:", off * 100 / 4095
+
+# angle 설정 (SG90의 경우 대략... 0도=0.6ms ... 180도=2.5ms)
+def set_angle(channel, rate):
+  val = 0.6 + rate * 1.9 / 180.0
+  print "PWM High time:",  val
+  set_PWM_Length(channel, val)
+
 #여기에서 부터 프로그램 시작
 # I2C 통신을 위한 smbus 초기화. Revision 2 파이에서는 파라미터 1을 사용한다.
 bus = smbus.SMBus(1)
@@ -77,27 +91,29 @@ bus = smbus.SMBus(1)
 address = 0x40
 
 # Now reset pca9685 
+# JDX 서보는 0.5ms(2.5duty) ~ 2.5ms(12.5duty) 사이에서 작동하는 것이 확인됨
+
+Hz = 50
 try:
-	# PCA9685를 초기화하고 주기를 50Hz로 설정한다. SG90 모터가 50Hz에서 작동하기 때문이다.
+	# PCA9685를 초기화하고 주기를 50Hz로 설정한다. 서보 모터가 50Hz에서 작동하기 때문이다.
 	bus.write_byte_data(address, PCA9685_MODE1, 0)
-	set_PWMFreq(50)	#50Hz
+	set_PWMFreq(Hz)	#50Hz
 	# 0번 채널을 듀티비 50으로 설정한다. PCA9685는 0 ~ 4095까지 듀티비 조절 가능하다.
-	set_PWM(0, 0, 2048)	#0 channel duty 50%
+	#set_PWM(0, 0, 2048)	#0 channel duty 50%
 except IOError:
 	print "Perhaps there's no i2c device, run i2cdetect -y 1 for device connection!" 
 	pass
 try:
-	while True:
-		val = input("Duty: 0.0 ~ 100.0,  Ctrl+C to quit:")
-		set_PWM_Duty(0, val)
-		time.sleep(1)
+  while True:
+    val = input("angle: 0 ~ 180,  Ctrl+C to quit:")
+    if(val < 0 or val > 180):
+      print "Invalid range"
+    else:  
+      set_angle(0, val)
+      #set_PWM_Length(1, val)
+    time.sleep(1)
 
 except KeyboardInterrupt:   
-	print "Servo driver Application End" 
-	set_PWM(0, 0, 0)
-	exit()
-
-
-
-
-
+  print "Servo driver Application End" 
+  set_PWM(0, 0, 0)
+  exit()

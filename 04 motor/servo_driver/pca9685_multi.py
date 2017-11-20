@@ -70,20 +70,35 @@ def set_PWM_Duty(channel, rate):
 	off = rate * 4095.0 / 100.0 
 	set_PWM(channel, on, int(off))
 
-# SG90 모터를 좌회전(PWM 듀티 5% 설정)
+# PWM Length 설정
+def set_PWM_Length(channel, rate):
+  pulse = 1000.0 / Hz #perhaps 20ms
+  off = rate * 4095/pulse
+  on = 0
+  set_PWM(channel, on, int(off))
+  print "PWM 0 ~ 4095:",  off, " duty:", off * 100 / 4095
+
+# angle 설정 (SG90의 경우 대략... 0도=0.6ms ... 180도=2.5ms)
+def set_angle(channel, rate):
+  val = 0.6 + rate * 1.9 / 180.0
+  print "PWM High time:",  val
+  set_PWM_Length(channel, val)
+  
+	
+# SG90 모터를 좌회전
 def Left(start, end):
 	for x in range(start, end):
-		set_PWM_Duty(x, 5.0)
+		set_angle(x, 0.0)
 		
-# SG90 모터를 중앙에 위치(PWM 듀티 7.5% 설정)
+# SG90 모터를 중앙에 위치
 def Middle(start, end):
 	for x in range(start, end):
-		set_PWM_Duty(x, 7.5)
+		set_angle(x, 90.0)
 
-# SG90 모터를 우회전(PWM 듀티 10% 설정)
+# SG90 모터를 우회전
 def Right(start, end):
 	for x in range(start, end):
-		set_PWM_Duty(x, 10.0)
+		set_angle(x, 180)
 
 #여기에서 부터 프로그램 시작
 # I2C 통신을 위한 smbus 초기화. Revision 2 파이에서는 파라미터 1을 사용한다.
