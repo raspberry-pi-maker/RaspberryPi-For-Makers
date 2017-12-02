@@ -80,7 +80,8 @@ except KeyboardInterrupt:
     pwm.stop()			
     GPIO.cleanup()
 ```
-
+<br/><br/>209페이지<br/>
+그림 4-17에서 GPIO24는 GPIO27의 표기 오류이다. 스테퍼 모터 예제에서는 GPIO27번을 사용했다.<br/>
 
 <br/><br/>220 ~ 222페이지<br/>
 201페이지 수정 내용을 반영해 소스코드의 서보모터 회전각 조절하는 부분을 수정한다.<br/>
