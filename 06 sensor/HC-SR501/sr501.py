@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 #-*- coding: utf-8 -*-
 #If this code works, it was written by Seunghyun Lee(www.bluebaynetworks.co.kr).
 #If not, I don't know who wrote it
@@ -12,7 +12,7 @@ GPIOOUT = 27
 
 #핀 넘버링을 BCM 방식을 사용한다.
 GPIO.setmode(GPIO.BCM)   
-print "Infra Red motion detection"   
+print "HC-SR501 motion detection start"
 #17번 핀을 입력용, 27번 핀을 출력용으로 설정한다.
 #출력용 핀은 LED 상태를 확인하기 위해 사용하는 핀으로 실제 동작과는 무관하다.
 GPIO.setup(GPIOIN, GPIO.IN)   
@@ -30,4 +30,4 @@ try:
 		time.sleep(0.1)  
 except KeyboardInterrupt:   
 	GPIO.cleanup()       
-GPIO.cleanup()           
+print "HC-SR501 motion detection end"
