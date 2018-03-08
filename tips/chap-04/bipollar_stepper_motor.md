@@ -76,7 +76,7 @@ DIR = 20   # Direction GPIO Pin
 STEP = 21  # Step GPIO Pin
 CW = 1     # Clockwise Rotation
 CCW = 0    # Counterclockwise Rotation
-SPR = 200   # Steps per Revolution (360 / 7.5)
+SPR = 200   # 한바퀴 회전에 필요한 스텝수 (360 / 1.8)
 MODE = (14, 15, 18)   # Microstep Resolution GPIO Pins
 resolution = 'Full'
 delay = 0.0
@@ -93,7 +93,7 @@ def set_step_mode(step_mode):
 
     if(step_mode == 'Full'):#1.8/step -->200 step / rotation
         SPR = 200
-    elif(step_mode == 'Half'):
+    elif(step_mode == 'Half'): #full step에 비해 두배의 스텝이 필요
         SPR = 200 * 2
     elif(step_mode == '1/4'):
         SPR = 200 * 4
@@ -130,11 +130,15 @@ def rotate(angle):
     
     print "angle:", angle, "  step count:", step_count, "  delay:", delay 
     for x in range(step_count):
-        GPIO.output(STEP, GPIO.HIGH)
-        sleep(delay)
-        GPIO.output(STEP, GPIO.LOW)
-        sleep(delay)
+        step()
     return    
+
+def step():
+    GPIO.output(STEP, GPIO.HIGH)
+    sleep(delay)
+    GPIO.output(STEP, GPIO.LOW)
+    sleep(delay)
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(DIR, GPIO.OUT)
@@ -183,7 +187,7 @@ Chopper Mode의 spreadCycle, stealthChop  두가지 모드에 대한 설명은 �
 
 ## 연결
 TMC2100의 경우 점퍼를 세팅하지 않고 초기 상태로 사용하면 stealthChop 모드의 16스텝이 된다. 이 모드에서 작업을 해보겠다. 참고로 제조사는 1/16 stealthChop 모드를 가장 추천한다.
-> TMC2100은 3.5V 로직 전압, 5V 로직 전압 2가지가 존재한다. 3.5V제품은 내부에 Voltage Regulator가 있다. 3.5V 제품을 사용해야 파이와 연결하기 쉽다. 참고로 5V 전용 제품은 로직 전압 핀 ViO 위치에 5V로 표기되어 있다. _
+> TMC2100은 3.5V 로직 전압, 5V 로직 전압 2가지가 존재한다. 3.5V제품은 내부에 Voltage Regulator가 있다. 3.5V 제품을 사용해야 파이와 연결하기 쉽다. 참고로 5V 전용 제품은 로직 전압 핀 ViO 위치에 5V로 표기되어 있다.
 
 파이와 TMC2100 그리고 NEMA 스테퍼 모터는 다음과 같이 연결한다.
 먼저 파이와 TMC2100는 다음과 같이 연결한다.<br/>
