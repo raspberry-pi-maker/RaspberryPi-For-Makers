@@ -38,11 +38,31 @@ Network에서 Setup WiFi 컴포넌트를 가져온 다음 On First Boot 아래�
 #### 설정값 저장 및 가져오기
 앞에서 설정한 내용을 저장 후 다음 작업에서 재사용하려면 우측 상단의 Export, Import 기능을 이용하면 된다.<br/><br/> 
 
+## 이미지 구성
+ SD카드 이미지는 두개의 파티션으로 이루어져 있다. 만약 Win32DiskImager 또는 Etcher를 사용해서 SD카드를 만들었다면 첫번째 BOOT 파티션은 FAT32이다. 그리고 두번째 파티션은 ext4 포맷이다. 이 두번째 파티션에 실제 라즈비안이 운영체제가 들어있다. ext4는 리눅스 시스템에서 사용하는 파일 시스템으로 PC에서는 지원하지 않기 때문에 보이지 않는다. 따라서 ext4 파일 시스템을 들여다 보려면 리눅스 시스템이 필요하다.  <br /><br />
 
+## PC에서 레드리스 이미지 만들기
+이미지가 만들어지면 PC에서는 두번째 파티션을 읽을 수 없기 때문에 포맷이 필요하다는 경고창이 나타날 수 있지만 무시하면 된다. 첫번째 파티션에서 다음과 같이 작업한다. <br /><br />
+#### SSH 활성화
+SSH 서비스 활성화는 BOOT 파티션에 ssh 이름의 빈 파일(사이즈 0)를 만들어 주면 된다.
+#### WiFi 셋업
+WiFi 셋업은 공유기 정보와 접속 암호를 알고 있다는 가정하에 진행한다. ssid가 _YourSSID_ , 공유기 암호가 _passwd_ 라고 가정하자. <br />
+BOOT 파티션에 wpa_supplicant.conf 파일을 만든 다음 다음과 같이 수정한다.
+
+다음과 같이 공유기 정보를 추가한다.<br />
+_ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev<br />
+update_config=1<br /><br />
+network={<br />
+    ssid="YourSSID"<br />
+    psk="passwd"<br />
+}
+>⚠️ **Tip**: boot 파티션에 저장한 wpa_supplicant.conf파일은 최초 부팅 시점에 이미지 두번째 파티션의 etc/wpa_supplicant 디렉토리로 복사되고 원본 이미지는 삭제된다.   
+![pcimage](../../tip_image/1-5.png)    
+
+ <br /><br />
 
 ## 리눅스에서 레드리스 이미지 만들기
- SD카드 이미지는 두개의 파티션으로 이루어져 있다. 만약 Win32DiskImager 또는 Etcher를 사용해서 SD카드를 만들었다면 첫번째 BOOT 파티션은 FAT32이다. 그리고 두번째 파티션은 ext4 포맷이다. 이 두번째 파티션에 실제 라즈비안이 운영체제가 들어있다. ext4는 리눅스 시스템에서 사용하는 파일 시스템으로 PC에서는 지원하지 않기 때문에 보이지 않는다. 따라서 ext4 파일 시스템을 들여다 보려면 리눅스 시스템이 필요하다. 만약 PC 사용자라면 가상 머신을 이용하면 된다. 오라클 VirtualBox, 델의 VMware player 등의 무료 프로그램을 사용해 리눅스 OS를 설치하거나 이미지를 구해서 작업을 진행한다. 또다른 파이를 이용하는 것도 좋은 방법이다. 이하 모든 작업은 root권한으로 작업한다.<br /><br />
-
+만약 PC 사용자라면 가상 머신을 이용하면 된다. 오라클 VirtualBox, 델의 VMware player 등의 무료 프로그램을 사용해 리눅스 OS를 설치하거나 이미지를 구해서 작업을 진행한다. 또다른 파이를 이용하는 것도 좋은 방법이다. 이하 모든 작업은 root권한으로 작업한다.<br /><br />
 #### MicroSD 카드 확인
 아래 그림과 같은 USB 아답터에 라즈비안 이미지가 들어있는 Micro SD 카드를 넣은 후 리눅스 시스템이 작동중인 PC USB포트에 삽입한다.  
 ![usbdisk](../../tip_image/1-3.png)  
@@ -76,19 +96,21 @@ wpa_supplicant 파일을 수정한다.
 * #vi /mnt/sdb2/etc/wpa_supplicant/wpa_supplicant.conf
 
 다음과 같이 공유기 정보를 추가한다.<br />
-_ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+_ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev<br/>
 update_config=1<br /><br />
 network={<br />
     ssid="YourSSID"<br />
     psk="passwd"<br />
-}_
+}
 
-그리고 다음은 dhcpcd.conf 파일을 수정한다. 
-* #vi /mnt/sdb2/etc/dhcpcd.conf
 
-dhcpd.conf 파일 수정 내용은 본문을 참조한다.<br />
-
-#### 마무리
+#### 마운트 해제
 마운트를 해제하고 SD카드를 제거 한 다음 파이에 넣어서 작동시키면 된다.
 * #umount /dev/sdb1 <br />
 * #umount /dev/sdb2 <br /><br />
+
+## 마무리 작업
+만약 정상으로 부팅이 된다면 angry ip scanner, nmap 등을 이용해 헤드리스 이미지로 부팅한 라즈베리파이의 IP를 찾을 수 있다.<br />
+![search](../../tip_image/1-6.png)<br />
+
+이제 여러분이 사용하는 ssh 툴을 이용해 접속 한다. 그리고 raspi-config 명령으로 필요한 세팅을 진행한다.
