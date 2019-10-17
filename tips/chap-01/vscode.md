@@ -1,4 +1,4 @@
-# VSCode Inside 설치
+# VSCode Insider 설치
 현재(2019년 10월) Arm CPU를 사용하는 Raspberry Pi, Jetson Nano, Odroid 등의 SBC를 이용한 원격 개발을 위한 VSCode 확장을 이용하려면 VSCode Insider를 설치해서 사용해야 한다. VSCode Insider는 VSCode와 거의 동일하지만 최신 기능을 먼저 소개하고 테스트할 수 있는 기회를 제공한다. VSCode에서도 Remote Development 확장을 제공하지만 Arm 계열 CPU를 아직 지원하지 않는다. 하지만 VSCode Insider에서 안정성이 검증되면 VSCode에고 적용될 것이기 때문에 항상 확장 설치시 제공되는 페이지를 참조한다. https://code.visualstudio.com/insiders/ 페이지에서 VSCode Insider를 다운로드 받아서 설치한다. Mac과 리눅스 버젼도 제공하기 때문에 자신이 사용하는 개발 환경에 맞게 다운로드하면 된다.
 
 # Extension 설치
@@ -80,7 +80,7 @@ Explorer버튼, Open Folder버튼을 차례로 누르면 다음 그림처럼 작
 그리고 브레이크 포인트를 지정한 부분에서 자동으로 멈춘다. 그림처럼 이 시점에서 변수 값을 마우스를 이용해 확인할 수 있으며 좌측 창을 이용해 각종 변수값을 단계별로 모니터링</br>
 ![ide6](../../tip_image/1-5-11.png)
 
-현재 시점에서 C/C++확장은 ARM CPU를 지원하지 않기 때문에 C/C++언어를 사용한다면 디버깅까지는 불가능하다. 하지만 조만간 이 부분도 곹 해결되지 않을까 기대한다.
+현재 시점에서 C/C++확장은 ARM CPU를 지원하지 않기 때문에 C/C++언어를 사용한다면 디버깅까지는 불가능하다. 하지만 조만간 이 부분도 곧 해결되지 않을까 기대한다.
 위에서 설명한 파이썬 원격 디버깅은 파이 뿐 아니라 X64 리눅스 서버, 각종 ARM CPU를 사용한 SBC에서도 사용이 가능하다. 여러분의 생산성 향상에 도움이 되길 바란다.
 
 
