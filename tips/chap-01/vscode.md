@@ -20,32 +20,9 @@ Visual Studio Code Remote Development Extension Pack
 ## SSH 접속을 위한 Key 생성
 VSCode Remote Development 확장을 이용해 원격 장비(라즈베리 파이)에 접속하려면 ssh key를 사용해야 한다.
 먼저 다음 과정을 거쳐 키를 생성한다. 키는 개인키(Private Key)와 공용 키(Public Key)가 만들어질 것이다.
-콘솔(도스 창)을 연 다음 다음 명령으로 키를 생성한다. 생성 과정의 질문에는 Enter로 넘어가도 무방하다.
+콘솔(도스 창)을 연 다음 다음 명령으로 키를 생성한다. 생성 과정의 질문에는 Enter로 넘어가도 무방하다.</br>
 
->PS C:\Users\spypiggy> ssh-keygen -t rsa -b 4096</br>
-Generating public/private rsa key pair.</br>
-Enter file in which to save the key (C:\Users\spypiggy/.ssh/id_rsa):</br>
-Created directory 'C:\Users\spypiggy/.ssh'.</br>
-Enter passphrase (empty for no passphrase):</br>
-Enter same passphrase again:</br>
-Your identification has been saved in C:\Users\spypiggy/.ssh/id_rsa.</br>
-Your public key has been saved in C:\Users\spypiggy/.ssh/id_rsa.pub.</br>
-The key fingerprint is:</br>
-SHA256:hO6lPKA0NW22CDFNBi4xXqTX/HMjKjvXWK43QnRoSLI spypiggy@spypiggy-PC</br>
-The key's randomart image is:</br>
-+---[RSA 4096]----+</br>
-|o =*o            |</br>
-|.=o=+. .         |</br>
-|.o*.+o* .        |</br>
-| E.+ X.+         |</br>
-|  o = ++So       |</br>
-| . o =.++ .      |</br>
-|  ....X          |</br>
-|   .o+ *         |</br>
-|   .o.+ .        |</br>
-+----[SHA256]-----+</br>
-
-</br>
+![keygen](../../tip_image/1-5-13.png)
 
 
 ## 원격 컴퓨터 키 복사
@@ -55,14 +32,8 @@ The key's randomart image is:</br>
 >PS C:\Users\spypiggy> scp "C:\Users\spypiggy/.ssh/id_rsa.pub" root@192.168.0.89:~/tmp.pub
 
 ## 원격 컴퓨터 키 작업
-라즈베리 파이에 ssh 접속후 다음 작업을 진행한다. 조금전 만든 키를 통한 접속을 허용하고 ssh 서비스를 재시작한다. 주의할 것은 같은 root 계정으로 작업해야 홈 경로(~)가 일치한다.
-
->root@raspberrypi:~# mkdir ~/.ssh</br>
-root@raspberrypi:~# chmod 700 ~/.ssh</br>
-root@raspberrypi:~# cat ~/tmp.pub >> ~/.ssh/authorized_keys</br>
-root@raspberrypi:~# chmod 600 ~/.ssh/authorized_keys</br>
-root@raspberrypi:~# rm -f ~/tmp.pub</br>
-root@raspberrypi:~# service ssh restart</br>
+라즈베리 파이에 ssh 접속후 다음 작업을 진행한다. 조금전 만든 키를 통한 접속을 허용하고 ssh 서비스를 재시작한다. 주의할 것은 같은 root 계정으로 작업해야 홈 경로(~)가 일치한다.</br>
+![command](../../tip_image/1-5-12.png)
 
 이제 PC에서 id/pw없이 개인 키를 이용한 접속이 가능하다.</br></br>
 
