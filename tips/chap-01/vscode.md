@@ -1,5 +1,8 @@
 # VSCode Insider 설치
-현재(2019년 10월) Arm CPU를 사용하는 Raspberry Pi, Jetson Nano, Odroid 등의 SBC를 이용한 원격 개발을 위한 VSCode 확장을 이용하려면 VSCode Insider를 설치해서 사용해야 한다. VSCode Insider는 VSCode와 거의 동일하지만 최신 기능을 먼저 소개하고 테스트할 수 있는 기회를 제공한다. VSCode에서도 Remote Development 확장을 제공하지만 Arm 계열 CPU를 아직 지원하지 않는다. 하지만 VSCode Insider에서 안정성이 검증되면 VSCode에고 적용될 것이기 때문에 항상 확장 설치시 제공되는 페이지를 참조한다. https://code.visualstudio.com/insiders/ 페이지에서 VSCode Insider를 다운로드 받아서 설치한다. Mac과 리눅스 버젼도 제공하기 때문에 자신이 사용하는 개발 환경에 맞게 다운로드하면 된다.
+현재(2019년 10월) Arm CPU를 사용하는 Raspberry Pi, Jetson Nano, Odroid 등의 SBC를 이용한 원격 개발을 위한 VSCode 확장을 이용하려면 VSCode Insider를 설치해서 사용해야 한다. VSCode Insider는 VSCode와 거의 동일하지만 최신 기능을 먼저 소개하고 테스트할 수 있는 기회를 제공한다. VSCode에서도 Remote Development 확장을 제공하지만 Arm 계열 CPU를 아직 지원하지 않는다. 하지만 VSCode Insider에서 안정성이 검증되면 VSCode에고 적용될 것이기 때문에 항상 확장 설치시 제공되는 페이지를 참조한다. https://code.visualstudio.com/insiders/ 페이지에서 VSCode Insider를 다운로드 받아서 설치한다. Mac과 리눅스 버젼도 제공하기 때문에 자신이 사용하는 개발 환경에 맞게 다운로드하면 된다.</br>
+원격지의 타겟머신에서 프로세스가 실행되기 때문에 사용자의 로컬 머신에는 어떠한 소스 코드, 개발 툴 등의 설치가 필요없다. 또한 운영체제의 차이에도 불구하고 Windows, Mac 등의 로컬 머신에서 Linux, Windows, Mac 등 다양한 OS 환경의 원격 머신에서 작동시킬 파이썬 프로그램의 디버깅이 가능하다.</br>
+![architecture](../../tip_image/1-5-14.png)
+
 
 # Extension 설치
 ## VSCode Remote Development Extension 설치
@@ -8,7 +11,6 @@ VSCode Insider(이하 VSCode)를 실행한 다음 Extensions 버튼을 누른다
 ![remote-development](../../tip_image/1-5-1.png)
 현재 시점에 우측 상단에 Preview 마크가 붙어 있는 것을 확인할 수 있다. 설명을 읽어보면 이 확장을 설치하면 Remote-SSH, Remote-Container, Remote-WSL 3개의 확장이 설치되는 것을 알 수 있다.
 
-Visual Studio Code Remote Development Extension Pack
 
 ## Python  Extension  설치
 다음은 Python 확장을 검색 후 설치한다.<br/>
@@ -75,7 +77,7 @@ Explorer버튼, Open Folder버튼을 차례로 누르면 다음 그림처럼 작
 이제 파이썬 소스코드에 마우스를 좌측 숫자 옆에 가져가면 브레이크포인트를 설정할 수 있다. 원하는 위치에 브레이크포인트를 만든다.</br>
 ![ide4](../../tip_image/1-5-9.png)
 
-그리고 디버거 버튼을 누른 후 디버거 시작 버튼을 누른다. 그러면 무엇을 디버깅할 것인지를 물어보면 Python File을 선택한다. 그러면 현재 창의 파이썬 파일을 자동으로 실행한다.  가능하다. </br>
+그리고 디버거 버튼을 누른 후 디버거 시작 버튼을 누른다. 그러면 무엇을 디버깅할 것인지를 물어보면 Python File을 선택한다. 그러면 현재 창의 파이썬 파일을 자동으로 실행한다.   </br>
 ![ide5](../../tip_image/1-5-10.png)
 그리고 브레이크 포인트를 지정한 부분에서 자동으로 멈춘다. 그림처럼 이 시점에서 변수 값을 마우스를 이용해 확인할 수 있으며 좌측 창을 이용해 각종 변수값을 단계별로 모니터링</br>
 ![ide6](../../tip_image/1-5-11.png)
