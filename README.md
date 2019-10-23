@@ -5,8 +5,14 @@
 
 ![book](./image/book.png)
 
+[교보문고](https://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=9788966264018)<br/>
+
+[yes24](http://www.yes24.com/Product/Goods/43860512?Acode=101)<br/>
+
+[알라딘](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=113475084)<br/>
+
 인사이트출판사의 "메이커를 위한 라즈베리파이"의 소스코드를 제공합니다.
-소스코드는 대부분 파이썬 2.7 기준으로 만들었으며 일부 코드는 wiringPi, pigpio 라이브러리를 이용해 C 언어로 만들었습니다. <br />
+소스코드는 대부분 파이썬 2.7 기준으로 만들었으며 일부 코드는 wiringPi, pigpio 라이브러리를 이용해 C 언어로 만들었습니다. <br/>
 
 
 잘못된 부분을 발견하시거나 질문이 있으신 분들은 raspberry.pi.maker@gmail.com로 메일 보내주시기 바랍니다.
