@@ -10,6 +10,7 @@
 다음 그림처럼 img 파일이 저장된 폴더를 우클릭 후 모든 사용자에게 모든 권한을 부여합니다.<br/><br/>
 ![공유 설정](../../tip_image/1-sdcard-1.png)
 
+<br/><br/>
 그리고 VMPlayer에서 설치한 우분투 리눅스를 실행한 다음, 상단 메뉴에서 Players->Manage->Edit virtual machine settings 메뉴를 이용해 다음과 같이 앞에서 공유한 PC 디렉토리를 공유합니다.<br/><br/>
 ![공유 설정](../../tip_image/1-sdcard-2.png)<br/><br/>
 
@@ -90,22 +91,26 @@ dr-xr-xr-x 1 root root       4192 May 22 17:45 ..
 -rwxrwxrwx 1 root root 15931539456 Jan 29 06:04 raspberry-rgb-matrix.img
 ```
 <br/><br/>
-새롭게 만든 이미지를 Etcher 프로그램을 사용해 다른 SD 카드에 옮긴 다음 부팅을 해본 결과 정상 작동하는 것을 확인했습니다.
+새롭게 만든 이미지를 Etcher 프로그램을 사용해 다른 SD 카드에 옮긴 다음 부팅을 해본 결과 정상 작동하는 것을 확인했습니다. 이렇게 축소한 이미지 파일로 만든 SD카드 이미지는 라즈비안 부팅 시점에 다시 가용한 파일 시스템을 모두 쓸 수 있게 자동으로 확장됩니다. 만약 구 버젼의 라즈베리파이 사용으로 인해 파일 시스템이 자동으로 확장되지 않는다면 raspi-config 툴을 이용해 수동으로 확장하면 됩니다. 파일 시스템의 확장 여부 확인은 라즈베리파이를 부팅 후 df 명령으로 확인하면 됩니다.
+
+아래에서 Mounted on의 값이 "/""인 /dev/root        15G  3.2G   11G  23% /" 라인을 주목하면 됩니다. Size 값이 15G로 현재 사용하는 SD 카드 이미지와 거의 동일하면 파일 시스템이 확장된 것입니다.
+
+``` bash
+pi@rpi-coral:~ $ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        15G  3.2G   11G  23% /
+devtmpfs        815M     0  815M   0% /dev
+tmpfs           944M     0  944M   0% /dev/shm
+tmpfs           944M  8.5M  936M   1% /run
+tmpfs           5.0M  4.0K  5.0M   1% /run/lock
+tmpfs           944M     0  944M   0% /sys/fs/cgroup
+/dev/mmcblk0p1  253M   53M  200M  21% /boot
+tmpfs           189M     0  189M   0% /run/user/1000
+```
+
+
 
 참고로 pishrink.sh를 이용한 이 방법은 NOOBS 이미지는 파티션이 라즈비안과 다르기 때문에 현재 지원하지 않습니다. 그리고 우분투는 16.10 이상의 버젼을 사용하기 바랍니다.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
