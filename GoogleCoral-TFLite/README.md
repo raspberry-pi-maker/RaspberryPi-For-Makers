@@ -72,7 +72,7 @@ sudo apt-get update
 ```
 
 </br></br> Edge TPU 런타임을 설치한다. Edge TPU 런타임은 std 버젼과 max 버젼 2개가 존재한다. max버젼은 CORAL AI 가속기의 프로세싱 유닛을 오버클로킹한다. 따라서 처리 속도가 조금 빨라지지만 대신 가속기의 온도가 올라간다. PC CPU 오버클로킹과 유사하다고 보면 된다. 만약 max 버젼을 사용하고 싶다면 libedgetpu1-std 대신 libedgetpu1-max를 설치한다.
-다음 그림은 두개의 차이를 보여주는 유튜브 동영상이다. 구글 홈페이지에서는 std 버젼의 사용을 권하고 있다. 하지만 max 버젼이 필요한 경우가 있다. 나중 예제에서 max 버젼이 필요한 경우를 설명하도록 하겠다.<br /><br />
+다음 그림은 두개의 차이를 보여주는 유튜브 동영상이다. 구글 홈페이지에서는 std 버젼의 사용을 권하고 있다. 하지만 일부 모델의 경우에는 max를 사용하지 않으면 제대로 작동하지 않는 경우가 있다. <br /><br />
 ![initial](./image/runtime.png)<br />
 < https://www.youtube.com/watch?v=qJMwNHQNOVU >
 ``` bash
