@@ -243,9 +243,7 @@ Requirement already satisfied: numpy in /usr/lib/python3/dist-packages (1.16.2)
 Requirement already satisfied: Pillow in /usr/lib/python3/dist-packages (5.4.1)
 ```
 
-필자의 경우에는 2개 모두 이미 설치되어 있기 때문에 별다른 사전 작업이 필요없다. 이제 예제를 실행하면 된다.
-
-먼저 간단하게 예제를 한번 돌려보고 코드를 분석해보자. 홈페이지의 앵무새가 아닌 인터넷에서 새롭게 구한  후투티 이미지를 한번 사용해보겠다.
+필자의 경우에는 2개 모두 이미 설치되어 있기 때문에 별다른 사전 작업이 필요없다. 이제 예제를 실행하면 된다. 먼저 간단하게 예제를 한번 돌려보고 코드를 분석해보자. 홈페이지의 앵무새가 아닌 인터넷에서 새롭게 구한  후투티 이미지를 한번 사용해보겠다.<br /><br />
 ![hututi](./image/hututi.jpg)<br />
 
 위 이미지를 tflite/python/examples/classification/images  디렉토리에 복사해넣는다.
