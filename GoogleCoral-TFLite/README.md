@@ -354,7 +354,7 @@ Upupa epops (Common Hoopoe): 0.85547
 6. 모델을 테스트하는데 만족하지 말고 이것(모델)을 이용해 어떤 유용한 물건을 만들지 고민한다.
 
 그리고 개인적으로 에지 AI 컴퓨팅 중에서 Pose Estimation에 관심이 많아서 많은 모델과 플랫폼을 테스트해오고 있는데 정확도가 뛰어난  ResNet 50 모델을 이용한 테스트에서 아주 좋은 성능이 나와서 소개한다.
-Coral AI 가속기를 이용한 Pose Estimation 예제를 저의 블로그 https://spyjetson.blogspot.com/2020/05/raspberry-pi-human-pose-estimation.html에 올려두었다. 영어블로그라 조금 불편할 수 있지만 대부분 코드와 그림으로 설명하고 있기 때문에 큰 어려움은 없을 것으로 생각한다. 관심있는 분들은 방문해보시길 바란다. 
+Coral AI 가속기를 이용한 Pose Estimation 예제를 저의 블로그 https://spyjetson.blogspot.com/2020/05/raspberry-pi-human-pose-estimation.html 에 올려두었다. 영어블로그라 조금 불편할 수 있지만 대부분 코드와 그림으로 설명하고 있기 때문에 큰 어려움은 없을 것으로 생각한다. 관심있는 분들은 방문해보시길 바란다. 
 
 
 
