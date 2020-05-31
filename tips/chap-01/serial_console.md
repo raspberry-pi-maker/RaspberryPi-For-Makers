@@ -72,7 +72,7 @@ max_framebuffers=2
 ![장치관리자](../../tip_image/1-serial-6.png)
 
 만약 다음과 같은 에러가 발생한다면 드라이버를 다시 설치한다.
-![장치관리자에러](../../tip_image/1-serial-7.png)
+![장치관리자에러](../../tip_image/1-serial-8.png)
 
 prolific사의 드라이버 제공 홈페이지(http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41)에서 다운로드 받아서 설치하면 된다.
 
@@ -93,6 +93,7 @@ USB-TTL과 파이, 노트북을 연결한다.
 
 ### Putty 접속
 Putty를 실행 후 접속 화면에서 Connection Type을 Serial로 변경한 다음, Serial Line 에는 앞에서 확인한 COM  포트, Speed에는 통신 속도를 입력한다. 통신 속도는 저속의 안정된 통신을 원하는 경우에는 9600, 일반적인 경우 115200을 사용한다. Open 버튼을 누르면 다음과 같이 접속된다. 만약 화면 출력이 보이지 않으면 엔터키를 눌러본다.<br/> 
+![장치관리자에러](../../tip_image/1-serial-7.png)
 
 ![장치관리자](../../tip_image/1-serial-10.png)
 
