@@ -71,7 +71,7 @@ max_framebuffers=2
 
 ![장치관리자](../../tip_image/1-serial-6.png)
 
-만약 다음과 같은 에러가 발생한다면 드라이버를 다시 설치한다.
+만약 다음과 같은 에러가 발생한다면 드라이버를 다시 설치한다.<br/>
 ![장치관리자에러](../../tip_image/1-serial-8.png)
 
 prolific사의 드라이버 제공 홈페이지(http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41)에서 다운로드 받아서 설치하면 된다.
