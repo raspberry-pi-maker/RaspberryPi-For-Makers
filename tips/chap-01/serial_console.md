@@ -89,7 +89,10 @@ Putty 다운로드 페이지 (https://www.chiark.greenend.org.uk/~sgtatham/putty
 ### 케이블 연결
 USB-TTL과 파이, 노트북을 연결한다.
 >⚠️ **Tip**: Rx,Tx, GND 3개만 연결한다. 앞에서 설명한 것처럼 Tx, Rx는 크로스 방식으로 연결하면 된다.
-그리고 파이를 부팅한다.
+그리고 파이를 부팅한다. 다음 그림은 나의 PC와 라즈베리파이을 USB-TTL을 이용해 연결한 사진이다.
+
+![연결](../../tip_image/1-serial-11.png)
+
 
 ### Putty 접속
 Putty를 실행 후 접속 화면에서 Connection Type을 Serial로 변경한 다음, Serial Line 에는 앞에서 확인한 COM  포트, Speed에는 통신 속도를 입력한다. 통신 속도는 저속의 안정된 통신을 원하는 경우에는 9600, 일반적인 경우 115200을 사용한다. Open 버튼을 누르면 다음과 같이 접속된다. 만약 화면 출력이 보이지 않으면 엔터키를 눌러본다.<br/> 
