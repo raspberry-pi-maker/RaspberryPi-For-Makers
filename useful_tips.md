@@ -19,3 +19,8 @@ SD카드 이미지 수정만으로 파이를 세팅하는 방법을 [headless_se
 ## 4장
 ### 쌍극 스테퍼모터(NEMA 모터) 제어
 책에서는 단극 스테퍼 모터만 다루었는데 3D 프린터를 비롯한 현장에서 많이 사용하는 NEMA 스테퍼 모터와 drv8825, tmc2100 등의 드라이버 사용법을 [bipollar_stepper_motor.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-04/bipollar_stepper_motor.md) 를 통해 확인할 수 있습니다.<br /><br />
+
+
+## 7장
+### OpenCV 소스코드 빌드
+OpenCV는 아주 활발하게 업데이트가 발생하는 오픈소스 패키지입니다. apt-get 명령어를 이용한 OpenCV  설치 대신 최신 소스코드를 직접 빌드해서 사용하고자 하는 분들은 [opencv.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-07/opencv.md)를 참조하시길 바랍니다.
