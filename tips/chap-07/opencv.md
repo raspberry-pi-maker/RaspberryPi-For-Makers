@@ -71,6 +71,8 @@ Model           : Raspberry Pi 4 Model B Rev 1.2
 ```
 <br /><br />
 
+
+
 ## ARM 최적화 라이브러리
 1. OpenCV HAL (Hardware Abstraction Layer)는 OpenCV와 저수준 아키텍쳐와의 인터페이스를 담당한다. -DENABLE_NEON=ON 옵션을 사용하면 ARMv7 and ARMv8 아키텍쳐에서 HAL을 구현한 NVIDIA Carotene을 포함시킨다. 따라서 우리는 cmake  명령에 -DENABLE_NEON=ON 옵션을 사용할 것이다.<br />
 2. 최근의 OpenCV는 ARM CPU에서 딥러닝 인퍼런스 가속엔진인 텐진([Tengine](https://github.com/OAID/Tengine))을 지원한다. 2020년 3월까지의 문서에는 이에 대한 언급이 없다.  2020년 7월 10일 현재까지 실험적인 시도이며 정식 지원하지 않는다. 텐진엔진을 추가하려면 -DWITH_TENGINE=ON 옵션이 필요하다.
@@ -87,6 +89,17 @@ Model           : Raspberry Pi 4 Model B Rev 1.2
 
 ![OAK-D](https://opencv.org/wp-content/uploads/2020/07/OAK-D-Single-Image-Spec-Sheet-1024x576.jpg) 그림에서는 확인이 어렵지만 이 제품은 3개의 카메라를 가지고 있으며 양끝 카메라 2개의 양안 시차를 이용해 프레임 속의 물체와의 거리를 실시간으로 계산한다.
 <br /><br />
+
+
+## JAVA 지원
+OpenCV 기본 빌드 옵션은 JAVA용 OpenCV 빌드를 제외하고 있다. 만약 Java용 opencv/build/bin/opencv-440.jar, opencv/build/lib/libopencv_java440.so 파일을 만들려면 다음 작업을 추가한다.
+
+``` bash
+sudo apt-get -y install default-jdk  #(open-jdk 설치)
+sudo apt-get -y install ant
+
+```
+그리고 뒤에서 설명할 cmake 옵션에 "-DBUILD_opencv_java=ON"을 추가한다.
 
 ## 빌드 환경 
 라즈베리파이는 X86(64) 계열 CPU에 비해 성능이 떨어지기 때문에 파이에서 큰 패키지를 빌드하면 몇시간이 걸릴 수 있다.
@@ -115,7 +128,6 @@ sudo apt-get -y install libeigen3-dev
 sudo apt-get -y install python3-dev python3-pip  python3-numpy
 # GStreamer package 
 sudo apt-get -y install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
-
 ```
 <br />
 그리고 만약 여러분이 사용하는 라즈베리 파이의 메모리가 1GB인 경우에는 swap 파일을 생성해 임시로 메모리를 늘릴 필요가 있다. 빌드 과정은 꽤 많은 메모리를 필요로 한다. 2,4,8GB의 메모리를 가진 라즈베리파이 4 사용자는 이 과정을 생략해도 된다.
@@ -128,7 +140,7 @@ sudo /etc/init.d/dphys-swapfile start
 <br /><br />
 
 ## 코드 다운로드
-소스코드를  github에서 다운로드 받는다. 2020년 7월 10일 현재 최신 버젼은 4.3이다.
+소스코드를  github에서 다운로드 받는다. 2020년 7월 10일 현재 최신 버젼은 4.4  pre 이다.
 ``` bash
 git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
