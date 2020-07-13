@@ -85,7 +85,7 @@ Model           : Raspberry Pi 4 Model B Rev 1.2
 <br /><br />
 >⚠️ **Tip**: OpenCV에서 OpenCV AI Kit with Depth (OAK-D)라는 H/W 제품을 내놓았다. OpenCV의 비젼 처리 기능을 최적화 할 수 있는 카메라 +AI 가속 기능을 가진 H/W이다. 이 하드웨어는 인텔의 OpenVino와 함께 작동하는 것으로 소개되어있다. 라즈베리파이에서 OpenVino의 설치가 가능하기 때문에 라즈베리파이와 함께 사용가능하다.<br />
 
-![OAK-D](https://opencv.org/wp-content/uploads/2020/07/OAK-D-Single-Image-Spec-Sheet-1024x576.jpg). 그림에서는 확인이 어렵지만 이 제품은 3개의 카메라를 가지고 있으며 양끝 카메라 2개의 양안 시차를 이용해 프레임 속의 물체와의 거리를 실시간으로 계산한다.
+![OAK-D](https://opencv.org/wp-content/uploads/2020/07/OAK-D-Single-Image-Spec-Sheet-1024x576.jpg) 그림에서는 확인이 어렵지만 이 제품은 3개의 카메라를 가지고 있으며 양끝 카메라 2개의 양안 시차를 이용해 프레임 속의 물체와의 거리를 실시간으로 계산한다.
 <br /><br />
 
 ## 빌드 환경 
