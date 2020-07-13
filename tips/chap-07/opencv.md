@@ -74,7 +74,18 @@ Model           : Raspberry Pi 4 Model B Rev 1.2
 ## ARM 최적화 라이브러리
 1. OpenCV HAL (Hardware Abstraction Layer)는 OpenCV와 저수준 아키텍쳐와의 인터페이스를 담당한다. -DENABLE_NEON=ON 옵션을 사용하면 ARMv7 and ARMv8 아키텍쳐에서 HAL을 구현한 NVIDIA Carotene을 포함시킨다. 따라서 우리는 cmake  명령에 -DENABLE_NEON=ON 옵션을 사용할 것이다.<br />
 2. 최근의 OpenCV는 ARM CPU에서 딥러닝 인퍼런스 가속엔진인 텐진([Tengine](https://github.com/OAID/Tengine))을 지원한다. 2020년 3월까지의 문서에는 이에 대한 언급이 없다.  2020년 7월 10일 현재까지 실험적인 시도이며 정식 지원하지 않는다. 텐진엔진을 추가하려면 -DWITH_TENGINE=ON 옵션이 필요하다.
+텐진엔진 지원은 OpenCV v3.4.10 그리고 v4.3.0 이후 버젼들에서 컴파일이 가능하다.
+텐진 엔진의 사용여부에 따른 성능 비교는 다음 표에서 가능하다.
+
+![Tengine based acceleration](https://raw.githubusercontent.com/wiki/opencv/opencv/images/tengine_speed.png)
+
 우리는 cmake  명령에 -DWITH_TENGINE=ON 옵션을 사용할 것이다.
+>⚠️ **Tip**: OpenCV 빌드에 텐진 엔진을 사용하는 옵션을 추가하지만 큰 기대는 하지 않는 것이 좋다. 위 표에서 VGG16 모델의 처리 속도가 약  45%가량 증가했지만 초당 처리 속도는 0.3개 정도 밖에 되지 않는다.  개인적인 생각으로는 라즈베리파이에서 AI 에지 컴퓨팅을 구현하려면 AI 가속기를 따로 사용하는 것을 권장한다. 구글의 USB 타입 Coral AI 가속기 또는 비젼 처리에 특화된 인텔 NCS(Neural Compute Stick) 2 등의 하드웨어 가속기를 함께 사용하는 것이 현실적이다. 라즈베리파이는 AI용으로 좋은 성능을 낼 수 있는 하드웨어가 절대 아니다. 라즈베리파이에서 구글 코랄 가속기와 함께 사용하는 방법은 [라즈베리파이와 머신러닝](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/tree/master/GoogleCoral-TFLite)에서 따로 설명했다.
+
+<br /><br />
+>⚠️ **Tip**: OpenCV에서 OpenCV AI Kit with Depth (OAK-D)라는 H/W 제품을 내놓았다. OpenCV의 비젼 처리 기능을 최적화 할 수 있는 카메라 +AI 가속 기능을 가진 H/W이다. 이 하드웨어는 인텔의 OpenVino와 함께 작동하는 것으로 소개되어있다. 라즈베리파이에서 OpenVino의 설치가 가능하기 때문에 라즈베리파이와 함께 사용가능하다.<br />
+
+![OAK-D](https://opencv.org/wp-content/uploads/2020/07/OAK-D-Single-Image-Spec-Sheet-1024x576.jpg). 그림에서는 확인이 어렵지만 이 제품은 3개의 카메라를 가지고 있으며 양끝 카메라 2개의 양안 시차를 이용해 프레임 속의 물체와의 거리를 실시간으로 계산한다.
 <br /><br />
 
 ## 빌드 환경 
