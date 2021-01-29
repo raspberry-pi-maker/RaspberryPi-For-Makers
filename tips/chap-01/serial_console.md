@@ -76,10 +76,12 @@ max_framebuffers=2
 
 ![장치관리자](../../tip_image/1-serial-6.png)
 
-만약 다음과 같은 에러가 발생한다면 앞에서 언급한 것처럼 구형 칩(PL2303HX RevA)를 사용한 제품으로 정상작동하지 않을 수 있다. <br/><br/>
+만약 PL2303시리즈 칩을 사용하는 USB-TTL에서 다음과 같은 에러가 발생한다면 앞에서 언급한 것처럼 구형 칩(PL2303HX RevA)를 사용한 제품으로 정상작동하지 않을 수 있다. <br/><br/>
 ![장치관리자에러](../../tip_image/1-serial-8.png)
 
-디바이스 드라이버는 prolific사의 드라이버 제공 홈페이지(http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41)에서 다운로드 받아서 설치하면 된다.
+만약 PL2303시리즈 칩을 사용하는 USB-TTL이라면 디바이스 드라이버는 prolific사의 드라이버 제공 홈페이지(http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41)에서 다운로드 받아서 설치하면 된다.
+
+만약 CH340칩을 사용하는 USB-TTL이라면 마이크로소프트의 (http://www.catalog.update.microsoft.com/Search.aspx?q=CH340)에서 cab 파일을 다운로드 받아서 설치한다. 먼저 cab 파일의 압축을 푼 다음 INF 파일을 클릭하면 디바이스 드리이버가 설치된다. 필자의 경우 위 AliExpress 제품 그림 중에좌측 3개 번들 제품을 구매했는데 2개가 PL2303HXA라서 사용하지 못하고 한개 제품이 CH340칩이라서 마이크로소프트 사이트에서 드라이버를 다운로드 받아서 설치 후 사용이 가능했다. 
 
 
 ### 시리얼 통신 소프트웨어 설치
