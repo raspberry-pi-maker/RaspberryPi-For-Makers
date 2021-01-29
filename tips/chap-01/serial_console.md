@@ -22,6 +22,11 @@ PC, 컴퓨터의 이 시리얼 포트는 초고속인터넷이 보급되기 전�
 위 제품은 AdaFruit사의 제품이며 https://www.adafruit.com/product/954에서 9.95$에 구매할 수 있다. Aliexpress에서 비슷한 제품을 저렴하게 구매할 수 있다. Aliexpress에서 "USB TO TTL"로 검색하면 여러 제품을 찾을 수 있다.<br /><br />
 ![시리얼 케이블2](../../tip_image/1-serial-4.png)
 <br/> <br/> 
+대부분의 USB-TTL은 Prolific사의 칩 및 디바이스 드라이버를 사용한다. 설치 드라이버에 첨부된 pdf 파일을 보면 다음 내용이 나온다. 즉 Windows 10 이상의 OS를 사용할 경우 최소한 PL-2303HX (Rev D) 이후의 칩을 사용한 제품을 이용해야 문제가 없다는 것이다. <br /><br />
+![USB-TTL 칩 지원](../../tip_image/1-serial-12.png)
+<br/> <br/>
+위 AliExpress에서 검색한 제품 중 좌측 제품은 PL-2303HX으로만 표기되어 있는데  아마도 (Rev A)을 사용하는 것으로 보인다. 따라서 제품 구매시 칩 종류를 확인해서 우측의 PL2303 TA칩을 사용한 제품을 구매하는 것이 좋다. 
+
 그리고 SD 카드 이미지를 수정할 수 있는 SD카드 리더가 있는 노트북 또는 외장형 리더기를 준비한다.<br/> <br/> 
 
 ## Raspberry Pi와 시리얼 케이블 연결
@@ -71,10 +76,10 @@ max_framebuffers=2
 
 ![장치관리자](../../tip_image/1-serial-6.png)
 
-만약 다음과 같은 에러가 발생한다면 드라이버를 다시 설치한다.<br/><br/>
+만약 다음과 같은 에러가 발생한다면 앞에서 언급한 것처럼 구형 칩(PL2303HX RevA)를 사용한 제품으로 정상작동하지 않을 수 있다. <br/><br/>
 ![장치관리자에러](../../tip_image/1-serial-8.png)
 
-prolific사의 드라이버 제공 홈페이지(http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41)에서 다운로드 받아서 설치하면 된다.
+디바이스 드라이버는 prolific사의 드라이버 제공 홈페이지(http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41)에서 다운로드 받아서 설치하면 된다.
 
 
 ### 시리얼 통신 소프트웨어 설치
