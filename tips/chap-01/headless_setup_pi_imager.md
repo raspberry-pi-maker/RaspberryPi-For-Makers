@@ -31,5 +31,5 @@
 
 
 여기까지 문제 없으면 WRITE 버튼이 활성화된다. 이제 WRITE버튼을 눌러 이미지를 만든다. 그리고 만든 이미지를 이용해 파이을 부팅한 다음 IP Scan 툴을 이용해 Pi 주소를 확인하고 ssh로 접속한다.
-라즈베리파이 재단에서 만든 동영상에 자세한 설명이 있다.
+라즈베리파이 재단에서 만든 동영상에 자세한 설명이 있다.<br/><br/>
 [![How to use Raspberry Pi Imager](../../tip_image/1-pi-imager-3.png)](https://youtu.be/J024soVgEeM) 
