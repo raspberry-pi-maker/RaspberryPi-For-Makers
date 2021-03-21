@@ -19,7 +19,7 @@
 여기에서 SSH를 활성화시킨다. 처음 접속이기 때문에 키 방식이 아닌 password authentification 방식을 사용하도록 한다. 
 
 #### WiFi 활성화
-만약 LAN을 이용할 것이면 여기까지만 진행해도 된다. 만약 WiFi를 이용할 예정이면 다음 항목인 COnfigure Wifi를 체크하고 SSID와 공유기 접속 암호를 넣는다.
+만약 LAN을 이용할 것이면 여기까지만 진행해도 된다. 만약 WiFi를 이용할 예정이면 다음 항목인 Configure Wifi를 체크하고 SSID와 공유기 접속 암호를 넣는다.
 
 
 #### Locale 설정
