@@ -15,7 +15,7 @@
 ![고급 옵션](../../tip_image/1-pi-imager-2.png)  
 
 
-#### SSSH 활성화
+#### SSH 활성화
 여기에서 SSH를 활성화시킨다. 처음 접속이기 때문에 키 방식이 아닌 password authentification 방식을 사용하도록 한다. 
 
 #### WiFi 활성화
@@ -31,3 +31,5 @@
 
 
 여기까지 문제 없으면 WRITE 버튼이 활성화된다. 이제 WRITE버튼을 눌러 이미지를 만든다. 그리고 만든 이미지를 이용해 파이을 부팅한 다음 IP Scan 툴을 이용해 Pi 주소를 확인하고 ssh로 접속한다.
+라즈베리파이 재단에서 만든 동영상에 자세한 설명이 있다.
+[![How to use Raspberry Pi Imager](../../tip_image/1-pi-imager-3.png)](https://youtu.be/J024soVgEeM) 
