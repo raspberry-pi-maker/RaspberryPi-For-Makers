@@ -1,7 +1,7 @@
 # 헤더리스 이미지 만들기
-라즈베리파이 재단의 Raspberry Pi Imager 1.6 버젼(2021.03.19일 공개)을 사용하면 쉽게 설정이 가능하다. Raspberry Pi Imager 1.6 버젼을 이용하는 방법은 [PiBakery 홈페이지](https://www.pibakery.org/)에서 확인할 수 있다. 가능하면 이제부터는 Raspberry Pi Imager 1.6을 사용하길 추천한다.<br/><br/>
+>⚠️라즈베리파이 재단의 Raspberry Pi Imager 1.6 버젼(2021.03.19일 공개)을 사용하면 쉽게 설정이 가능하다. Raspberry Pi Imager 1.6 버젼을 이용하는 방법은 [Raspberry Pi Imager를 이용한 헤더리스 이미지 만들기](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/headless_setup_pi_imager.md)에서 확인할 수 있다. 가능하면 이제부터는 Raspberry Pi Imager 1.6을 사용하길 추천한다.
 
-
+<br/><br/>
 아래 내용은 PiBakery 또는 Etcher 등의 툴을 이용할 경우 유용하게 사용할 수 있는 내용이다. 
 처음 라즈비안 이미지를 만든 다음 초기 세팅을 헤드리스로 진행하려면 몇가지 문제가 있다.<br />
 먼저 SSH 서비스가 2016년 11월부터는 다운로드 이미지에서 막혀있다.(하지만 뒤에서 설명할 PiBakery를 이용해 설치하는 이미지에는 SSH가 활성화 되어 있다.) 그리고 네트워크는 유선랜에서만 dhcp모드로 작동한다. 파이3부터는 WiFi가 지원되기 때문에 WiFi세팅만 가능하다면 랜케이블 연결없이 네트워크 접속이 가능하다.<br />
