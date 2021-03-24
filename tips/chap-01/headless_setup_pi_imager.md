@@ -1,5 +1,5 @@
 # Raspberry Pi Imager를 이용한 헤더리스 이미지 만들기
-라즈베리파이 재단에서는 라즈베리파이 OS이미지를 만들 수 있는 2020년 Raspberry Pi Imager를 공개했다. 이 프로그램은 SD카드 이미지를 만들때 많이 사용했던 Etcher 또는 WIn32DiskManager와 큰 차이가 없었다. 사실 Raspberry Pi Imager는  [PiBakery](https://www.pibakery.org/)를 이용해 만든 제품이다. 이 제품의 사용법은 [헤드리스 셋업PiBakery](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/headless_setup.md)에서 설명했다. 
+라즈베리파이 재단에서는 라즈베리파이 OS이미지를 만들 수 있는 Raspberry Pi Imager를 2020년 공개했다. 이 프로그램은 SD카드 이미지를 만들때 많이 사용했던 Etcher 또는 WIn32DiskManager와 큰 차이가 없었다. 사실 Raspberry Pi Imager는  [PiBakery](https://www.pibakery.org/)를 이용해 만든 제품이다. 이 제품의 사용법은 [헤드리스 셋업PiBakery](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/headless_setup.md)에서 설명했다. 
 그런데 2021년 3월에 발표된 1.6버젼은 헤드리스 셋업에 상당히 유용한 기능을 포함하고 있다. 더 이상 PiBakery를 사용할 필요가 없는 것 같다.
 우선 [Raspberry Pi OS 사이트](https://www.raspberrypi.org/software/)에서 Raspberry Pi Imager 프로그램을 다운로드 받는다.  <br/><br/>
 
