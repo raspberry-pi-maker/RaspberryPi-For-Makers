@@ -1,5 +1,13 @@
-# VSCode Insider 설치
-현재(2019년 10월) Arm CPU를 사용하는 Raspberry Pi, Jetson Nano, Odroid 등의 SBC를 이용한 원격 개발을 위한 VSCode 확장을 이용하려면 VSCode Insider를 설치해서 사용해야 한다. VSCode Insider는 VSCode와 거의 동일하지만 최신 기능을 먼저 소개하고 테스트할 수 있는 기회를 제공한다. VSCode에서도 Remote Development 확장을 제공하지만 Arm 계열 CPU를 아직 지원하지 않는다. 하지만 VSCode Insider에서 안정성이 검증되면 VSCode에고 적용될 것이기 때문에 항상 확장 설치시 제공되는 페이지를 참조한다. https://code.visualstudio.com/insiders/ 페이지에서 VSCode Insider를 다운로드 받아서 설치한다. Mac과 리눅스 버젼도 제공하기 때문에 자신이 사용하는 개발 환경에 맞게 다운로드하면 된다.</br>
+# VSCode 설치(2020년 이후 버젼 사용자)
+이 글에서 소개하는 원격 디버깅은 처음 소개 당시(2019년)에는 VCCode Insider에서만 가능했지만 지금은 일반 VSCode에서도 가능하다. 또한 처음 원격 ssh 접속을 VSCode에서 지원했을 당시엔 보안키를 이용한 ssh 접속만 지원했지만 지금은 id/password 방식도 지원한다. 라즈베리파이와 같은 SBC는 SD 카드를 저장공간으로 사용하기 때문에 쉽게 SD카드를 교체해서 사용한다. 이 경우 키 교환방식을 사용하면 이전 SD카드에서 사용했던 키를 사용할 수 없다. 이 때문에 번거롭게 키를 재생성해야 하는 불편함이 있었다.
+하지만 최근의 VSCode에서는 id/password 방식을 사용할 수 있기 때문에 이미지 SD 카드 변경시 훨씬 쉽게 사용할 수 있는 장점이 있다.
+최신 VSCode를 사용한다면 다음 글을 참조 바란다.[VSCode Remote Python Debugging without ssh keys](https://tipspiggy.blogspot.com/2020/08/vscode-remote-python-debugging-without.html) </br>
+
+위 글은 NVidia Jetson 시리즈에서 머신러닝을 사용하는 방법을 정리한 제 영문 블로그이다. 이 글은 NVidia Jetson의 VSCode에서 id/password를 이용해 원격 디버깅을 하는 방법을 설명하고있다. NVidia Jetson 역시 라즈베리파이와 마찬가지로 ARM CPU를 이용하고 있기 때문에 이 글의 내용은 라즈베리파이에서도 그대로 적용 가능하다.
+
+
+# VSCode Insider 설치(2019년)
+2019년 10월, Arm CPU를 사용하는 Raspberry Pi, Jetson Nano, Odroid 등의 SBC를 이용한 원격 개발을 위한 VSCode 확장을 이용하려면 VSCode Insider를 설치해서 사용해야 한다. VSCode Insider는 VSCode와 거의 동일하지만 최신 기능을 먼저 소개하고 테스트할 수 있는 기회를 제공한다. VSCode에서도 Remote Development 확장을 제공하지만 Arm 계열 CPU를 아직 지원하지 않는다. 하지만 VSCode Insider에서 안정성이 검증되면 VSCode에고 적용될 것이기 때문에 항상 확장 설치시 제공되는 페이지를 참조한다. https://code.visualstudio.com/insiders/ 페이지에서 VSCode Insider를 다운로드 받아서 설치한다. Mac과 리눅스 버젼도 제공하기 때문에 자신이 사용하는 개발 환경에 맞게 다운로드하면 된다.</br>
 원격지의 타겟머신에서 프로세스가 실행되기 때문에 사용자의 로컬 머신에는 어떠한 소스 코드, 개발 툴 등의 설치가 필요없다. 또한 운영체제의 차이에도 불구하고 Windows, Mac 등의 로컬 머신에서 Linux, Windows, Mac 등 다양한 OS 환경의 원격 머신에서 작동시킬 파이썬 프로그램의 디버깅이 가능하다.</br>
 ![architecture](../../tip_image/1-5-14.png)
 
