@@ -3,7 +3,7 @@
 하지만 최근의 VSCode에서는 id/password 방식을 사용할 수 있기 때문에 이미지 SD 카드 변경시 훨씬 쉽게 사용할 수 있는 장점이 있다.
 최신 VSCode를 사용한다면 다음 글을 참조 바란다.[VSCode Remote Python Debugging without ssh keys](https://tipspiggy.blogspot.com/2020/08/vscode-remote-python-debugging-without.html) </br>
 
-위 글은 NVidia Jetson 시리즈에서 머신러닝을 사용하는 방법을 정리한 제 영문 블로그이다. 이 글은 NVidia Jetson의 VSCode에서 id/password를 이용해 원격 디버깅을 하는 방법을 설명하고있다. NVidia Jetson 역시 라즈베리파이와 마찬가지로 ARM CPU를 이용하고 있기 때문에 이 글의 내용은 라즈베리파이에서도 그대로 적용 가능하다.
+위 글은 NVidia Jetson 시리즈에서 머신러닝을 사용하는 방법을 정리한 제 영문 블로그 글중에서 원격 디버깅에 관한 글이다. 이 글은 NVidia Jetson의 VSCode에서 id/password를 이용해 원격 디버깅을 하는 방법을 설명하고있다. NVidia Jetson 역시 라즈베리파이와 마찬가지로 ARM CPU를 이용하고 있기 때문에 이 글의 내용은 라즈베리파이에서도 그대로 적용 가능하다.
 
 
 # VSCode Insider 설치(2019년)
