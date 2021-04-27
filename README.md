@@ -30,5 +30,8 @@
 그럼에도 아쉬운 부분이 몇가지 있습니다.<br/><br/>
 가장 아쉬운 부분은 예제 파일들이 파이썬 2로 만들어져 있는데, 파이썬 3으로 업그레이드 못한 부분입니다. 여러분이 만약 처음 라즈베리파이를 접하신다면 파이썬 3을 사용하시길 권장합니다.<br/><br/>
 그리고 두번째 부분은 텐서플로를 설명한 챕터를 업그레이드 못한 부분입니다. 요즈음 개발자들이 가장 관심있는 분야는  인공지능, 머신 러닝과 같은 것일 겁니다. 제가 책을 쓸 당시에는 텐서플로가 공식적으로 ARM32 기반의 라즈베리파이를 지원하지 않았습니다. 하지만 이제 라즈베리파이에서 텐서플로 뿐 아니라 텐서플로의 경량화 버젼(Tensorflow Lite)을 공식적으로 사용할 수 있습니다. 그리고 구글 코랄과 같은 TPU를 사용하면 상당한 수준의  Edge AI를 구현할 수 있습니다. <br/><br/>
-라즈베리파이 4 + Tensorflow Lite + Google Coral AI 가속기를 이용해 에지 AI 컴퓨팅을 해볼 수 있는 내용을 [README.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/tree/master/GoogleCoral-TFLite) 올렸습니다.<br/><br/><br/>
+라즈베리파이 4 + Tensorflow Lite + Google Coral AI 가속기를 이용해 에지 AI 컴퓨팅을 해볼 수 있는 내용을 [라즈베리파이와 머신러닝](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/tree/master/GoogleCoral-TFLite) 올렸습니다.<br/><br/><br/>
 
+# 머신러닝
+요즘 AI를 라즈베리파이와 같은 Edge Device에서 구현하는 것에 관심있는 분들이 많이 계실 것입니다. 하지만 라즈베리파이 4B까지는 ARM의 말리 GPU를 사용하기 때문에 텐서플로와 같은 머신러닝 프레임워크를 사용하더라도 GPU 가속기능을 이용하기 힘듭니다. 구글에서 출시한 H/W 가속기인 코랄을 이용하면 사용 가능한 수준의 성능을 낼 수 있습니다. [라즈베리파이와 머신러닝](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/tree/master/GoogleCoral-TFLite)에서 라즈베리파이에서 AI 기능 구현을 위한 방법 및 구글 코랄 사용법을 살펴보았습니다.<br/><br/>
+그리고 개인적으로 요즈음 NVidia사의 Jetson 시리즈(Nano, Xavier NX, TX2)를 많이 사용하고 있습니다. Jetson Nano같은 경우에는 라즈베리파이와 비슷한 크기와 하드웨어 성능을 가지고 있습니다. 하지만 NVidia사의 GPU를 포함하고 있으며 제공하는 OS(우분투)에는 CUDA와 같은 세팅이 모두 되어있기 때문에 PyTorch, Tensorflow 등의 머신러닝 프레임워크를 사용할 때 라즈베리파이에 비해 뛰어난 성능을 발휘합니다. Jetson 시리즈를 사용하면서 정리한 내용을 구글 블로그에 올려두었으며 지속적으로 가끔씩 새로운 글을 새롭게 올리고 있습니다. 많은 분들이 볼 수 있게 영문으로 만든 블로그입니다. 제 영어 실력이 짧아서 번역기 도움을 자주 받으면서 작성했습니다. 평이한 내용이라 영어 실력이 뛰어나지 않아도 내용을 이해하는데 전혀 어려움이 없을 겁니다. NVidia Jetson 시리즈에 관심이 많으신 분들은 블로그 글에도 관심을 가져주시면 고맙겠습니다. 제 블로그 주소는 [NVIDIA Jetson](https://spyjetson.blogspot.com/)입니다.  <br/>
