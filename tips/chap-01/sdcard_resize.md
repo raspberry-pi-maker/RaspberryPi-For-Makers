@@ -40,7 +40,14 @@ dr-xr-xr-x 1 root root       4192 May 22 17:45 ..
 ```
 
 이제 모든 준비가 끝났습니다. 이미지 변경작업을 해보도록 하겠습니다.
-참고로 shrink.sh 파일은 Drew Bonasera씨가 만들었으며 https://github.com/Drewsif/PiShrink 에서 다운받을 수 있습니다.<br/><br/>
+참고로 shrink.sh 파일은 Drew Bonasera씨가 만들었으며 https://github.com/Drewsif/PiShrink 에서 다운받을 수 있습니다.<br/><br/><br/>
+
+
+
+# VMPlayer를 이용하지 않는 경우
+## 이미지 파일 복사 후 작업
+만약 VM을 이용하지 않고 독립된 우분투 PC가 있다면 작업은 더욱 간단합니다. 이미지 파일 및 뒤에서 설명할 스크립트 파일을 우분투 PC로 복사해서 작업하면 됩니다.
+<br/><br/><br/>
 
 
 
