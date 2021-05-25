@@ -94,7 +94,13 @@ dr-xr-xr-x 1 root root       4192 May 22 17:45 ..
 -rwxrwxrwx 1 root root  4480184832 May 22 18:42 raspberry-rgb-matri2x.img
 -rwxrwxrwx 1 root root 15931539456 Jan 29 06:04 raspberry-rgb-matrix.img
 ```
-<br/><br/>
+<br/>
+
+작업은 스크립트 파일을 실행하는 것만으로 끝입니다. root 권한이 필요하기 때문에 반드시 sudo 명령을 함께 사용합니다. 두번째 파라미터 raspberry-rgb-matri2x.img는 생략 가능합니다. 만약 생략하면 첫번째 이미지를 덮어씁니다. 따라서 이미지의 백업을 따로 저장하지 않았다면 두번째 파라미터를 함께 사용하는 것이 안전합니다.<br/><br/><br/>
+
+# 이미지 복구
+## SD카드 사이즈 복구
+
 새롭게 만든 이미지를 Etcher 프로그램을 사용해 다른 SD 카드에 옮긴 다음 부팅을 해본 결과 정상 작동하는 것을 확인했습니다. 이렇게 축소한 이미지 파일로 만든 SD카드 이미지는 라즈비안 부팅 시점에 다시 가용한 파일 시스템을 모두 쓸 수 있게 자동으로 확장됩니다. 만약 구 버젼의 라즈베리파이 사용으로 인해 파일 시스템이 자동으로 확장되지 않는다면 raspi-config 툴을 이용해 수동으로 확장하면 됩니다. 파일 시스템의 확장 여부 확인은 라즈베리파이를 부팅 후 df 명령으로 확인하면 됩니다.
 
 아래에서 Mounted on의 값이 "/""인 /dev/root        15G  3.2G   11G  23% /" 라인을 주목하면 됩니다. Size 값이 15G로 현재 사용하는 SD 카드 이미지와 거의 동일하면 파일 시스템이 확장된 것입니다.
@@ -113,8 +119,22 @@ tmpfs           189M     0  189M   0% /run/user/1000
 ```
 
 
-
 pishrink.sh를 이용한 이 방법은 NOOBS 이미지는 파티션이 라즈비안과 다르기 때문에 현재 지원하지 않습니다. 그리고 우분투는 16.10 이상의 버젼을 사용하기 바랍니다.
+<br/><br/>
+
+## DietPi SD카드 사이즈 복구
+만약 라즈비안이 아닌 다른 OS를 사용한다면 사이즈 복구 방법이 조금 달라질 수 있습니다. 대부분의 OS들이 디스크 복구 툴들을 함께 제공합니다. 처음 제공하는 이미지들은 다운로드의 편의성을 위해 최소 사이즈로 만들어집니다. 따라서 대부분 최초 부팅 시점에 가용 사이즈를 자동으로 확장합니다.
+필자가 자주 사용하는 OS는 DietPi입니다. DietPi는 Rasbian을 기본으로 합니다. Rasbian에서 불필요한 기능 및 패키지를 제거해 가볍고 최적의 성능을 낼 수 있게 만들어져 있습니다. 따라서 GUI가 필요없는 경우 저는 DietPi를 많이 사용합니다.
+
+DietPi에도 디스크 사이즈를 조절하는 데몬이 존재하지만 raspi-config 명령과 유사한 dietpi-config에는 디스크 사이즈 조절 메뉴가 없습니다. 하지만 다음 명령으로 조절이 가능합니다. 아래 명령으로 서비스를 실행 후 다시 비활성화 시킨 다음 df 명령으로 확인하면 가용 디스크가 늘어난 것을 확인할 수 있습니다.
+
+``` bash
+systemctl enable dietpi-fs_partition_resize.service
+systemctl start dietpi-fs_partition_resize.service
+systemctl stop dietpi-fs_partition_resize.service
+systemctl disable dietpi-fs_partition_resize.service
+```
+<br/><br/>
 
 위 내용은 https://retropie.org.uk/forum/topic/4843/how-to-shrink-a-retropie-image을 참조했습니다. 레트로파이 이미지의 사이즈를 조절하는 내용이지만 라즈비안, 다이어트파이 등 다른 종류의 이미지에도 유용하게 사용할 수 있습니다.
 
