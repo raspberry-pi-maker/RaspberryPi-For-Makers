@@ -1,6 +1,6 @@
 # SD카드 백업 이미지 사이즈 변경
 
-백업 이미지의 두번째 파티션이 리눅스 파일 시스템이기 때문에 리눅스 시스템이 필요합니다. 가장 쉬운 방법은  PC에 무료 버젼인 VMPlayer를 설치해서 우분투 등의 리눅스 시스템을 설치하거나 또하나의 라즈베리파이를 이용하는 것입니다. 이 글에서는 PC를 이용하도록 하겠습니다. VMWare의 VMPlayer 설치 및 우분투 설치는 구글링을 통해 많은 에제를 찾을 수 있기 때문에 생략하겠습니다. VMPlayer 대신 오라클의 VirtualBox를  비롯한 다른 가상화 소프트웨어를 사용해도 됩니다. 참고로 테스트에는 우분투 18.04LTS Desktop 버젼을 사용했습니다. 가급적 GUI 버젼을 사용하시기 바랍니다. 콘솔 모드에서는 VMWare Tools 설치가 까다롭습니다.<br/><br/>
+백업 이미지의 두번째 파티션이 리눅스 파일 시스템이기 때문에 이 파일 시스템을 변경하려면 리눅스 시스템이 필요합니다. 가장 쉬운 방법은  PC에 무료 버젼인 VMPlayer를 설치해서 우분투 등의 리눅스 시스템을 설치하거나 또하나의 라즈베리파이를 이용하는 것입니다. 이 글에서는 PC를 이용하도록 하겠습니다. VMWare의 VMPlayer 설치 및 우분투 설치는 구글링을 통해 많은 예제를 찾을 수 있기 때문에 생략하겠습니다. VMPlayer 대신 오라클의 VirtualBox를  비롯한 다른 가상화 소프트웨어를 사용해도 됩니다. 참고로 테스트에는 우분투 18.04LTS Desktop 버젼을 사용했습니다. 가급적 GUI 버젼을 사용하시기 바랍니다. 콘솔 모드에서는 VMWare Tools 설치가 까다롭습니다.<br/><br/>
 
 
 # VMPlayer 이용
@@ -40,7 +40,7 @@ dr-xr-xr-x 1 root root       4192 May 22 17:45 ..
 ```
 
 이제 모든 준비가 끝났습니다. 이미지 변경작업을 해보도록 하겠습니다.
-참고로 shrink.sh 파일은 Drew Bonasera씨가 만들었으며 https://github.com/Drewsif/PiShrink 에서 다운받을 수 있습니다.<br/><br/><br/>
+참고로 작업에 사용할 shrink.sh 파일은 Drew Bonasera씨가 만들었으며 https://github.com/Drewsif/PiShrink 에서 다운받을 수 있습니다.<br/><br/><br/>
 
 
 
@@ -65,7 +65,7 @@ spypiggy@ubuntu:/mnt/hgfs/vmshare$sudo chmod +x pishrink.sh
 spypiggy@ubuntu:/mnt/hgfs/vmshare$sudo ./pishrink.sh raspberry-rgb-matrix.img raspberry-rgb-matrix2.img
 ```
 <br/><br/>
-다음은 작업 과정을 보여줍니다. 15G 파일이 4.2G로 줄어든 내용을 보여줍니다.<br/><br/>
+다음은 작업 과정을 보여줍니다. 15G 파일이 4.2G로 줄어든 것을 알 수 있습니다.<br/><br/>
 ``` bash
 pishrink.sh v0.1.2
 pishrink.sh: Copying raspberry-rgb-matrix.img to raspberry-rgb-matri2x.img... ...
@@ -101,9 +101,7 @@ dr-xr-xr-x 1 root root       4192 May 22 17:45 ..
 -rwxrwxrwx 1 root root  4480184832 May 22 18:42 raspberry-rgb-matri2x.img
 -rwxrwxrwx 1 root root 15931539456 Jan 29 06:04 raspberry-rgb-matrix.img
 ```
-<br/>
-
-작업은 스크립트 파일을 실행하는 것만으로 끝입니다. root 권한이 필요하기 때문에 반드시 sudo 명령을 함께 사용합니다. 두번째 파라미터 raspberry-rgb-matri2x.img는 생략 가능합니다. 만약 생략하면 첫번째 이미지를 덮어씁니다. 따라서 이미지의 백업을 따로 저장하지 않았다면 두번째 파라미터를 함께 사용하는 것이 안전합니다.<br/><br/><br/>
+<br/><br/><br/>
 
 # 이미지 복구
 ## SD카드 사이즈 복구
