@@ -1,6 +1,11 @@
 # RaspberryPi-For-Makers
 
 ## 1장
+
+### 라즈베리파이 OS 64비트 
+2022년 2월 드디어 64비트 버젼의 라즈베리파이 OS의 적식버젼이 공개되었습니다. 베타버젼이 나온지 1년 이상의 시간이 흘렀습니다. 아마도 라즈베리파이 재단에서도 64비트 버젼 포팅이 쉽지 않았던 것으로 보입니다. 라즈베리파이 64비트 버젼에 대해서 알아보도록 하겠습니다.  [raspberry_pi_os_64.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/raspberry_pi_os_64.md) <br /><br />
+
+
 ### 헤더리스 이미지 만들기
 SD카드 이미지 수정만으로 파이를 세팅하는 방법을 [headless_setup.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/headless_setup.md) 를 통해 확인할 수 있습니다.<br /><br />
 
