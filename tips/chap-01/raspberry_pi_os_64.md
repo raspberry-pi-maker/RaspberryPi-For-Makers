@@ -20,7 +20,7 @@
 
 ![rpi 종류](../../tip_image/1-rpios64-3.png)
 <br>
-<Raspberry Pi  Imager의 64비트 OS 옵션>
+<Raspberry Pi 모델별 CPU>
 
 그럼 라즈베리파이 OS 64비트의 특징에 대해서 살펴보겠습니다.<br><br>
 
