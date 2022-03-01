@@ -55,7 +55,7 @@ sudo apt install matchbox-keyboard -y
 이제 터미널 또는 어플리케이션을 열어서 입력작업을 할 수 있다.<br /><br />
 ![키보드 화면](../../tip_image/1-hdmi-24.png)<br /><br />
 
-그런데 키보드 레이아웃이 적절치 않다. 숫자키와 특수키가 전혀 보이지 않는다. 가장 무난한 텐키리스 모드로 미리 변환해둔다.
+그런데 키보드 레이아웃이 적절치 않다. 숫자키와 특수키가 전혀 보이지 않는다. 키보드 레이아웃을 변경해보자.
 다음 xml 파일을 복사해서 ~/.matchbox/keyboard.xml에 저장한다.   <br /><br />
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
