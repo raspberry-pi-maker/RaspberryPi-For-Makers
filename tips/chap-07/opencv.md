@@ -1,17 +1,19 @@
 # OpenCV
-OpenCV(Open Source Computer Vision)은 실시간 컴퓨터 비전을 목적으로 한 프로그래밍 라이브러리이다. Windows, Linux, OSX 등 다양한 운영체제를 지원한다. 모바일 운영체제인 안드로이드, IOS 역시 지원한다. 이미지 또는 비디오 스트림, 카메라 스트림을 읽고 이미지 프로세싱 등의 작업 뿐 아니라 최근에는  TensorFlow , Torch / PyTorch 및 Caffe의 딥러닝 프레임워크를 지원한다.
-'메이커를 위한 라즈베리파이' 책 7장에서 OpenCV의 HaarCascade를 이용한 인체 부위 검색하는 예제를 소개한 적이 있다. 최근 머신러닝 기술의 발달로 뛰어난 사물인식을 제공하는 모델들이 많이 소개되면서 HaarCascade는 이전처럼 많이 사용하지 않는다. 하지만 무거운 AI 프레임워크없이 간단하게 기능을 시험할 수 있기 때문에 입문용으로 사용하기에는 무리가 없다.
+OpenCV(Open Source Computer Vision)은 실시간 컴퓨터 비전을 목적으로 한 프로그래밍 라이브러리입니다. Windows, Linux, OSX 등 다양한 운영체제를 지원하며 모바일 운영체제인 안드로이드, IOS 에서 사용가능합니다. 이미지 또는 비디오 스트림, 카메라 스트림을 읽고 이미지 프로세싱 등의 작업 뿐 아니라 최근에는  TensorFlow , Torch / PyTorch 및 Caffe의 딥러닝 프레임워크를 지원합니다.
+'메이커를 위한 라즈베리파이' 책 7장에서 OpenCV의 HaarCascade를 이용한 인체 부위 검색하는 예제를 소개한 적이 있는데 최근 머신러닝 기술의 발달로 뛰어난 사물인식을 제공하는 모델들이 많이 소개되면서 HaarCascade는 이전처럼 많이 사용하지 않습니다. 하지만 무거운 AI 프레임워크없이 간단하게 기능을 시험할 수 있기 때문에 입문용으로 사용하기에는 아직도 무리가 없습니다.
 
-Tensorflow, PyTorch 등의 머신러닝 프레임워크에서 가장 활발하게 소개되는 분야는 단연 영상처리 분야이다. 사물인식(Object detection),  사물 분류(Classification), 영역분할(Segmentation), 자세 인식(Keypoint Detection) 등은 모두 이미지를 대상으로 한 AI 모델들이다.   이들 머신러닝 프레임워크를 사용하다보면 반드시 마주치게 되는 것이 영상처리를 위한 OpenCV와 PIL(Pillow)이다. PIL, OpenCV 모두 사용법을 익혀두는 것이 좋다. PIL은 OpenCV에 비해 가볍고 기능이 단순하기 때문에 배우기 쉽다. OpenCV는 PIL에 비해 더욱 강력한 기능을 제공하며, 활발하게 새로운 버젼이 제공되는 역동적인 솔루션이다.
+Tensorflow, PyTorch 등의 머신러닝 프레임워크에서 가장 활발하게 소개되는 분야는 단연 영상처리 분야입니다. 사물인식(Object detection),  사물 분류(Classification), 영역분할(Segmentation), 자세 인식(Keypoint Detection) 등은 모두 이미지를 대상으로 한 AI 모델입니다.   이들 머신러닝 프레임워크를 사용하다보면 반드시 마주치게 되는 것이 영상처리를 위한 OpenCV와 PIL(Pillow)입니다. PIL, OpenCV 모두 사용법을 익혀두는 것이 좋은데 PIL은 OpenCV에 비해 가볍고 기능이 단순하기 때문에 배우기 쉽습니다. OpenCV는 PIL에 비해 더욱 강력한 기능을 제공하며, 활발하게 새로운 버젼이 제공되는 역동적인 솔루션입니다.
 
-책에서는 패키지 매니저인 apt-get을 이용해 OpenCV를 설치했지만 이 글에서는 라즈베리파이에 최적화 시킬 수 있는 옵션을 이용해서 최신 버젼의 OpenCV를 직접 빌드하는 방법을 알아보겠다. 가령 인텔 CPU는 SSE, AVX 명령어 셋을 제공하며 ARM CPU는 VFP, NEON 명령어 셋을 지원한다. OpenCV 를 컴파일할 때 자신이 사용하는 CPU에 따라 적절한 옵션을 제공하면  최적화된 OpenCV를 만들 수 있다.  그리고 마지막으로 패키지 매니저를 이용해 설치한 OpenCV와 버젼 및 성능을 비교해보겠다.
+'메이커를 위한 라즈베리파이' 책에서는 패키지 매니저인 apt-get을 이용해 OpenCV를 설치했지만 이 글에서는 라즈베리파이에 최적화 시킬 수 있는 옵션을 이용해서 최신 버젼의 OpenCV를 직접 빌드하는 방법을 알아보겠습니다. 가령 인텔 CPU는 SSE, AVX 명령어 셋을 제공하며 ARM CPU는 VFP, NEON 명령어 셋을 지원합니다. OpenCV 를 컴파일할 때 자신이 사용하는 CPU에 따라 적절한 옵션을 제공하면  최적화된 OpenCV를 만들 수 있습니다.  그리고 마지막으로 패키지 매니저를 이용해 설치한 OpenCV와 버젼 및 성능을 비교해보겠습니다.
 
-참고로 이글은 Satya Mallick의 learnopencv.com에 소개된  https://www.learnopencv.com/build-and-install-opencv-4-for-raspberry-pi/?ck_subscriber_id=379731419 글에서 많은 부분을 참조했다.
+참고로 이글은 Satya Mallick의 learnopencv.com에 소개된  https://www.learnopencv.com/build-and-install-opencv-4-for-raspberry-pi/?ck_subscriber_id=379731419, https://qengineering.eu/install-opencv-4.5-on-raspberry-pi-4.html 글에서 많은 부분을 참조했습니다.
 
 
 # 라즈베리파이에서 OpenCV Build
-라즈베리파이 OS를 설치하는 방법은 이 글에서 설명하지 않겠다. https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/headless_setup.md 에서 설치 방법을 설명해두었으니 설치와 관련한 내용은 이 문서를 참조바란다.
-라즈베리파이는 ARMV7 명령어 셋을 기본으로 사용한다. 참고로 구형 라즈베리파이 1, 파이 Zero는 ARMV6 아키텍쳐이다. 대부분의 사용자들이 사용하는 라즈베리파이 2B,3B, 3B+,4B 모델은 ARMV7으로 이해하면 된다.
+라즈베리파이 OS를 설치하는 방법은 이 글에서 설명하지 않습니다. https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/headless_setup.md 에서 설치 방법을 설명해두었으니 설치와 관련한 내용은 이 문서를 참조바랍니다.
+라즈베리파이 OS는 최근 BullsEye 64 비트 버져이 공개되면서 많은 변화가 있었습니다. 특히 BullsEye는 32, 64비트 버젼 모두 공개되었는데 64, 32비트 모두  OpenCV는 큰 영향을 받습니다. 라즈베리파이 재단에서 준비가 덜 된 상태에서 BullsEye와 함께 카메라 관련 구조를 변경하는 바람에 기존 PiCamera 또는 OpenCV 관련 솔루션들이 제대로 동작하지 않을 수 있습니다. 이 경우 raspi-config 프로그램을 이용해 기존 Legacy Camera를 활성화해서 기존 카메라 설정을 유지하기 바랍니다. 이 문제는 [RaspberryPi-For-Makers/tips/chap-01/raspberry_pi_os_64.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-01/raspberry_pi_os_64.md)에서 자세히 다루고 있습니다. 카메라 솔루션을 사용하고 있다면 성급하게 BullsEye OS로의 업그레이드는 천천히 진행하는 것이  좋다고 생각하고 있습니다.
+
+
 
 |CPU 기능 |CMake 키|설명|
 |------|---|---|
@@ -19,7 +21,8 @@ Tensorflow, PyTorch 등의 머신러닝 프레임워크에서 가장 활발하�
 |VFPv3|-DENABLE_VFPV3=ON|ARM VFP3 부동 소숫점 연산 확장 기능|
 |NEON|-DENABLE_NEON=ON|ARM NEON 벡터 연산 기능|
 
-/proc/cpuinfo 파일은 현재 사용하는 CPU의 성능 및 모델을 보여준다. 4개의 CPU가 존재하는 것을 쉽게 알 수 있다.  model name 부분에 ARMV7 프로세서 이름이 있다. 주의깊게 볼 부분은 Features 이다. 여기에서 thumb, vfp, neon, vfpv4와 같은 기능을 제공하는 것을 알 수 있다. 
+다음 내용은 데비안 Buster에만 해당하는 내용입니다.
+/proc/cpuinfo 파일은 현재 사용하는 CPU의 성능 및 모델을 보여줍니다. 4개의 CPU가 존재하는 것을 쉽게 알 수 있으며 model name 부분에 ARMV7 프로세서 이름이 있습니다. 주의깊게 볼 부분은 Features 이다. 여기에서 thumb, vfp, neon, vfpv4와 같은 기능을 제공하는 것을 알 수 있습니다. 
 
 ``` bash
 root@DietPi:~# cat /proc/cpuinfo
@@ -71,37 +74,84 @@ Model           : Raspberry Pi 4 Model B Rev 1.2
 ```
 <br /><br />
 
+만약 BullsEye에서 cpuinfo를 실행한다면 다음과 같이 다른 결과가 보입니다.
+
+``` bash
+pi@raspberrypi:~ $ cat /proc/cpuinfo
+processor	: 0
+BogoMIPS	: 108.00
+Features	: fp asimd evtstrm crc32 cpuid
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x0
+CPU part	: 0xd08
+CPU revision	: 3
+
+processor	: 1
+BogoMIPS	: 108.00
+Features	: fp asimd evtstrm crc32 cpuid
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x0
+CPU part	: 0xd08
+CPU revision	: 3
+
+processor	: 2
+BogoMIPS	: 108.00
+Features	: fp asimd evtstrm crc32 cpuid
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x0
+CPU part	: 0xd08
+CPU revision	: 3
+
+processor	: 3
+BogoMIPS	: 108.00
+Features	: fp asimd evtstrm crc32 cpuid
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x0
+CPU part	: 0xd08
+CPU revision	: 3
+
+Hardware	: BCM2835
+Revision	: b03112
+Serial		: 10000000a4ace77f
+Model		: Raspberry Pi 4 Model B Rev 1.2
+```
 
 
-## ARM 최적화 라이브러리
-1. OpenCV HAL (Hardware Abstraction Layer)는 OpenCV와 저수준 아키텍쳐와의 인터페이스를 담당한다. -DENABLE_NEON=ON 옵션을 사용하면 ARMv7 and ARMv8 아키텍쳐에서 HAL을 구현한 NVIDIA Carotene을 포함시킨다. 따라서 우리는 cmake  명령에 -DENABLE_NEON=ON 옵션을 사용할 것이다.<br />
-2. 최근의 OpenCV는 ARM CPU에서 딥러닝 인퍼런스 가속엔진인 텐진([Tengine](https://github.com/OAID/Tengine))을 지원한다. 2020년 3월까지의 문서에는 이에 대한 언급이 없다.  2020년 7월 10일 현재까지 실험적인 시도이며 정식 지원하지 않는다. 텐진엔진을 추가하려면 -DWITH_TENGINE=ON 옵션이 필요하다.
-텐진엔진 지원은 OpenCV v3.4.10 그리고 v4.3.0 이후 버젼들에서 컴파일이 가능하다.
-텐진 엔진의 사용여부에 따른 성능 비교는 다음 표에서 가능하다.
+## ARM 최적화 라이브러리 
+1. OpenCV HAL (Hardware Abstraction Layer)는 OpenCV와 저수준 아키텍쳐와의 인터페이스를 담당합니다. -DENABLE_NEON=ON 옵션을 사용하면 ARMv7 and ARMv8 아키텍쳐에서 HAL을 구현한 NVIDIA Carotene을 포함시킵니다. 따라서 우리는 cmake  명령에 -DENABLE_NEON=ON 옵션을 사용할 것입니다.<br />
+
+2. 최근의 OpenCV는 ARM CPU에서 딥러닝 인퍼런스 가속엔진인 텐진([Tengine](https://github.com/OAID/Tengine))을 지원합니다. 2020년 3월까지의 문서에는 이에 대한 언급이 없습니다.  텐진엔진을 추가하려면 -DWITH_TENGINE=ON 옵션을 추가합니다.
+텐진엔진 지원은 OpenCV v3.4.10 그리고 v4.3.0 이후 버젼들에서 컴파일이 가능합니다. 
+텐진 엔진의 사용여부에 따른 성능 비교는 다음 표에서 가능합니다.
 
 ![Tengine based acceleration](https://raw.githubusercontent.com/wiki/opencv/opencv/images/tengine_speed.png)
 
-우리는 cmake  명령에 -DWITH_TENGINE=ON 옵션을 사용할 것이다.
->⚠️ **Tip**: OpenCV 빌드에 텐진 엔진을 사용하는 옵션을 추가하지만 큰 기대는 하지 않는 것이 좋다. 위 표에서 VGG16 모델의 처리 속도가 약  45%가량 증가했지만 초당 처리 속도는 0.3개 정도 밖에 되지 않는다.  개인적인 생각으로는 라즈베리파이에서 AI 에지 컴퓨팅을 구현하려면 AI 가속기를 따로 사용하는 것을 권장한다. 구글의 USB 타입 Coral AI 가속기 또는 비젼 처리에 특화된 인텔 NCS(Neural Compute Stick) 2 등의 하드웨어 가속기를 함께 사용하는 것이 현실적이다. 라즈베리파이는 AI용으로 좋은 성능을 낼 수 있는 하드웨어가 절대 아니다. 라즈베리파이에서 구글 코랄 가속기와 텐서플로를 함께 사용하는 방법은 [라즈베리파이와 머신러닝](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/tree/master/GoogleCoral-TFLite)에서 따로 설명했다.
+우리는 cmake  명령에 -DWITH_TENGINE=ON 옵션을 사용할 것입니다.
+>⚠️ **Tip**: OpenCV 빌드에 텐진 엔진을 사용하는 옵션을 추가하지만 큰 기대는 하지 않는 것이 좋습니다. 위 표에서 VGG16 모델의 처리 속도가 약  45%가량 증가했지만 초당 처리 속도는 0.3개 정도 밖에 되지 않습니다.  개인적인 생각으로는 라즈베리파이에서 AI 에지 컴퓨팅을 구현하려면 AI 가속기를 따로 사용하는 것을 권장합니다. 구글의 USB 타입 Coral AI 가속기 또는 비젼 처리에 특화된 인텔 NCS(Neural Compute Stick) 2 등의 하드웨어 가속기를 함께 사용하는 것이 현실적입니다. 라즈베리파이는 AI용으로 좋은 성능을 낼 수 있는 하드웨어가 절대 아닙니다. 라즈베리파이에서 구글 코랄 가속기와 텐서플로를 함께 사용하는 방법은 [라즈베리파이와 머신러닝](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/tree/master/GoogleCoral-TFLite)에서 따로 설명했습니다.
 
 <br /><br />
 
 
 
 ## JAVA 지원
-OpenCV 기본 빌드 옵션은 JAVA용 OpenCV 빌드를 제외하고 있다. 만약 Java용 opencv/build/bin/opencv-440.jar, opencv/build/lib/libopencv_java440.so 파일을 만들려면 다음 작업을 추가한다.
+OpenCV 기본 빌드 옵션은 JAVA용 OpenCV 빌드를 제외하고 있습니다. 만약 Java용 opencv/build/bin/opencv-440.jar, opencv/build/lib/libopencv_java440.so 파일을 만들려면 다음 작업을 추가합니다.
 
 ``` bash
 sudo apt-get -y install default-jdk  #(open-jdk 설치)
 sudo apt-get -y install ant
 
 ```
-그리고 뒤에서 설명할 cmake 옵션에 "-DBUILD_opencv_java=ON"을 추가한다.
+그리고 뒤에서 설명할 cmake 옵션에 "-DBUILD_opencv_java=ON"을 추가합니다.
 
-## 빌드 환경 
-라즈베리파이는 X86(64) 계열 CPU에 비해 성능이 떨어지기 때문에 파이에서 큰 패키지를 빌드하면 몇시간이 걸릴 수 있다.
+라즈베리파이는 X86(64) 계열 CPU에 비해 성능이 떨어지기 때문에 파이에서 큰 패키지를 빌드하면 몇시간이 걸릴 수 있습니다.<br><br>
 
-먼저 다음 패키지를 설치한다.
+## Buster OS 빌드 환경 <br><br>
+
+먼저 다음 패키지를 설치합니다.
 
 ``` bash
 sudo apt-get -y update
@@ -127,17 +177,17 @@ sudo apt-get -y install python3-dev python3-pip  python3-numpy
 sudo apt-get -y install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 ```
 <br />
-그리고 만약 여러분이 사용하는 라즈베리 파이의 메모리가 1GB인 경우에는 swap 파일을 생성해 임시로 메모리를 늘릴 필요가 있다. 빌드 과정은 꽤 많은 메모리를 필요로 한다. 2,4,8GB의 메모리를 가진 라즈베리파이 4 사용자는 이 과정을 생략해도 된다.
+그리고 만약 여러분이 사용하는 라즈베리 파이의 메모리가 1,2,4GB인 경우에는 swap 파일을 생성해 임시로 메모리를 늘릴 필요가 있습니다. 빌드 과정은 꽤 많은 메모리를 필요로 한다. 8GB의 메모리를 가진 라즈베리파이 4 사용자는 이 과정을 생략해도 됩니다.
 
 ``` bash
-sudo sed -i 's/CONF_SWAPSIZE=100/CONF_SWAPSIZE=1024/g' /etc/dphys-swapfile
+sudo sed -i 's/CONF_SWAPSIZE=100/CONF_SWAPSIZE=2048/g' /etc/dphys-swapfile
 sudo /etc/init.d/dphys-swapfile stop
 sudo /etc/init.d/dphys-swapfile start
 ``` 
 <br /><br />
 
 ## 코드 다운로드
-소스코드를  github에서 다운로드 받는다. 2020년 7월 10일 현재 최신 버젼은 4.4  pre 이다.
+소스코드를  github에서 다운로드 받는다. 2020년 73월 현재 최신 버젼은 4.4 입니다.
 ``` bash
 git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
@@ -271,7 +321,7 @@ cmake -DENABLE_NEON=ON -DWITH_TENGINE=ON -DWITH_GSTREAMER=ON -DENABLE_VFPV3=ON \
 
 ```
 <br />
-여기에서 중요한 부분은 'Other third-party libraries' 부분이다. 앞에서 지정한 Tengine, Custom HAL이 제대로 들어가 있다.
+여기에서 중요한 부분은 'Other third-party libraries' 부분압나다. 앞에서 지정한 Tengine, Custom HAL이 제대로 들어가 있습니다.
 
 ```bash
 --   Other third-party libraries:
@@ -282,7 +332,7 @@ cmake -DENABLE_NEON=ON -DWITH_TENGINE=ON -DWITH_GSTREAMER=ON -DENABLE_VFPV3=ON \
 --     Protobuf:                    build (3.5.1)
 ```
 <br />
-그리고 파이썬 관련 내용도 다음처럼 정확하게 표시되어야 한다. numpy관련 경로 역시 정확하게 나와야 한다.
+그리고 파이썬 관련 내용도 다음처럼 정확하게 표시되어야 합니다. numpy관련 경로 역시 정확하게 나와야 합니다.
 
 ```bash
 --   Python 3:
@@ -292,17 +342,17 @@ cmake -DENABLE_NEON=ON -DWITH_TENGINE=ON -DWITH_GSTREAMER=ON -DENABLE_VFPV3=ON \
 --     install path:                lib/python3.7/dist-packages/cv2/python-3.7
 ```
 <br />
-그리고 마지막 부분에 다음과 같은 문구가 보여야  Makefile이 정상으로 만들어진 것이다.
+그리고 마지막 부분에 다음과 같은 문구가 보여야  Makefile이 정상으로 만들어진 것입니다.
 
 ```bash
 -- Configuring done
 -- Generating done
 ```
-만약 결과가 이상하다면 build 디렉토리를 삭제하고 cmake 옵션을 변경 후 다시 실행하면 된다.
+만약 결과가 이상하다면 build 디렉토리를 삭제하고 cmake 옵션을 변경 후 다시 실행하면 됩니다.
 <br /><br />
 ## 빌드
-이제 마지막 과정이다. 소스코드는 make 명령으로 빌드할 수 있다.
-라즈베리파이는 4코어 CPU를 가지고 있기 떄문에 make 명령에 -j4 또는 -j$(nproc)를 추가하면 4개의 코어에서 동시에 컴파일 작업을 할 수 있어 작업시간이 단축된다. 하지만 -j 옵션을 사용하더라도 한시간 이상이 걸릴 수 있다. 
+이제 마지막 과정입니다. 소스코드는 make 명령으로 빌드할 수 있습니다.
+라즈베리파이는 4코어 CPU를 가지고 있기 떄문에 make 명령에 -j4 또는 -j$(nproc)를 추가하면 4개의 코어에서 동시에 컴파일 작업을 할 수 있으며 작업시간이 단축됩다. 하지만 -j 옵션을 사용하더라도 한시간 이상이 걸릴 수 있다. 
 
 
 ```bash
@@ -310,7 +360,7 @@ make -j4
 sudo make install
 ```
 <br />
-빌드 빛 설치가 정상이면 다음과 같이 확인할 수 있다.
+빌드 빛 설치가 정상이면 다음과 같이 확인할 수 있습니다.
 
 ```bash
 root@raspberrypi:/usr/local/src/opencv/build# python3
@@ -324,8 +374,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 <br /><br />
 
 # 패키지 설치 버젼과 비교
-마지막으로 소스코드를 빌드한 OpenCV와 패키지 관리자 apt-get을 이용해 설치한 버젼을 비교해보자. 
-다음은 패키지 매니저를 이용해 설치한 OpenCV의 빌드 정보를 파이썬 콘솔에서 확인한 정보이다. cv2.getBuildInformation() .함수를 이용하면 cmake를 이용해 만든 Makefile 정보를 확인할 수 있다.
+마지막으로 소스코드를 빌드한 OpenCV와 패키지 관리자 apt-get을 이용해 설치한 버젼을 비교해보겠습니다. 
+다음은 패키지 매니저를 이용해 설치한 OpenCV의 빌드 정보를 파이썬 콘솔에서 확인한 정보입니다. cv2.getBuildInformation() .함수를 이용하면 cmake를 이용해 만든 Makefile 정보를 확인할 수 있습니다.
 
 ```bash
 root@DietPi:/usr/local/src/study/cvperf# python3 
@@ -437,10 +487,107 @@ General configuration for OpenCV 4.1.1 =====================================
 -----------------------------------------------------------------
 ```
 <br /><br />
-앞에서 설명한 4.3버젼과 비교하면 큰 차이가 없다. 
-ARM CPU의 NEON 옵션이  ON 상태이며 따라서 carotene custom HAL 역시 포함되어 있다. 비디오 처리는 ffmpeg과 v4l이 ON 상태이다.
-실제 부하테스트를 해보면 apt-get으로 설치한 OpenCV와 코드를 빌드한 OpenCV는 성능차이가 거의 없다.
-다만 apt-get을 이용해 설치한 OpenCV는 최신 버젼이 아니라는 점이다. 최신 버젼을 선호하는 분들은 코드를 직접 빌드하는 것이 좋겠지만 안정화된 적당한 버젼에 만족하는 분들은 apt-get을 이용해 OpenCV를 설치해서 사용해도 성능상의 차이는 없다. 
-다만 텐진 엔진의 경우 아직 사용하지 않았기 때문에 평가가 어렵다. 텐진 엔진의 사용이 필요한 경우라면 코드를 빌드해서 사용하는 것이 유일한 방법이다.
+앞에서 설명한 4.3버젼과 비교하면 큰 차이가 없습니다. 
+ARM CPU의 NEON 옵션이  ON 상태이며 따라서 carotene custom HAL 역시 포함되어 있습니다. 비디오 처리는 ffmpeg과 v4l이 ON 상태입니다.
+실제 부하테스트를 해보면 apt-get으로 설치한 OpenCV와 코드를 빌드한 OpenCV는 성능차이가 거의 없습니다.
+다만 apt-get을 이용해 설치한 OpenCV는 최신 버젼이 아니라는 점입니다. 최신 버젼을 선호하는 분들은 코드를 직접 빌드하는 것이 좋겠지만 안정화된 적당한 버젼에 만족하는 분들은 apt-get을 이용해 OpenCV를 설치해서 사용해도 성능상의 차이는 크지 않습니다. 
+다만 텐진 엔진의 경우 아직 사용하지 않았기 때문에 평가가 어려우며 텐진 엔진의 사용이 필요한 경우라면 코드를 빌드해서 사용하는 것이 유일한 방법입니다.<br><br>
+
+
+## BullsEye OS 빌드 환경(32비트, 64비트 공통) <br><br>
+앞에서 설명한 것처럼 반드시 소스코드를 빌드해야 하는 것은 아닙니다. 대부분의 경우 pip3 명령으로 이미 만들어진 OpenCV 패키지를 설치할 수 있습니다. 
+
+``` bash
+pip3 install opencv-python
+```
+<br><br>
+ 하지만 가끔씩은 최신 버젼이 필요하거나 자신이 원하는 옵션에 맞게 소스코드를 직접 빌드하는 것이 필요할 수 있습니다. Buster OS를 대상으로 위에서 설명한 내용과 거의 동일한 내용을 스크립트 파일로 만들었습니다. 이 스크립트는 [Install OpenCV 4.5 on Raspberry Pi 4](https://qengineering.eu/install-opencv-4.5-on-raspberry-pi-4.html)에서 소개한 내용입니다. 아래 스크립트에서 4.5.5를 원하는 버젼으로 바꾸면 해당 버젼의 코드를 빌드합니다. 하지만 4.5.5버젼에 대해서 BullsEye OS에서 테스트한 스크립트입니다.
+
+``` bash
+#!/bin/bash
+set -e
+echo "Installing OpenCV 4.5.5 on your Raspberry Pi 64-bit OS"
+echo "It will take minimal 2.0 hour !"
+cd ~
+# install the dependencies
+sudo apt-get install -y build-essential cmake git unzip pkg-config
+sudo apt-get install -y libjpeg-dev libtiff-dev libpng-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install -y libgtk2.0-dev libcanberra-gtk* libgtk-3-dev
+sudo apt-get install -y libgstreamer1.0-dev gstreamer1.0-gtk3
+sudo apt-get install -y libgstreamer-plugins-base1.0-dev gstreamer1.0-gl
+sudo apt-get install -y libxvidcore-dev libx264-dev
+sudo apt-get install -y python3-dev python3-numpy python3-pip
+sudo apt-get install -y libtbb2 libtbb-dev libdc1394-22-dev
+sudo apt-get install -y libv4l-dev v4l-utils
+sudo apt-get install -y libopenblas-dev libatlas-base-dev libblas-dev
+sudo apt-get install -y liblapack-dev gfortran libhdf5-dev
+sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
+sudo apt-get install -y protobuf-compiler
+
+# download the latest version
+cd ~ 
+sudo rm -rf opencv*
+wget -O opencv.zip https://github.com/opencv/opencv/archive/4.5.5.zip 
+wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.5.5.zip 
+# unpack
+unzip opencv.zip 
+unzip opencv_contrib.zip 
+# some administration to make live easier later on
+mv opencv-4.5.5 opencv
+mv opencv_contrib-4.5.5 opencv_contrib
+# clean up the zip files
+rm opencv.zip
+rm opencv_contrib.zip
+
+# set install dir
+cd ~/opencv
+mkdir build
+cd build
+
+# run cmake
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+-D CMAKE_INSTALL_PREFIX=/usr/local \
+-D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+-D ENABLE_NEON=ON \
+-D WITH_OPENMP=ON \
+-D WITH_OPENCL=OFF \
+-D BUILD_TIFF=ON \
+-D WITH_FFMPEG=ON \
+-D WITH_TBB=ON \
+-D BUILD_TBB=ON \
+-D WITH_GSTREAMER=ON \
+-D BUILD_TESTS=OFF \
+-D WITH_EIGEN=OFF \
+-D WITH_V4L=ON \
+-D WITH_LIBV4L=ON \
+-D WITH_VTK=OFF \
+-D WITH_QT=OFF \
+-D OPENCV_ENABLE_NONFREE=ON \
+-D INSTALL_C_EXAMPLES=OFF \
+-D INSTALL_PYTHON_EXAMPLES=OFF \
+-D PYTHON3_PACKAGES_PATH=/usr/lib/python3/dist-packages \
+-D OPENCV_GENERATE_PKGCONFIG=ON \
+-D BUILD_EXAMPLES=OFF ..
+
+# run make
+make -j4
+sudo make install
+sudo ldconfig
+
+# cleaning (frees 300 MB)
+make clean
+sudo apt-get update
+
+echo "Congratulations!"
+echo "You've successfully installed OpenCV 4.5.5 on your Raspberry Pi 64-bit OS"
+
+```
+
+
+
+
+
+
 
 
