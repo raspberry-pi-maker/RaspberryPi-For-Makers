@@ -202,7 +202,7 @@ pi@raspberrypi8GB:~/src $ python3 preview.py
 camera read Failed
 ```
 <br /><br />
-이 문제는 사용중인 OpenCV에서 libcamera를 제대로 처리하지 못해서 발생하는 문제입니다. 만약 raspi-config에서 Legacy Camera를 활성화시키고 리부팅 후 다시 이 프로그램을 테스트해보겠습니다. 정상작동하는 것을 확인할 수 있습니다. 결국 파이썬 코드의 문제가 아니라 OpenCV에서 libcamera를 처리하지 못해서 발생하는 문제였던 것입니다.
+이 문제는 사용중인 OpenCV에서 libcamera를 제대로 처리하지 못해서 발생하는 문제입니다. 만약 raspi-config에서 Legacy Camera를 활성화시키고 리부팅 후 다시 이 프로그램을 테스트해보겠습니다. 정상작동하는 것을 확인할 수 있습니다. 결국 파이썬 코드의 문제가 아니라 OpenCV에서 libcamera를 처리하지 못해서 발생하는 문제였던 것입니다.<br/><br/>
 ![preview](../../tip_image/7-1.png)
 <br /><br />
 
