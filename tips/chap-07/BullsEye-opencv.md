@@ -10,7 +10,7 @@
 라즈베리파이 OS에서 CSI 카메라를 Legacy 카메라로 지칭하고 있습니다. 그리고 이 카메라 제어는 라즈베리파이의 칩셋 공급사인 브로드컴의 SoC에 맞게 개발되어져 있었습니다. 따라서 상당히 폐쇄적인 구조입니다. 라즈베리파이 재단에서 BullsEye로 OS를 바꾸면서 이 카메라 제어를 개방적인 libcamera로 바꾸면서 기존 소프트웨어와의 호환성 문제가 발생하고 있습니다. 어쩌면 칩셋 공급사를 브로드컴에서 다른 회사로 바꾸려고 하는 것은 아닌지 하는 의문이 듭니다.<br>
 다음은 라즈베리파이 카메라 관련 공식 페이지입니다. https://www.raspberrypi.com/documentation/accessories/camera.html . 오픈소스 libcamera로 이동하는 이유를 장황하게 설명하고 있습니다. 
 
-당장 기존 파이썬 개발에 사용하던 PiCamera  모듈을 사용할 수 없게 되었습니다. 이 모듈은 당연히 기존 폐쇄적인 Legacy 카메라 제어를 이용하고 있기 때문에 새로운  libcamera에서는 사용할 수 없습니다. 라즈베리파이 재단에서는 libcamera 용 PiCamera2를 만들고 있습니다. 깃허브(https://github.com/raspberrypi/picamera2)에서 현재(2022.03)까지 개발된 picamera2 베타 버젼을 다운로드 받아서 테스트해볼 수 있습니다. 그렇지만 API가 100% 동일하게 유지하는 것은 불가능하기 때문에 기존에 만든 파이썬 프로그램을 libcamera용으로 수정해야 하는 작업은 피할 수 없습니다. 다음은 libcamera와 기존 raspicam 프로그램간의 비교입니다. 기존에 사용하던 raspicam 프로그램에 대응하는 libcamera 프로그램들이 존재하기 때문에 명령창에서 미리보기, 사진찍기, 비디오 촬영 등의 작업은 문제가 없습니다. <br><br>
+당장 기존 파이썬 개발에 사용하던 PiCamera  모듈을 사용할 수 없게 되었습니다. 이 모듈은 당연히 기존 폐쇄적인 Legacy 카메라 제어를 이용하고 있기 때문에 새로운  libcamera에서는 사용할 수 없습니다. 라즈베리파이 재단에서는 libcamera 용 PiCamera2를 만들고 있습니다. 깃허브(https://github.com/raspberrypi/picamera2) 에서 현재(2022.03)까지 개발된 picamera2 베타 버젼을 다운로드 받아서 테스트해볼 수 있습니다. 그렇지만 API가 100% 동일하게 유지하는 것은 불가능하기 때문에 기존에 만든 파이썬 프로그램을 libcamera용으로 수정해야 하는 작업은 피할 수 없습니다. 다음은 libcamera와 기존 raspicam 프로그램간의 비교입니다. 기존에 사용하던 raspicam 프로그램에 대응하는 libcamera 프로그램들이 존재하기 때문에 명령창에서 미리보기, 사진찍기, 비디오 촬영 등의 작업은 문제가 없습니다. <br><br>
 
 |libcamera-apps |설명|대응 raspicam app|
 |------|---|---|
