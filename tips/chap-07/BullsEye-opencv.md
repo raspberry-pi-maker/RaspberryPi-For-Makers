@@ -24,7 +24,7 @@
 
 하지만 개발자 입장에서는 전혀 다른 이야기입니다. 기존 프로그램들을 모두 사용할 수 없게 만든 상황에서 어쩔 수 없이 라즈베리파이 재단은 BullsEye에서 기존 Legacy 카메라를 사용할 수 있도록 raspi-config를 개선했습니다. 참고로 libcamera, legacy camera를 동시에 사용할 수는 없습니다. raspi-config에서 Interface Options/Legacy Camera를 활성화하면 기존 Legacy 카메라 모드로 복귀합니다. 이전처럼 카메라 비활성화, 활성화 옵션이 아닙니다. 따라서 libcamera를 사용할 경우에는 이 옵션을 활성화하면 안됩니다.
 
-[![Legacy Camera](http://img.youtube.com/watch?v=E7KPSc_Xr24/0.jpg)](https://www.youtube.com/watch?v=E7KPSc_Xr24?t=0s) 
+[![Legacy Camera](../../tip_image/7-4.png)](https://www.youtube.com/watch?v=E7KPSc_Xr24) 
 
 카메라 솔루션을 사용하고 있다면 성급하게 BullsEye OS로의 업그레이드는 신중하게 진행하는 것이  좋다고 생각하고 있습니다.
 
