@@ -25,7 +25,8 @@
 하지만 개발자 입장에서는 전혀 다른 이야기입니다. 기존 프로그램들을 모두 사용할 수 없게 만든 상황에서 어쩔 수 없이 라즈베리파이 재단은 BullsEye에서 기존 Legacy 카메라를 사용할 수 있도록 raspi-config를 개선했습니다. 참고로 libcamera, legacy camera를 동시에 사용할 수는 없습니다. raspi-config에서 Interface Options/Legacy Camera를 활성화하면 기존 Legacy 카메라 모드로 복귀합니다. 이전처럼 카메라 비활성화, 활성화 옵션이 아닙니다. 따라서 libcamera를 사용할 경우에는 이 옵션을 활성화하면 안됩니다.
 
 [![Legacy Camera](../../tip_image/7-4.png)](https://www.youtube.com/watch?v=E7KPSc_Xr24) 
-
+<center> Legacy 모드복귀 방법을 설명하는 유튜브</center>
+<br><br>
 카메라 솔루션을 사용하고 있다면 BullsEye OS로의 업그레이드는 신중하게 진행하는 것이  좋다고 생각하고 있습니다.
 
 <br><br>
@@ -204,6 +205,7 @@ camera read Failed
 <br /><br />
 이 문제는 사용중인 OpenCV에서 libcamera를 제대로 처리하지 못해서 발생하는 문제입니다. 만약 raspi-config에서 Legacy Camera를 활성화시키고 리부팅 후 다시 이 프로그램을 테스트해보겠습니다. 정상작동하는 것을 확인할 수 있습니다. 결국 파이썬 코드의 문제가 아니라 OpenCV에서 libcamera를 처리하지 못해서 발생하는 문제였던 것입니다.<br/><br/>
 ![preview](../../tip_image/7-1.png)
+<center> Legacy 모드에서 정상 작동 화면</center>
 <br /><br />
 
 
@@ -548,7 +550,8 @@ Not enough buffering available for  the processing deadline of 0:00:00.015000000
 그리고 화면에 다음과 같이 카메라 화면이 출력됩니다. 
 
 ![카메라](../../tip_image/7-2.png)
-
+<center> libcamera 스택에서 정상작동하는 GStreamer 화면</center>
+<br /><br />
 GSttreamer가 제대로 libcamera를 이용해서 처리하는 것을 확인했습니다. 이제 드디어 OpenCV에서 GStreamer 파이프라인을 이용해 카메라를 열어보도록 하겠습니다.
 <br /><br />
 
@@ -600,7 +603,7 @@ pi@raspberrypi:~/src/camera $ python3 preview.py
 에러메시지가 있지만 정상 작동하고 있습니다. 이 에러 메시지는 libcamera-still 프로그램에서도 발생하는 메시지인데 문제를 일으키지는 않습니다. libcamera 카메라 스택이 업데이트되면 개선될 것으로 생각합니다. 다음 그림처럼 카메라 미리보기 창이 성공적으로 나타납니다.
 
 ![OpenCV-GStreamer](../../tip_image/7-3.png)
-
+<center> libcamera 스택에서 정상작동하는 OpenCV 화면</center>
 <br /><br />
 
 # 결론
