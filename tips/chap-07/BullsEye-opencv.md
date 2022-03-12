@@ -254,7 +254,7 @@ cv2.VideoCapture 함수에서 일반적으로 사용하는 번호 대신 gstream
 
 
 # BullsEye 64비트에서 GStreamer 지원 OpenCV 빌드 
-OpenCV는 꽤 큰 패키지입니다. 라즈베리파이 4에서 빌드 시간이 약 1 ~ 2 시간 정도 필요합니다. 그리고 빌으에 메모리도 많이 필요하기 때문에 2GB 모델을 사용하는 분들은 가상메모리를 확보해 메모리를 늘린 다음 빌드하는 것이 좋습니다. <br /><br />
+OpenCV는 꽤 큰 패키지입니다. 라즈베리파이 4에서 빌드 시간이 약 1 ~ 2 시간 정도 필요합니다. 그리고 빌드에 메모리도 많이 필요하기 때문에 2GB 모델을 사용하는 분들은 가상메모리를 확보해 메모리를 늘린 다음 빌드하는 것이 좋습니다. <br /><br />
 
 ## 가상메모리 확보 
 2GB모델 사용자에게만 적용됩니다.
@@ -386,7 +386,7 @@ echo "You've successfully installed OpenCV 4.5.5 on your Raspberry Pi 64-bit OS"
 ```
 
 위 내용으로 install_opencv.sh 파일을 만들어 실행하면 됩니다.
-빌드가 끝나면 자동으로 설치까지 하도록 스크립트가 만들어져 있습니다. 그기로 가장 중요한 것은 빌드 옵션에 "-D WITH_GSTREAMER=ON " 가 추가되어 있다는 것입니다. 약 1시간 이상의 빌드 시간이 필요합니다.
+빌드가 끝나면 자동으로 설치까지 하도록 스크립트가 만들어져 있습니다. 그리고 가장 중요한 것은 빌드 옵션에 "-D WITH_GSTREAMER=ON " 가 추가되어 있다는 것입니다. 약 1시간 이상의 빌드 시간이 필요합니다.
 
 ``` bash
 # 만약 pip으로 설치한 버젼이 있으면 삭제후 설치한다.
@@ -547,7 +547,7 @@ Additional debug info:
 Not enough buffering available for  the processing deadline of 0:00:00.015000000, add enough queues to buffer  0:00:00.015000000 additional data. Shortening processing latency to 0:00:00.000000000.
 ```
 
-그리고 화면에 다음과 같이 카메라 화면이 출력됩니다. 
+그리고 화면에 다음과 같이 카메라 화면이 출력됩니다. 참고로 라즈베리파이 OS에서 Legacy Camera는 비활성화된 상태입니다.
 
 ![카메라](../../tip_image/7-2.png)
 <center> libcamera 스택에서 정상작동하는 GStreamer 화면</center>
@@ -600,7 +600,7 @@ pi@raspberrypi:~/src/camera $ python3 preview.py
 [ WARN:0@0.648] global /home/pi/opencv/modules/videoio/src/cap_gstreamer.cpp (1405) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
 ```
 
-에러메시지가 있지만 정상 작동하고 있습니다. 이 에러 메시지는 libcamera-still 프로그램에서도 발생하는 메시지인데 문제를 일으키지는 않습니다. libcamera 카메라 스택이 업데이트되면 개선될 것으로 생각합니다. 다음 그림처럼 카메라 미리보기 창이 성공적으로 나타납니다.
+에러메시지가 있지만 정상 작동하고 있습니다. 이 에러 메시지는 libcamera-still 프로그램에서도 발생하는 메시지인데 문제를 일으키지는 않습니다. libcamera 스택이 업데이트되면 개선될 것으로 생각합니다. 다음 그림처럼 카메라 미리보기 창이 성공적으로 나타납니다.
 
 ![OpenCV-GStreamer](../../tip_image/7-3.png)
 <center> libcamera 스택에서 정상작동하는 OpenCV 화면</center>
