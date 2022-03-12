@@ -26,7 +26,7 @@
 
 [![Legacy Camera](../../tip_image/7-4.png)](https://www.youtube.com/watch?v=E7KPSc_Xr24) 
 
-카메라 솔루션을 사용하고 있다면 성급하게 BullsEye OS로의 업그레이드는 신중하게 진행하는 것이  좋다고 생각하고 있습니다.
+카메라 솔루션을 사용하고 있다면 BullsEye OS로의 업그레이드는 신중하게 진행하는 것이  좋다고 생각하고 있습니다.
 
 <br><br>
 
