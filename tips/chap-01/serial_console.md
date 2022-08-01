@@ -31,7 +31,7 @@ PC, 컴퓨터의 이 시리얼 포트는 초고속인터넷이 보급되기 전�
 
 >⚠️ Windows 11 사용자 : Windows 11에서는 Prolific사 칩을 사용하는 제품이 제대로 작동하지 않는다. 필자도 Windows 11로 업그레이드 이후 이 제품이 인식되지 않아 홈페이지를 찾아보았더니 다음과 같은 설명이 있다.  PL2303 HXD, SA, RA GC, GS, GT, GL, GE , GD, GR 칩을 사용하는 제품들은 Windows 11드라이버 설치가 가능하지만 TH1 1507, TH2 1511, RS1 1607, RS2 1703, RS3 1709, RS4 1803,RS5 1809,19H1 1903, 19H2 1909, 20H1 VB, 21H1 제품들은 Windows 10까지만 사용하다는 내용이다. AliExpress에서 판매중인 대부분의 제품이 구현칩이기 때문에 WIndows 11사용자는 Prolific 칩보다는 FTDI사의 칩을 사용한 제품을 구매하는 것이 좋다.
 
-![시리얼 케이블](../../tip_image/1-serial-14.jpg)
+![시리얼 케이블](../../tip_image/1-serial-14.png)s
 
 
 
