@@ -98,6 +98,7 @@ GPIO 5: level=1 fsel=3 alt=4 func=RXD3 pull=UP
 
 모뎀 제어를 위한 프로그램은 책에서 소개한 미니콤을 사용할 수 있지만 좀 더 모던한 GUI 프로그램을 찾아보기로 했습니다. 
 제가 찾은 프로그램은 cutecom입니다. apt 명령으로 간단하게 설치할 수 있습니다.
+<br />
 
 ``` bash
 pi@Rpi:~ $ sudo apt-get install cutecom
@@ -105,7 +106,7 @@ pi@Rpi:~ $ sudo apt-get install cutecom
 
 <br />
 다음은 라즈베리파이 4에서 실행한 cutecom의 화면입니다. minicom과 달리 GUI 프로그램이라 사용법이 쉽습니다. 화면에서 /dev/TTYAMA1을 115200 속도로 개방해서 사용하고 있습니다. 우리넷 모뎀은 명령 마지막에 CR(줄바꿈)을 보내면 하나의 명령으로인식하고 반응합니다. 대부분의 모뎀들이 비슷하게 작동합니다. 가장 간단하게 "AT + CR"을 보내면 모뎀은 "OK"를 응답하면서 정상적으로 통신이 되고 있는 것을 알려줍니다. 그림에서 INPUT 뒤에 CR을 보내도록 선택한 것을 알 수 있습니다.
-<br />
+<br /><br />
 
 ![cutecom](../../tip_image/3-1.png)
 
