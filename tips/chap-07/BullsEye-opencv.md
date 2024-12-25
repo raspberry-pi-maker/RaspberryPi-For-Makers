@@ -300,7 +300,6 @@ $ sudo reboot
 
 ## BullsEye OS에서 OpenCV 빌드(32비트, 64비트 공통) 
 
-다음은 빌드를 
 이 스크립트는 [Install OpenCV 4.5 on Raspberry Pi 4](https://qengineering.eu/install-opencv-4.5-on-raspberry-pi-4.html)에서 소개한 내용입니다. 아래 스크립트에서 4.5.5를 원하는 버젼으로 바꾸면 해당 버젼의 코드를 빌드합니다. 
 
 
@@ -311,6 +310,8 @@ echo "Installing OpenCV 4.5.5 on your Raspberry Pi 64-bit OS"
 echo "It will take minimal 2.0 hour !"
 cd ~
 # install the dependencies
+sudo apt-get update
+sudo apt-get upgrade
 sudo apt-get install -y build-essential cmake git unzip pkg-config
 sudo apt-get install -y libjpeg-dev libtiff-dev libpng-dev
 sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
@@ -325,6 +326,15 @@ sudo apt-get install -y libopenblas-dev libatlas-base-dev libblas-dev
 sudo apt-get install -y liblapack-dev gfortran libhdf5-dev
 sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
 sudo apt-get install -y protobuf-compiler
+
+case `cat /etc/debian_version` in
+10*) sudo apt-get install -y libtbb2 libtbb-dev libdc1394-22-dev
+        ;;
+11*) sudo apt-get install -y libtbb2 libtbb-dev libdc1394-22-dev
+        ;;
+12*) sudo apt-get install -y libtbbmalloc2 libtbb-dev libdc1394-dev gstreamer1.0-libcamera
+        ;;
+esac
 
 # download the latest version
 cd ~ 
