@@ -9,7 +9,18 @@ BullsEye 이후의 라즈베리파이에서 CSI 카메라 사용의 문제점 �
 
 이 글에서는 라즈베리파이 booklworm에서 2024년 12월 최신 버젼의 OpenCV (버젼 4.10.0)을 bookworm에서 설치하는 스크립트 파일만 수정해서 올립니다.
 
-<br>
+<br><br>
+다음은 libcamera와 기존 raspicam 프로그램간의 비교입니다. BullsEye에서는 libcamera-* 형식의 명령어였지만 bookworm에서 rpicam-*으로 명령어들이 바뀌었습니다.  기존 명령어에 대한 심볼릭 링크만 추가되었기 때문에 기존 명령어(libcamera-*) 역시 사용할 수 있습니다.
+
+|rpicam-apps |설명|대응 raspicam app(libcamera 적용 이전 버젼 명령)|
+|------|---|---|
+|rpicam-hello|미리보기 창을 이용해 카메라 화면을 보여줍니다.|raspistill -t 5|
+|rpicam-jpeg|jpeg 파일 촬영|raspistill -o image.jpg
+|rpicam-still|raspistill과 유사하게 rpicam-jpeg보다 정교한 옵션 제공. |raspistill|
+|rpicam-vid|비디오 촬영|raspivid
+
+
+<br><br>
 
 ## bookworm OS에서 OpenCV 빌드(32비트, 64비트 공통) 
 
@@ -272,20 +283,20 @@ $ sudo apt-get install gstreamer1.0-qt5
 ```
 <br /><br />
 
-이제 GStreamer가 카메라를 제대로 제어하는지 확인해보겠습니다. GStreamer 파이프라인이 libcamerasrc에서 시작하는 것을 알 수 있습니다.
+이제 GStreamer가 카메라를 제대로 제어하는지 확인해보겠습니다. GStreamer 파이프라인이 libcamerasrc에서 시작하는 것을 알 수 있습니다. 
+NV12 포맷은 Rpi5에서는 반드시 포함해야 작동합니다. Rpi4에서는 이 옵션이 없어도 작동합니다.
 ``` bash
-spypiggy@raspberrypi:~ $ gst-launch-1.0 libcamerasrc  ! video/x-raw, width=1280, height=720, framerate=30/1 ! videoconvert ! videoscale ! clockoverlay time-format="%D %H:%M:%S" ! video/x-raw, width=640, height=360 ! autovideosink
+pi@raspberrypi:~ $ gst-launch-1.0 libcamerasrc  ! video/x-raw,format=NV12, width=1280, height=720, framerate=30/1 ! videoconvert ! videoscale ! clockoverlay time-format="%D %H:%M:%S" ! video/x-raw, width=640, height=360 ! autovideosink
 Setting pipeline to PAUSED ...
-[2:10:24.888630771] [20020]  INFO Camera camera_manager.cpp:325 libcamera v0.3.2+99-1230f78d
-[2:10:24.919234927] [20042]  WARN RPiSdn sdn.cpp:40 Using legacy SDN tuning - please consider moving SDN inside rpi.denoise
-[2:10:24.922608281] [20042]  WARN RPI vc4.cpp:393 Mismatch between Unicam and CamHelper for embedded data usage!
-[2:10:24.923339265] [20042]  INFO RPI vc4.cpp:447 Registered camera /base/soc/i2c0mux/i2c@1/imx219@10 to Unicam device /dev/media2 and ISP device /dev/media0
+[0:10:17.079545711] [2644]  INFO Camera camera_manager.cpp:325 libcamera v0.3.2+99-1230f78d
+[0:10:17.090998750] [2650]  INFO RPI pisp.cpp:695 libpisp version v1.0.7 28196ed6edcf 29-08-2024 (16:33:32)
+[0:10:17.102686550] [2650]  INFO RPI pisp.cpp:1154 Registered camera /base/axi/pcie@120000/rp1/i2c@88000/imx296@1a to CFE device /dev/media2 and ISP device /dev/media0 using PiSP variant BCM2712_C0
 Pipeline is live and does not need PREROLL ...
 Pipeline is PREROLLED ...
 Setting pipeline to PLAYING ...
 New clock: GstSystemClock
-[2:10:24.930133508] [20045]  INFO Camera camera.cpp:1197 configuring streams: (0) 1280x720-NV21
-[2:10:24.930601831] [20042]  INFO RPI vc4.cpp:622 Sensor: /base/soc/i2c0mux/i2c@1/imx219@10 - Selected sensor format: 1920x1080-SBGGR10_1X10 - Selected unicam format: 1920x1080-pBAA
+[0:10:17.105845581] [2653]  INFO Camera camera.cpp:1197 configuring streams: (0) 1280x720-NV12
+[0:10:17.106016139] [2650]  INFO RPI pisp.cpp:1450 Sensor: /base/axi/pcie@120000/rp1/i2c@88000/imx296@1a - Selected sensor format: 1456x1088-SBGGR10_1X10 - Selected CFE format: 1456x1088-PC1B
 Redistribute latency...
 WARNING: from element /GstPipeline:pipeline0/GstAutoVideoSink:autovideosink0/GstXvImageSink:autovideosink0-actual-sink-xvimage: Pipeline construction is invalid, please add queues.
 Additional debug info:
@@ -295,19 +306,20 @@ WARNING: from element /GstPipeline:pipeline0/GstAutoVideoSink:autovideosink0/Gst
 Additional debug info:
 ../libs/gst/base/gstbasesink.c(1249): gst_base_sink_query_latency (): /GstPipeline:pipeline0/GstAutoVideoSink:autovideosink0/GstXvImageSink:autovideosink0-actual-sink-xvimage:
 Not enough buffering available for  the processing deadline of 0:00:00.015000000, add enough queues to buffer  0:00:00.015000000 additional data. Shortening processing latency to 0:00:00.000000000.
-ERROR: from element /GstPipeline:pipeline0/GstAutoVideoSink:autovideosink0/GstXvImageSink:autovideosink0-actual-sink-xvimage: Output window was closed
-Additional debug info:
-../sys/xvimage/xvimagesink.c(586): gst_xv_image_sink_handle_xevents (): /GstPipeline:pipeline0/GstAutoVideoSink:autovideosink0/GstXvImageSink:autovideosink0-actual-sink-xvimage
-Execution ended after 0:00:10.789086001
+^Chandling interrupt.
+Interrupt: Stopping pipeline ...
+Execution ended after 0:00:06.352084308
 Setting pipeline to NULL ...
-freeing pipeline ..
+Freeing pipeline ...
+
 
 ```
 
-그리고 화면에 다음과 같이 카메라 화면이 출력됩니다. 참고로 라즈베리파이 OS에서 Legacy Camera는 비활성화된 상태입니다.
-
 <br /><br />
+
+그리고 화면에 다음과 같이 카메라 화면이 출력됩니다. 참고로 라즈베리파이 OS에서 Legacy Camera는 비활성화된 상태입니다.
 GSttreamer가 제대로 libcamera를 이용해서 처리하는 것을 확인했습니다. 이제 드디어 OpenCV에서 GStreamer 파이프라인을 이용해 카메라를 열어보도록 하겠습니다.
+
 <br /><br />
 
 
@@ -318,7 +330,7 @@ GSttreamer가 제대로 libcamera를 이용해서 처리하는 것을 확인했�
 import cv2
 import numpy as np
 import sys
-connstr = 'libcamerasrc ! video/x-raw, width=640, height=480, framerate=30/1 ! videoconvert ! videoscale ! clockoverlay time-format="%D %H:%M:%S" ! appsink'
+connstr = 'libcamerasrc ! video/x-raw,format=NV12, width=640, height=480, framerate=30/1 ! videoconvert ! videoscale ! clockoverlay time-format="%D %H:%M:%S" ! appsink'
 cap = cv2.VideoCapture(connstr, cv2.CAP_GSTREAMER)
 if cap.isOpened() == False:
     print('camera open Failed')
