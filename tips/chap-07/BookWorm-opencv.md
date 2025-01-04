@@ -284,7 +284,8 @@ $ sudo apt-get install gstreamer1.0-qt5
 <br /><br />
 
 이제 GStreamer가 카메라를 제대로 제어하는지 확인해보겠습니다. GStreamer 파이프라인이 libcamerasrc에서 시작하는 것을 알 수 있습니다. 
-NV12 포맷은 Rpi5에서는 반드시 포함해야 작동합니다. Rpi4에서는 이 옵션이 없어도 작동합니다.
+라즈베리파이5에서는 GStreamer 파이프라인에 반드시 format을 넣어줘야 합니다. 아마도 라즈베리파이 5에서 디스플레이포트와 카메라포트가 통합되면서 바뀐 HW 구조 때문인 것 같습니다.
+NV12 또는 RGBx 포맷을 Rpi5에서는 반드시 포함해야 작동합니다. Rpi4에서는 이 옵션이 없어도 작동합니다.
 ``` bash
 pi@raspberrypi:~ $ gst-launch-1.0 libcamerasrc  ! video/x-raw,format=NV12, width=1280, height=720, framerate=30/1 ! videoconvert ! videoscale ! clockoverlay time-format="%D %H:%M:%S" ! video/x-raw, width=640, height=360 ! autovideosink
 Setting pipeline to PAUSED ...
