@@ -45,7 +45,7 @@ apt-get upgrade
 #!/bin/bash
 version=$1
 if [ $# -eq 0 ]; then
-    echo "No OpenCV version is given."
+    echo "No OpenCV version is given. run like this : install_opencv.sh 4.10.0"
     exit 0
 else
   echo "Installing OpenCV ${version} on your Raspberry Pi 64-bit OS"
@@ -74,21 +74,10 @@ sudo apt-get install -y libtbbmalloc2 libtbb-dev libdc1394-dev gstreamer1.0-libc
 cd ~ 
 sudo rm -rf opencv*
 
-wget -O opencv.zip https://github.com/opencv/opencv/archive/${version}.zip 
-wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/${version}.zip 
-# unpack
-unzip opencv.zip 
-unzip opencv_contrib.zip 
-# some administration to make live easier later on
-mv opencv-${version} opencv
-mv opencv_contrib-${version} opencv_contrib
+git clone https://github.com/opencv/opencv.git 
+cd opencv 
+git checkout ${version}
 
-# clean up the zip files
-rm opencv.zip
-rm opencv_contrib.zip
-
-# set install dir
-cd ~/opencv
 mkdir build
 cd build
 
