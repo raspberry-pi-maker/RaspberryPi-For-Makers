@@ -74,6 +74,7 @@ sudo apt-get install -y libtbbmalloc2 libtbb-dev libdc1394-dev gstreamer1.0-libc
 cd ~ 
 sudo rm -rf opencv*
 
+git clone https://github.com/opencv/opencv_contrib.git
 git clone https://github.com/opencv/opencv.git 
 cd opencv 
 git checkout ${version}
