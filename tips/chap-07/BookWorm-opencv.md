@@ -536,8 +536,8 @@ if cap.isOpened() == False:
     sys.exit(0)
 
 while True:
-    succes, img = cap.read()
-    if succes == False:
+    success, img = cap.read()
+    if success == False:
         print('camera read Failed')
         sys.exit(0)
 
