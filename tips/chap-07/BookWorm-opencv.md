@@ -69,16 +69,30 @@ sudo apt-get install -y liblapack-dev gfortran libhdf5-dev
 sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
 sudo apt-get install -y protobuf-compiler
 sudo apt-get install -y libtbbmalloc2 libtbb-dev libdc1394-dev gstreamer1.0-libcamera
+#If you want to build with QT, install libqt6core5compat6-dev
+sudo apt-get -y install libqt6core5compat6-dev
 
 # download the latest version
 cd ~ 
 sudo rm -rf opencv*
+echo "**** Downloading opencv ****"
+wget -O opencv.zip https://github.com/opencv/opencv/archive/refs/tags/${version}.zip
+echo "**** Downloading opencv_contrib ****"
+wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/refs/tags/${version}.zip
 
-git clone https://github.com/opencv/opencv_contrib.git
-git clone https://github.com/opencv/opencv.git 
+# unpack
+unzip opencv.zip 
+unzip opencv_contrib.zip 
+
+# some administration to make live easier later on
+mv opencv-${version} opencv
+mv opencv_contrib-${version} opencv_contrib
+
+# clean up the zip files
+rm opencv.zip
+rm opencv_contrib.zip
+
 cd opencv 
-git checkout ${version}
-
 mkdir build
 cd build
 
@@ -361,6 +375,56 @@ spypiggy@raspberrypi:~ $ python3 preview.py
 ```
 
 정상 작동합니다.
+
+
+<br /><br />
+
+
+# QT 지원
+
+<br>
+
+앞에서 install_opencv.sh 스크립트에서 cmake 옵션 중 WITH_QT 값은 OFF입니다. 즉 QT를 제외한 opencv를 빌드하겠다는 의미입니다.
+QT 옵션을 ON으로 바꾸면 OpenCV에서 GUI 기능을 추가할 수 있습니다.
+예를 들어 Preview 창에서 현재 프레임을 이미지로 저장하거나 zoom in, out 기능을 구현할 수도 있습니다. QT 옵션을 활성화 하려면 반드시 libqt6core5compat6-dev 패키지를 미리 설치해야 합니다.  install_opencv.sh 스크립트에서는 이 패키지를 설치하도록 해두었습니다. QT 옵션을 활성화한 패키지는 약간의 성능저하가 발생할 수 있습니다. QT GUI 기능이 필요한 경우에만 활성화 후에 빌드하는 것이 좋습니다.
+
+```bash 
+sudo apt-get -y install libqt6core5compat6-dev
+```
+
+
+[![QT image](../../tip_image/7-5.png)]
+
+<br>
+
+위 그림은 다음과 같이 단순한 프로그램입니다. 하지만 Window 상단의 버튼들은 위에서 설명한 여러가지 기능을 GUI 버튼을 통해 지원합니다. 
+
+```bash
+#preview.py
+import cv2
+import numpy as np
+import sys
+connstr = 'libcamerasrc ! video/x-raw, format=RGBx, width=640, height=480, framerate=30/1 ! videoconvert! video/x-raw, format=(string)BGR ! videoscale ! appsink'
+cap = cv2.VideoCapture(connstr, cv2.CAP_GSTREAMER)
+if cap.isOpened() == False:
+    print('camera open Failed')
+    sys.exit(0)
+
+while True:
+    succes, img = cap.read()
+    if succes == False:
+        print('camera read Failed')
+        sys.exit(0)
+
+    k = cv2.waitKey(1)
+    if k == ord('q'):
+        break
+
+    cv2.imshow('Img',img)
+
+cap.release()
+cv2.destroyAllWindows()
+```
 
 <br /><br />
 
