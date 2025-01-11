@@ -386,12 +386,137 @@ spypiggy@raspberrypi:~ $ python3 preview.py
 
 앞에서 install_opencv.sh 스크립트에서 cmake 옵션 중 WITH_QT 값은 OFF입니다. 즉 QT를 제외한 opencv를 빌드하겠다는 의미입니다.
 QT 옵션을 ON으로 바꾸면 OpenCV에서 GUI 기능을 추가할 수 있습니다.
-예를 들어 Preview 창에서 현재 프레임을 이미지로 저장하거나 zoom in, out 기능을 구현할 수도 있습니다. QT 옵션을 활성화 하려면 반드시 libqt6core5compat6-dev 패키지를 미리 설치해야 합니다.  install_opencv.sh 스크립트에서는 이 패키지를 설치하도록 해두었습니다. QT 옵션을 활성화한 패키지는 약간의 성능저하가 발생할 수 있습니다. QT GUI 기능이 필요한 경우에만 활성화 후에 빌드하는 것이 좋습니다.
+예를 들어 Preview 창에서 현재 프레임을 이미지로 저장하거나 zoom in, out 기능을 구현할 수도 있습니다. 또한 Window 하다에 현재 커서 위치와 현재 위치 픽셀의 RGB 값을 보여줍니다.
+QT 옵션을 활성화 하려면 반드시 libqt6core5compat6-dev 패키지를 미리 설치해야 합니다.  install_opencv.sh 스크립트에서는 이 패키지를 설치하도록 해두었습니다. QT 옵션을 활성화한 패키지는 약간의 성능저하가 발생할 수 있습니다. QT GUI 기능이 필요한 경우에만 활성화 후에 빌드하는 것이 좋습니다.
 
 ```bash 
 sudo apt-get -y install libqt6core5compat6-dev
 ```
 
+<br>
+
+만약 QT 옵션을 ON으로 한 다음 OpenCV를 빌드, 설치 후 getBuildInformation()을 호출하면 다음과 같은 정보를 확인할 수 있습니다.
+가운데 부분에서 "QT: YES (ver 6.4.2 )" 라인을 확인할 수 있습니다. 이 라인이 QT를 지원하고 있다는 내용용입니다.
+
+<br>
+
+```bash
+spypiggy@raspberrypi:~ $ python 
+Python 3.11.2 (main, Sep 14 2024, 03:00:30) [GCC 12.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import cv2
+>>> print(cv2.getBuildInformation())
+
+General configuration for OpenCV 4.10.0 =====================================
+  Version control:               unknown
+
+  Extra modules:
+    Location (extra):            /home/spypiggy/opencv_contrib/modules
+    Version control (extra):     unknown
+
+  Platform:
+    Timestamp:                   2025-01-11T05:31:33Z
+    Host:                        Linux 6.6.62+rpt-rpi-2712 aarch64
+    CMake:                       3.25.1
+    CMake generator:             Unix Makefiles
+    CMake build tool:            /usr/bin/gmake
+    Configuration:               RELEASE
+
+  CPU/HW features:
+    Baseline:                    NEON FP16
+      required:                  NEON
+    Dispatched code generation:  NEON_DOTPROD NEON_FP16 NEON_BF16
+      requested:                 NEON_FP16 NEON_BF16 NEON_DOTPROD
+      NEON_DOTPROD (1 files):    + NEON_DOTPROD
+      NEON_FP16 (2 files):       + NEON_FP16
+      NEON_BF16 (0 files):       + NEON_BF16
+
+  C/C++:
+    Built as dynamic libs?:      YES
+    C++ standard:                11
+    C++ Compiler:                /usr/bin/c++  (ver 12.2.0)
+    C++ flags (Release):         -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections    -fvisibility=hidden -fvisibility-inlines-hidden -fopenmp -O3 -DNDEBUG  -DNDEBUG
+    C++ flags (Debug):           -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections    -fvisibility=hidden -fvisibility-inlines-hidden -fopenmp -g  -O0 -DDEBUG -D_DEBUG
+    C Compiler:                  /usr/bin/cc
+    C flags (Release):           -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections    -fvisibility=hidden -fopenmp -O3 -DNDEBUG  -DNDEBUG
+    C flags (Debug):             -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections    -fvisibility=hidden -fopenmp -g  -O0 -DDEBUG -D_DEBUG
+    Linker flags (Release):      -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  
+    Linker flags (Debug):        -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  
+    ccache:                      NO
+    Precompiled headers:         NO
+    Extra dependencies:          dl m pthread rt
+    3rdparty dependencies:
+
+  OpenCV modules:
+    To be built:                 aruco bgsegm bioinspired calib3d ccalib core cvv datasets dnn dnn_objdetect dnn_superres dpm face features2d flann freetype fuzzy gapi hdf hfs highgui img_hash imgcodecs imgproc intensity_transform line_descriptor mcc ml objdetect optflow phase_unwrapping photo plot python3 quality rapid reg rgbd saliency shape signal stereo stitching structured_light superres surface_matching text tracking ts video videoio videostab wechat_qrcode xfeatures2d ximgproc xobjdetect xphoto
+    Disabled:                    world
+    Disabled by dependency:      -
+    Unavailable:                 alphamat cannops cudaarithm cudabgsegm cudacodec cudafeatures2d cudafilters cudaimgproc cudalegacy cudaobjdetect cudaoptflow cudastereo cudawarping cudev java julia matlab ovis python2 sfm viz
+    Applications:                perf_tests apps
+    Documentation:               NO
+    Non-free algorithms:         YES
+
+  GUI:                           QT6
+    QT:                          YES (ver 6.4.2 )
+      QT OpenGL support:         NO
+    GTK+:                        YES (ver 3.24.38)
+      GThread :                  YES (ver 2.74.6)
+      GtkGlExt:                  NO
+
+  Media I/O: 
+    ZLib:                        /usr/lib/aarch64-linux-gnu/libz.so (ver 1.2.13)
+    JPEG:                        /usr/lib/aarch64-linux-gnu/libjpeg.so (ver 62)
+    WEBP:                        /usr/lib/aarch64-linux-gnu/libwebp.so (ver encoder: 0x020f)
+    PNG:                         /usr/lib/aarch64-linux-gnu/libpng.so (ver 1.6.39)
+    TIFF:                        build (ver 42 - 4.6.0)
+    JPEG 2000:                   build (ver 2.5.0)
+    OpenEXR:                     build (ver 2.3.0)
+    HDR:                         YES
+    SUNRASTER:                   YES
+    PXM:                         YES
+    PFM:                         YES
+
+  Video I/O:
+    DC1394:                      YES (2.2.6)
+    FFMPEG:                      YES
+      avcodec:                   YES (59.37.100)
+      avformat:                  YES (59.27.100)
+      avutil:                    YES (57.28.100)
+      swscale:                   YES (6.7.100)
+      avresample:                NO
+    GStreamer:                   YES (1.22.0)
+    v4l/v4l2:                    YES (linux/videodev2.h)
+
+  Parallel framework:            TBB (ver 2021.11 interface 12110)
+
+  Trace:                         YES (with Intel ITT)
+
+  Other third-party libraries:
+    Lapack:                      NO
+    Custom HAL:                  YES (carotene (ver 0.0.1, Auto detected))
+    Protobuf:                    build (3.19.1)
+    Flatbuffers:                 builtin/3rdparty (23.5.9)
+
+  Python 3:
+    Interpreter:                 /usr/bin/python3 (ver 3.11.2)
+    Libraries:                   /usr/lib/aarch64-linux-gnu/libpython3.11.so (ver 3.11.2)
+    Limited API:                 NO
+    numpy:                       /usr/lib/python3/dist-packages/numpy/core/include (ver 1.24.2)
+    install path:                /usr/lib/python3/dist-packages/cv2/python-3.11
+
+  Python (for build):            /usr/bin/python3
+
+  Java:                          
+    ant:                         NO
+    Java:                        NO
+    JNI:                         NO
+    Java wrappers:               NO
+    Java tests:                  NO
+
+  Install to:                    /usr/local
+-----------------------------------------------------------------
+
+```
 
 [![QT image](../../tip_image/7-5.png)]
 
