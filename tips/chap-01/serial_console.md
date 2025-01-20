@@ -75,6 +75,11 @@ Windows 11에서 시리얼 포트가 인식되었기 때문에 이제 다음 작
 ## Raspberry Pi4와 시리얼 케이블 연결
 "메이커를 위한 라즈베리파이" 116페이지의 UART 통신편에 파이에서 시리얼 통신을 하는 방법을 자세히 설명하였다.  파이3,4에서 가장 유의할 점은 성능이 뛰어난 하드웨어 UART0(Full UART)가 블루투스 무선 시리얼 통신용으로 바뀜에 따라 UART1(Mini UART)를 사용한다. 아마도 대부분의 독자들은 파이 3,4를 사용할 것이기 때문에 UART1을 사용해서 작업을 하도록 하겠다. UART1은 /dev/ttsS0에 매핑되어 있다. 라즈베리파이 재단에서도 이런 혼돈을 줄이기 위해 "/dev/serial0"을 사용하도록 권장한다. /dev/serial0는 파이2에서는 UART0(/dev/ttyAMA0), 파이 3,4에서는 UART1(/dev/ttsS0)에 매핑되어 있다. 
 
+```bash
+#다음 명령으로 확인할 수 있다.
+spypiggy@raspberrypi:~ $ ls -al /dev/serial*
+lrwxrwxrwx 1 root root 5 Jan 20 19:46 /dev/serial0 -> ttyS0
+```
 
 | 이름   | TXD | PIN |RXD |PIN |PORT |
 |-------|--------|---|-------|---|----|
