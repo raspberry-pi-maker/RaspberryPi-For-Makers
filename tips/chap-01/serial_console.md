@@ -16,7 +16,7 @@ PC, 컴퓨터의 이 시리얼 포트는 초고속인터넷이 보급되기 전�
 하지만 가끔씩 이더넷 접속을 하기 불가능한 경우가 있다. 가령 라즈베리파이의 네트워크 설정이 잘못되어있는데 모니터, 키보드가 없다면 마땅히 라즈베리파이에 접속할 방법이 없다. 이 경우에 유용한 방법이 시리얼 접속이다. 시리얼 접속 방법을 한번 알아두면 응급 상황에서 유용하게 사용할 수 있다.
 
 ## 필요한 도구
-시리얼 접속을 하려면 위 그림처럼 시리얼 케이블이 필요하다. 하지만 요즈음은 대부분의 컴퓨터에서 위 그림의 9핀 시리얼 포트는 없어지고 USB 포트를 제공한다. 참고로 USB(Universal Serial Bus) 역시 시리얼 통신의 일종이다. USB 포트에 연결해서 시리얼 통신을 할 수 있는 제품이 필요하다. 참고로 파이에서 시리얼 통신은 GPIO 핀을 이용한다. 따라서 한쪽은 USB 반대쪽은 GPIO 핀에 연결가능한 듀폰 케이블 형태의 시리얼 케이블이 필요하다.<br /><br />
+시리얼 접속을 하려면 위 그림처럼 시리얼 케이블이 필요하다. 하지만 요즈음은 대부분의 컴퓨터에서 위 그림의 9핀 시리얼 포트는 없어지고 USB 포트를 제공한다. 참고로 USB(Universal Serial Bus) 역시 시리얼 통신의 일종이다. USB 포트에 연결해서 시리얼 통신을 할 수 있는 제품이 필요하다. 파이에서 시리얼 통신은 GPIO 핀을 이용한다. (파이5에서는 3핀 커넥터를 따로 제공한다.) 따라서 파이4에서는 한쪽은 USB 반대쪽은 GPIO 핀에 연결가능한 듀폰 케이블 형태의 시리얼 케이블이 필요하다. 파이5에서는 UART3핀에 연결가능한 JST커넥터 케이블을 준비한다. (파이4에서 사용하는 듀폰 커넥터도 사용할 수 있다.)<br /><br />
 ![시리얼 케이블](../../tip_image/1-serial-3.jpg)
 
 위 제품은 AdaFruit사의 제품이며 https://www.adafruit.com/product/954 에서 9.95$에 구매할 수 있다. Aliexpress에서 비슷한 제품을 저렴하게 구매할 수 있다. Aliexpress에서 "USB TO TTL"로 검색하면 여러 제품을 찾을 수 있다.<br /><br />
@@ -72,8 +72,19 @@ Windows 11에서 시리얼 포트가 인식되었기 때문에 이제 다음 작
 
 <br/> <br/> 
 
-## Raspberry Pi와 시리얼 케이블 연결
+## Raspberry Pi4와 시리얼 케이블 연결
 "메이커를 위한 라즈베리파이" 116페이지의 UART 통신편에 파이에서 시리얼 통신을 하는 방법을 자세히 설명하였다.  파이3,4에서 가장 유의할 점은 성능이 뛰어난 하드웨어 UART0(Full UART)가 블루투스 무선 시리얼 통신용으로 바뀜에 따라 UART1(Mini UART)를 사용한다. 아마도 대부분의 독자들은 파이 3,4를 사용할 것이기 때문에 UART1을 사용해서 작업을 하도록 하겠다. UART1은 /dev/ttsS0에 매핑되어 있다. 라즈베리파이 재단에서도 이런 혼돈을 줄이기 위해 "/dev/serial0"을 사용하도록 권장한다. /dev/serial0는 파이2에서는 UART0(/dev/ttyAMA0), 파이 3,4에서는 UART1(/dev/ttsS0)에 매핑되어 있다. 
+
+
+| 이름   | TXD | PIN |RXD |PIN |PORT |
+|-------|--------|---|-------|---|----|
+| UART0 | GPIO 14 | 8  |GPIO 15 | 10 |/dev/ttyAMA0 |
+| UART1 | GPIO 0 | 27  |GPIO 1  | 28 |/dev/ttyAMA1 |
+| UART2 | GPIO 4 | 7   |GPIO 5  | 29 |/dev/ttyAMA2 |
+| UART3 | GPIO 8 | 24  |GPIO 9  | 21 |/dev/ttyAMA3 |
+| UART4 | GPIO 12 | 32 |GPIO 13 | 33 |/dev/ttyAMA4 |
+
+<br/> 
 
 >⚠️ **Tip**: 시리얼 통신용 GPIO핀은 파이 3,4에서도 14,15번으로 동일하다. USB-TTL 제품의 Rx출력을 파이의 Tx와 Tx 출력을 파이의 Rx와 연결하는 것에 유의한다. 즉 USB 출력을 파이에서 입력받고 파이의 출력을 USB에서 입력 받는 방식으로 이해하면 된다.
 
@@ -81,34 +92,44 @@ Windows 11에서 시리얼 포트가 인식되었기 때문에 이제 다음 작
 ![시리얼 연결](../../tip_image/1-serial-5.png)
 
 
-## Raspberry Pi 설정
-앞에서 우리는 파이를 설정하기 위한 키보드, 모니터가 없는 상태를 가정하고 진행해왔다. 파이의 SD 카드 이미지를 노트북에서 직접 수정하도록 하겠다. 파이에서 SD 카드를 제거한 후 노트북에 삽입해서 작업한다. 참고로 SD 카드 이미지는 2개의 파티션이 있는데 그중 하나는 boot 파티션이며 파일 시스템이 ExFAT로 되어있다. 따라서  Windows에서도 이 파티션의 파일은 수정이 가능하다. 파이 시스템의 중요한 설정값들은 대부분 boot 파티션에 존재한다. boot 파티션의 
-config.txt 파일에 다음 라인을 추가한다. 라인 위치는 
+### Raspberry Pi 설정
+라즈베리파이 설정화면(raspi-config) 또는 GUI 설정화면에서 다음과 같이 작업한다.
 
+"3 Interface Options    Configure connections to peripherals" 설정으로 진입한다.
+"I6 Serial Port Enable/disable shell messages on the serial connection"을 선택한 다음 다음 그림과 같이 시리얼 인터페이스를 활성화한다. 시리얼 로그인도 활성화 한다. 
+
+![RPi5](../../tip_image/1-serial-18.png)
+
+이 작업은 /boot/firmware/config.txt 파일에 다음 라인을 추가할 것이다. Device Tree에서 UART를 활성화한다는 의미이다.
 
 ``` bash
 enable_uart=1
 ```
 <br />
-아래와 같이 pi4 또는 all 섹션 윗부분 "dtparam=audio=on"라인 아래 부분이 적당하다.
+
+그리고 이 작업은 /boot/firmware/cmdline.txt 파일에 다음 라인을 추가할 것이다. 만약 시리얼로그인을 비활성화했다면 "console=serial0"은 "console=tty1"로 바뀔 것이다.
 
 ``` bash
-# Enable audio (loads snd_bcm2835)
-dtparam=audio=on
-enable_uart=1
-
-[pi4]
-# Enable DRM VC4 V3D driver on top of the dispmanx display stack
-dtoverlay=vc4-fkms-v3d
-max_framebuffers=2
-
-[all]
-# dtoverlay=vc4-fkms-v3d
+console=serial0,115200 console=tty1 root=PARTUUID=7950dd04-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles cfg80211.ieee80211_regdom=KR
 ```
 
-그리고 수정이 끝난 SD 카드를 다시 파이에 삽입한다.
 
 <br/> <br/> 
+
+## Raspberry Pi5와 시리얼 케이블 연결
+라즈베리파이5에서는 UART 3핀이 별도로 제공된다. GPIO핀을 사용해도 되지만 별도로 제공되는 UART핀을 사용하는 것이 편리하다. 다음 그림에서 볼 수 있듯이 3핀의 UART Connector가 존재한다. UART3핀의 핀 배열은 그림에 표기해두었다.
+앞에서 소개한 시리얼 USB 케이블 역시 파즈베리파이5용으로 끝 부분이 듀폰 케이블에서 이 단자에 연결되도록 개선한 제품들이 알리 등에서 판매하고 있다. 하지만 앞에서 소개한 구형케이블 역시 연결이 가능하기 때문에 이미 구형 케이블을 가지고 있다면 새롭게 구매할 필요는 없다.
+<br/> 
+
+![RPi5](../../tip_image/1-serial-17.png)
+
+<image 출처 : https://www.elektormagazine.com/news/up-close-raspberry-pi-5-video>
+
+
+<br/> <br/> 
+
+
+
 
 ## 노트북 작업
 노트북에 필요한 작업은 미리 해두도록 한다. 드라이버, 프로그램 등이 필요하기 때문에 현장에서 갑자기 진행하려면 시간이 걸릴 뿐 아니라 드라이버 오작동 등의 문제가 발생할 경우 대처가 어렵다. 미리 사무실, 집에서 여러분이 구매한 USB-TTL 제품을 이용해서 테스트까지 끝내두도록 한다.
@@ -152,7 +173,7 @@ USB-TTL과 파이, 노트북을 연결한다.
 <br/> 
 
 ### Putty 접속
-Putty를 실행 후 접속 화면에서 Connection Type을 Serial로 변경한 다음, Serial Line 에는 앞에서 확인한 COM  포트, Speed에는 통신 속도를 입력한다. 통신 속도는 저속의 안정된 통신을 원하는 경우에는 9600, 일반적인 경우 115200을 사용한다. Open 버튼을 누르면 다음과 같이 접속된다. 만약 화면 출력이 보이지 않으면 엔터키를 눌러본다.<br/> 
+Putty를 실행 후 접속 화면에서 Connection Type을 Serial로 변경한 다음, Serial Line 에는 앞에서 확인한 COM  포트, Speed에는 통신 속도를 입력한다. 통신 속도는 115200을 사용한다. Open 버튼을 누르면 다음과 같이 접속된다. 만약 화면 출력이 보이지 않으면 엔터키를 눌러본다.<br/> 
 ![장치관리자에러](../../tip_image/1-serial-7.png)
 
 ![장치관리자](../../tip_image/1-serial-10.png)
