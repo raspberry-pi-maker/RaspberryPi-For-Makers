@@ -1,3 +1,0 @@
-## 3장
-### UART
-최근 LTE 모뎀을 연결하는 IoT 디바이스를 만들 기회가 있었는데 오랜만에 라즈베리파이의 UART를 이용해서 모뎀을 테스트하였습니다. 책에서는 시리얼 통신을 설명하면서 시리얼 통신 프로그램으로 미니콤을 소개하였습니다. 하지만 미니콤은 콘솔에서 작동하며 UI가 현대적이지 않습니다. 따라서 처음 사용하는 분들은 상당한 어려움을 느낄 수 있습니다. 라즈베리파이 4에서 UART를 구현하고 좀 더 쉬운 모뎀 제어 프로그램도 찾을 겸 다시 한번 UART를 돌아보았습니다. [uart.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-03/uart.md)에 글을 실었습니다.<br /><br />

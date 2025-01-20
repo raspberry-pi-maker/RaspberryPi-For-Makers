@@ -1,3 +1,5 @@
+# RaspberryPi-For-Makers
+
 ## 1장
 
 ### 라즈베리파이 OS 64비트 
@@ -23,3 +25,34 @@ SD카드 이미지 수정만으로 파이를 세팅하는 방법을 [headless_se
 
 ### 안드로이드 스마트폰을 라즈베리파이 모니터로 활용하기.
 노트북이 없더라도 대부분 스마트폰은 가지고 있을 것입니다. 이번에는 안드로이드 스마트폰을 라즈베리파이의 모니터로 이용하는 방법을 알아보겠습니다. 당연히 스마트폰과 키보드, HDMI 케이블, HDMI 캡쳐카드 그리고 Desktop 모드에서는 추가로 마우스가 필요합니다. [hdmi_capture2.md](./tips/chap-01/hdmi_capture2.md) 를 통해 확인할 수 있습니다.<br /><br />
+
+
+## 2장
+### GPIO
+2020년 가을 GPIO 제어를 위한 개발도구들과 관련해서 많은 변화들이 있었습니다. 가장 큰 소식은 WiringPi가 더 이상 지원되지 않는다는 것입니다. 그리고 파이썬을 사용하는 개발자들이 주로 사용하던 RPi.GPIO 대신 라즈베리파이 재단에서 일했던 Ben Nuttall이 공개한 gpiozero를 사용하는 개발자들이 많아졌습니다. 결국 "메이커를 위한 라즈베리파이" 책을 쓸 당시 주로 사용하던 WiringPi, RPi.GPIO 대신 새로운 개발 도구들이 필요하거나 검토할 수 있다는 것입다. GPIO 제어를 위한 개발 도구들에 대해 좀 더 자세히 들여다 보도록 하겠습니다.
+[gpio.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-02/gpio.md)에 글을 실었습니다..<br /><br />
+
+## 3장
+### UART
+최근 LTE 모뎀을 연결하는 IoT 디바이스를 만들 기회가 있었는데 오랜만에 라즈베리파이의 UART를 이용해서 모뎀을 테스트하였습니다. 책에서는 시리얼 통신을 설명하면서 시리얼 통신 프로그램으로 미니콤을 소개하였습니다. 하지만 미니콤은 콘솔에서 작동하며 UI가 현대적이지 않습니다. 따라서 처음 사용하는 분들은 상당한 어려움을 느낄 수 있습니다. 라즈베리파이 4에서 UART를 구현하고 좀 더 쉬운 모뎀 제어 프로그램도 찾을 겸 다시 한번 UART를 돌아보았습니다. [uart.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-03/uart.md)에 글을 실었습니다.<br /><br />
+
+
+
+## 4장
+### 쌍극 스테퍼모터(NEMA 모터) 제어
+책에서는 단극 스테퍼 모터만 다루었는데 3D 프린터를 비롯한 현장에서 많이 사용하는 NEMA 스테퍼 모터와 drv8825, tmc2100 등의 드라이버 사용법을 [bipollar_stepper_motor.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-04/bipollar_stepper_motor.md) 를 통해 확인할 수 있습니다.<br /><br />
+
+
+## 7장
+### OpenCV 소스코드 빌드
+OpenCV는 아주 활발하게 업데이트가 발생하는 오픈소스 패키지입니다. apt-get 명령어를 이용한 OpenCV 설치 대신 최신 소스코드를 직접 빌드해서 사용하고자 하는 분들은 [opencv.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-07/opencv.md)를 참조하시길 바랍니다.<br />
+
+### 라즈베리파이 OS BullsEye에서 OpenCV 사용
+라즈베리파이 OS가 BullsEye로 업데이트되면서 카메라 제어 스택이 기존 Legacy에서 libcamera로 바뀌었습니다. 이 영향으로 기존 cv2.VideoCapture(0)을 이용해서 CSI 카메라를 제어하던 방법을 더 이상 사용할 수 없습니다.(물론 카메라 스택을 Legacy로 복원하면 사용가능합니다.) libcamera 카메라 스택 환경에서 OpenCV를 새롭게 빌드해서 카메라를 제어하는 방법을 알아보겠습니다.<br />
+[BullsEye-opencv.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-07/BullsEye-opencv.md)를 참조하시길 바랍니다.
+
+
+### 라즈베리파이 OS BookWorm에서 OpenCV 사용
+[BullsEye-opencv.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-07/BullsEye-opencv.md)의 내용을 BookWorm OS와 최신 OpenCV에 맞게 업데이트했습니다.
+
+[BookWorm-opencv.md](https://github.com/raspberry-pi-maker/RaspberryPi-For-Makers/blob/master/tips/chap-07/BookWorm-opencv.md)를 참조하시길 바랍니다.
