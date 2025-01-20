@@ -72,22 +72,122 @@ Windows 11에서 시리얼 포트가 인식되었기 때문에 이제 다음 작
 
 <br/> <br/> 
 
+## Raspberry Pi4,  Pi5 UART 비교
+
+<br/>
+
+라즈베리파이5가 나오면서 시리얼포트에도 변화가 생겼다. 가장 큰 변화는 UART용 전용 3핀 커넥터가 생긴 것이다. 
+
+<br/>
+
+### Raspberry Pi4
+
+<br/>
+
+| 이름   | TXD | PIN |RXD |PIN |PORT |
+|-------|--------|---|-------|---|----|
+| UART0 | GPIO 14 | 8  |GPIO 15 | 10 |/dev/ttyAMA0 |
+| UART1 | GPIO 0 | 27  |GPIO 1  | 28 |/dev/ttyAMA2 |
+| UART2 | GPIO 4 | 7   |GPIO 5  | 29 |/dev/ttyAMA3 |
+| UART3 | GPIO 8 | 24  |GPIO 9  | 21 |/dev/ttyAMA4 |
+| UART4 | GPIO 12 | 32 |GPIO 13 | 33 |/dev/ttyAMA5 |
+
+<br/> 
+파이4에서는 위와 같이 여러개의 UART를 사용할 수 있다. 사용방법은 Device Tree에 다음과 같이 추가시키면 된다.
+이 방법으로 사용하지 않는 GPIO핀들 중에 선택적으로 UART를 사용할 수 있다.
+작업을 하기전에 /dev 디렉토리의 tty AMA 파일들을 확인한 다음 어떻게 바뀌는지 확인해보자.
+
+```bash
+spypiggy@raspberrypi:~ $ ls -al /dev/ttyAMA* /dev/ttyS*
+ls: cannot access '/dev/ttyAMA*': No such file or directory
+crw-rw---- 1 root dialout 4, 64 Jan 20 19:46  /dev/ttyS0
+```
+
+<br/> 
+
+```bash
+#/boot/firmware/config.txt 파일의 마지막 부분에 다음 라인들을 추가하면 모든 UART를 사용할 수 있다.
+# 파이4에서 만약 블루투스를 사용한다면 "dtoverlay=disable-bt"라인은 삭제한다.
+[all]
+enable_uart=1
+dtoverlay=disable-bt
+dtoverlay=uart2
+dtoverlay=uart3
+dtoverlay=uart4
+dtoverlay=uart5
+```
+<br/> 
+
+이제 시스템을 재부팅한 다음 다시 tty 디바이스들을 확인해보자. 이제 위 테이블에서 원하는 UART를 선택한 다음 해당 GPIO핀을 이용해 시리얼 통신을 할 수 있다.
+
+```bash
+spypiggy@raspberrypi:~ $ ls -al /dev/ttyAMA* /dev/ttyS*
+crw-rw---- 1 root dialout 204, 64 Jan 20 20:41 /dev/ttyAMA0
+crw-rw---- 1 root dialout 204, 66 Jan 20 20:41 /dev/ttyAMA2
+crw-rw---- 1 root dialout 204, 67 Jan 20 20:41 /dev/ttyAMA3
+crw-rw---- 1 root dialout 204, 68 Jan 20 20:41 /dev/ttyAMA4
+crw-rw---- 1 root dialout 204, 69 Jan 20 20:41 /dev/ttyAMA5
+crw-rw---- 1 root dialout   4, 64 Jan 20 20:41 /dev/ttyS0
+```
+
+<br/> <br/> 
+
+
+### Raspberry Pi5
+
+<br/>
+
+| 이름   | TXD | PIN |RXD |PIN |PORT |
+|-------|--------|---|-------|---|----|
+| UART0 |  |   | |  |/dev/ttyAMA10 |
+| UART1 | GPIO 0 | 27  |GPIO 1  | 28 |/dev/ttyAMA1 |
+| UART2 | GPIO 4 | 7   |GPIO 5  | 29 |/dev/ttyAMA2 |
+| UART3 | GPIO 8 | 24  |GPIO 9  | 21 |/dev/ttyAMA3 |
+| UART4 | GPIO 12 | 32 |GPIO 13 | 33 |/dev/ttyAMA4 |
+
+라즈베리파이 5에서 전용3핀이 생기면서 이 디바이스 이름이 ttyAMA10으로 되었다. 그리고 ttyserial0는 항상 이 디바이스에 대한 바로가기로 작동한다.
+라즈베리파이4에서는 블루투스 사용 여부에 따라 ttyserial0이 ttyAMA0(bt 미사용시), ttyS0(bt 사용시)에 대한 바로가기였다.
+라즈베리파이4에서 블루투스가 ttyAMA0를 사용하기 때문이다.
+
+라즈베리파이5에서는 ttyserial1이 새롭게 추가되었으며 블루투스를 사용안할 경우에만 ttyserial1이 ttyS0에 대한 바로가기이다.
+
+```bash
+# 블루투스를 사용하면 
+spypiggy@raspberrypi:~ $ ls -al /dev/ttyAM* /dev/ttyS* /dev/seri*
+ls: cannot access '/dev/ttyS*': No such file or directory
+lrwxrwxrwx 1 root root          8 Jan 20 22:09  /dev/serial0 -> ttyAMA10
+crw-rw---- 1 root dialout 204, 65 Jan 20 22:09  /dev/ttyAMA1
+crw-rw---- 1 root dialout 204, 74 Jan 20 22:09  /dev/ttyAMA10
+crw-rw---- 1 root dialout 204, 66 Jan 20 22:09  /dev/ttyAMA2
+crw-rw---- 1 root dialout 204, 67 Jan 20 22:09  /dev/ttyAMA3
+crw-rw---- 1 root dialout 204, 68 Jan 20 22:09  /dev/ttyAMA4
+
+# 사용안하면 
+spypiggy@raspberrypi:~ $ ls -al /dev/ttyAM* /dev/ttyS* /dev/seri*
+lrwxrwxrwx 1 root root          8 Jan 20 22:14 /dev/serial0 -> ttyAMA10
+lrwxrwxrwx 1 root root          5 Jan 20 22:14 /dev/serial1 -> ttyS0
+crw-rw---- 1 root dialout 204, 65 Jan 20 22:14 /dev/ttyAMA1
+crw-rw---- 1 root dialout 204, 74 Jan 20 22:14 /dev/ttyAMA10
+crw-rw---- 1 root dialout 204, 66 Jan 20 22:14 /dev/ttyAMA2
+crw-rw---- 1 root dialout 204, 67 Jan 20 22:14 /dev/ttyAMA3
+crw-rw---- 1 root dialout 204, 68 Jan 20 22:14 /dev/ttyAMA4
+crw-rw---- 1 root dialout   4, 64 Jan 20 22:14 /dev/ttyS0
+```
+<br/> <br/> 
+
 ## Raspberry Pi4와 시리얼 케이블 연결
-"메이커를 위한 라즈베리파이" 116페이지의 UART 통신편에 파이에서 시리얼 통신을 하는 방법을 자세히 설명하였다.  파이3,4에서 가장 유의할 점은 성능이 뛰어난 하드웨어 UART0(Full UART)가 블루투스 무선 시리얼 통신용으로 바뀜에 따라 UART1(Mini UART)를 사용한다. 아마도 대부분의 독자들은 파이 3,4를 사용할 것이기 때문에 UART1을 사용해서 작업을 하도록 하겠다. UART1은 /dev/ttsS0에 매핑되어 있다. 라즈베리파이 재단에서도 이런 혼돈을 줄이기 위해 "/dev/serial0"을 사용하도록 권장한다. /dev/serial0는 파이2에서는 UART0(/dev/ttyAMA0), 파이 3,4에서는 UART1(/dev/ttsS0)에 매핑되어 있다. 
+"메이커를 위한 라즈베리파이" 116페이지의 UART 통신편에 파이에서 시리얼 통신을 하는 방법을 자세히 설명하였다.  
+파이3,4에서 가장 유의할 점은 성능이 뛰어난 하드웨어 UART0(Full UART)가 블루투스 무선 시리얼 통신용으로 바뀜에 따라 UART1(Mini UART)를 사용한다. 
+아마도 대부분의 독자들은 파이 3,4를 사용할 것이기 때문에 UART1을 사용해서 작업을 하도록 하겠다. 
+UART1은 /dev/ttyS0에 매핑되어 있다. 
+라즈베리파이 재단에서도 이런 혼돈을 줄이기 위해 "/dev/serial0"을 사용하도록 권장한다. 
+/dev/serial0는 파이2에서는 UART0(/dev/ttyAMA0), 파이 3,4에서는 UART1(/dev/ttsS0)에 매핑되어 있다. 
 
 ```bash
 #다음 명령으로 확인할 수 있다.
 spypiggy@raspberrypi:~ $ ls -al /dev/serial*
 lrwxrwxrwx 1 root root 5 Jan 20 19:46 /dev/serial0 -> ttyS0
 ```
-
-| 이름   | TXD | PIN |RXD |PIN |PORT |
-|-------|--------|---|-------|---|----|
-| UART0 | GPIO 14 | 8  |GPIO 15 | 10 |/dev/ttyAMA0 |
-| UART1 | GPIO 0 | 27  |GPIO 1  | 28 |/dev/ttyAMA1 |
-| UART2 | GPIO 4 | 7   |GPIO 5  | 29 |/dev/ttyAMA2 |
-| UART3 | GPIO 8 | 24  |GPIO 9  | 21 |/dev/ttyAMA3 |
-| UART4 | GPIO 12 | 32 |GPIO 13 | 33 |/dev/ttyAMA4 |
 
 <br/> 
 
